@@ -12,8 +12,8 @@ const PlaceholderImage = ({ width = 300, height = 300, text = 'Image' }) => (
 )
 
 const projectLinks = {
-  bugFinder: 'https://github.com/bikas15/-bugs_finder',
-  hostelHub: 'https://github.com/bikas15/Hostel-Khojau'
+  bugFinder: 'https://bikas15.github.io/-bugs_finder/#/',
+  hostelHub: 'https://bikas15.github.io/Hostel-Khojau/#/'
 }
 
 function App() {
@@ -137,7 +137,7 @@ function App() {
               </div>
               <div className="project-content">
                 <h3>Bugs Finder</h3>
-                <p>Explore the Bug Finder source code and project details on GitHub.</p>
+                <p>Open the Bug Finder application.</p>
                 <div className="project-tech">
                   <span className="tech-tag">React</span>
                   <span className="tech-tag">Django</span>
@@ -146,7 +146,7 @@ function App() {
               </div>
             </a>
             <div className="project-actions">
-              <button type="button" className="btn-link" onClick={() => openProject(projectLinks.bugFinder)}>View on GitHub</button>
+              <button type="button" className="btn-link" onClick={() => openProject(projectLinks.bugFinder)}>Open Website</button>
             </div>
           </div>
 
@@ -157,7 +157,7 @@ function App() {
               </div>
               <div className="project-content">
                 <h3>Hostel Hub</h3>
-                <p>Explore the Hostel Hub source code and project details on GitHub.</p>
+                <p>Open the Hostel Hub application.</p>
                 <div className="project-tech">
                   <span className="tech-tag">React</span>
                   <span className="tech-tag">Node</span>
@@ -166,7 +166,7 @@ function App() {
               </div>
             </a>
             <div className="project-actions">
-              <button type="button" className="btn-link" onClick={() => openProject(projectLinks.hostelHub)}>View on GitHub</button>
+              <button type="button" className="btn-link" onClick={() => openProject(projectLinks.hostelHub)}>Open Website</button>
             </div>
           </div>
         </div>
