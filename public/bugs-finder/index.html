@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bug Finder</title>
+    <style>
+      :root {
+        --bg: #0f172a;
+        --panel: #111827;
+        --panel-2: #1f2937;
+        --accent: #8b5cf6;
+        --accent-2: #ec4899;
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --good: #22c55e;
+        --warn: #f59e0b;
+        --bad: #ef4444;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #020817, #111827);
+        color: var(--text);
+      }
+
+      .app {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 32px 20px 60px;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+      }
+
+      .brand {
+        font-size: 2rem;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+      }
+
+      .brand span {
+        color: #a78bfa;
+      }
+
+      .nav {
+        display: flex;
+        gap: 20px;
+        color: var(--muted);
+      }
+
+      .nav a {
+        text-decoration: none;
+        color: var(--muted);
+        font-weight: 600;
+      }
+
+      .hero {
+        background: rgba(17, 24, 39, 0.9);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 22px;
+        padding: 28px 28px 18px;
+        box-shadow: 0 20px 50px rgba(15, 23, 42, 0.4);
+      }
+
+      .hero-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+        flex-wrap: wrap;
+      }
+
+      .hero h1 {
+        margin: 0;
+        font-size: clamp(2.2rem, 4vw, 4rem);
+        line-height: 1.05;
+      }
+
+      .hero p {
+        color: var(--muted);
+        font-size: 1.1rem;
+        margin: 10px 0 0;
+      }
+
+      .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 22px;
+      }
+
+      .chip {
+        border-radius: 999px;
+        padding: 10px 18px;
+        background: rgba(139, 92, 246, 0.15);
+        border: 1px solid rgba(139, 92, 246, 0.25);
+        color: #c4b5fd;
+        font-weight: 700;
+      }
+
+      .actions {
+        display: flex;
+        gap: 14px;
+        margin-top: 28px;
+        flex-wrap: wrap;
+      }
+
+      .button {
+        text-decoration: none;
+        color: white;
+        padding: 16px 28px;
+        border-radius: 14px;
+        font-weight: 800;
+        letter-spacing: 0.03em;
+        transition: transform 0.2s ease;
+        display: inline-block;
+      }
+
+      .button:hover { transform: translateY(-1px); }
+
+      .button.primary {
+        background: linear-gradient(135deg, #7c3aed, #4f46e5);
+        box-shadow: 0 12px 24px rgba(99, 102, 241, 0.35);
+      }
+
+      .button.secondary {
+        background: linear-gradient(135deg, #ec4899, #f43f5e);
+        box-shadow: 0 12px 24px rgba(236, 72, 153, 0.35);
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 28px;
+      }
+
+      .card {
+        background: rgba(17, 24, 39, 0.9);
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        border-radius: 18px;
+        padding: 20px;
+      }
+
+      .card small {
+        display: block;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .card strong {
+        display: block;
+        font-size: 1.9rem;
+        margin-top: 8px;
+      }
+
+      .card span {
+        display: inline-block;
+        margin-top: 8px;
+        color: var(--good);
+        font-weight: 700;
+      }
+
+      .board {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 20px;
+        margin-top: 28px;
+      }
+
+      .list {
+        background: rgba(17, 24, 39, 0.9);
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        border-radius: 18px;
+        padding: 22px;
+      }
+
+      .list-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+
+      .bug-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 14px 0;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      }
+
+      .bug-item:last-child {
+        border-bottom: none;
+      }
+
+      .bug-main h4 {
+        margin: 0 0 6px;
+        font-size: 1.05rem;
+      }
+
+      .bug-main p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .badge {
+        min-width: 86px;
+        text-align: center;
+        border-radius: 999px;
+        padding: 10px 12px;
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+
+      .badge.open { background: rgba(239, 68, 68, 0.14); color: #fca5a5; }
+      .badge.review { background: rgba(245, 158, 11, 0.14); color: #fcd34d; }
+      .badge.fixed { background: rgba(34, 197, 94, 0.14); color: #86efac; }
+
+      .status {
+        display: grid;
+        gap: 16px;
+        margin-top: 24px;
+      }
+
+      .status-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--muted);
+      }
+
+      .status-item strong {
+        color: var(--text);
+        font-size: 1.6rem;
+      }
+
+      @media (max-width: 760px) {
+        .stats, .board {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">⚙ <span>Bug Finder</span></div>
+        <nav class="nav">
+          <a href="../">Home</a>
+          <a href="#projects">Projects</a>
+          <a href="#reports">Reports</a>
+        </nav>
+      </header>
+
+      <section class="hero">
+        <div class="hero-row">
+          <div>
+            <h1>Track bugs faster.</h1>
+            <p>A modern bug-tracking dashboard running locally inside your portfolio.</p>
+            <div class="chip-row">
+              <span class="chip">React</span>
+              <span class="chip">Django</span>
+              <span class="chip">MySQL</span>
+            </div>
+            <div class="actions">
+              <a class="button primary" href="../">Back to portfolio</a>
+              <a class="button secondary" href="./index.html">Refresh</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats">
+        <div class="card">
+          <small>Total bugs</small>
+          <strong>184</strong>
+          <span>+12 this week</span>
+        </div>
+        <div class="card">
+          <small>Open</small>
+          <strong>42</strong>
+          <span>Needs review</span>
+        </div>
+        <div class="card">
+          <small>In progress</small>
+          <strong>27</strong>
+          <span>7 critical</span>
+        </div>
+        <div class="card">
+          <small>Fixed</small>
+          <strong>115</strong>
+          <span>Resolved</span>
+        </div>
+      </section>
+
+      <section class="board" id="projects">
+        <div class="list">
+          <div class="list-header">
+            <h3>Recent issues</h3>
+            <span>Today</span>
+          </div>
+
+          <div class="bug-item">
+            <div class="bug-main">
+              <h4>Login session expires too early</h4>
+              <p>Frontend / Authentication</p>
+            </div>
+            <span class="badge review">In review</span>
+          </div>
+
+          <div class="bug-item">
+            <div class="bug-main">
+              <h4>Dark mode contrast is too low</h4>
+              <p>UI / Accessibility</p>
+            </div>
+            <span class="badge open">Open</span>
+          </div>
+
+          <div class="bug-item">
+            <div class="bug-main">
+              <h4>CSV export fails for large datasets</h4>
+              <p>Backend / Export</p>
+            </div>
+            <span class="badge fixed">Fixed</span>
+          </div>
+
+          <div class="bug-item">
+            <div class="bug-main">
+              <h4>Search filters reset on refresh</h4>
+              <p>Frontend / Search</p>
+            </div>
+            <span class="badge open">Open</span>
+          </div>
+        </div>
+
+        <div class="list" id="reports">
+          <h3>Quick status</h3>
+          <div class="status">
+            <div class="status-item">
+              <span>Production</span>
+              <strong>96.8%</strong>
+            </div>
+            <div class="status-item">
+              <span>Uptime</span>
+              <strong>99.94%</strong>
+            </div>
+            <div class="status-item">
+              <span>QA pass</span>
+              <strong>87%</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
