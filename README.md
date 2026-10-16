@@ -20,6 +20,6 @@ npm run preview
 
 GitHub Actions builds the site and publishes it to GitHub Pages whenever a commit is pushed to `main`. The site is available at:
 
-https://bikas15.github.io/protfolio/
+https://bikas15.github.io/portfolio/
 
 The Bug Finder and Hostel Hub cards link to their source repositories. GitHub Pages serves static files only; those projects' backend services need separate hosting to run as live applications.
