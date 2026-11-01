@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: bikas-portfolio-contact-api
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: FRONTEND_ORIGINS
+        value: https://bikas15.github.io

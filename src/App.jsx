@@ -11,11 +11,6 @@ const PlaceholderImage = ({ width = 300, height = 300, text = 'Image' }) => (
   </svg>
 )
 
-const projectLinks = {
-  bugFinder: 'https://bikas15.github.io/-bugs_finder/#/',
-  hostelHub: 'https://bikas15.github.io/Hostel-Khojau/#/'
-}
-
 function App() {
   const [formData, setFormData] = useState({
     name: '',
@@ -25,14 +20,8 @@ function App() {
   })
   
   const [submitMessage, setSubmitMessage] = useState('')
-
-  const openProject = (url) => {
-    window.open(url, '_blank', 'noopener,noreferrer')
-  }
-
-  const handleMailClick = () => {
-    window.location.href = 'mailto:bikashbanjade@gmail.com?subject=Portfolio%20Inquiry'
-  }
+  const [submitError, setSubmitError] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -42,16 +31,40 @@ function App() {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!formData.name || !formData.email || !formData.message) {
-      setSubmitMessage('Please fill all required fields!')
+    setSubmitMessage('')
+    setSubmitError(false)
+
+    const apiUrl = import.meta.env.VITE_CONTACT_API_URL?.replace(/\/+$/, '')
+    if (!apiUrl) {
+      setSubmitError(true)
+      setSubmitMessage('Contact form is not configured. Please try again later.')
       return
     }
-    console.log('Form submitted:', formData)
-    setSubmitMessage('✅ Message sent successfully!')
-    setFormData({ name: '', email: '', phone: '', message: '' })
-    setTimeout(() => setSubmitMessage(''), 3000)
+
+    setIsSubmitting(true)
+    try {
+      const response = await fetch(`${apiUrl}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Unable to send your message.')
+      }
+
+      setSubmitMessage('Message sent successfully!')
+      setFormData({ name: '', email: '', phone: '', message: '' })
+    } catch (error) {
+      console.error('Contact form submission failed:', error)
+      setSubmitError(true)
+      setSubmitMessage(error.message || 'Unable to send your message. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -131,13 +144,13 @@ function App() {
         <h2>Projects</h2>
         <div className="projects-grid">
           <div className="project-card">
-            <a className="project-card-link" href={projectLinks.bugFinder} target="_blank" rel="noreferrer">
+            <a className="project-card-link" href="/bugs-finder/index.html">
               <div className="project-image">
                 <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/perfil.jpg" alt="Bugs Finder" />
               </div>
               <div className="project-content">
                 <h3>Bugs Finder</h3>
-                <p>Open the Bug Finder application.</p>
+                <p>A modern bug-tracking project running locally inside your website. Open it directly from this portfolio.</p>
                 <div className="project-tech">
                   <span className="tech-tag">React</span>
                   <span className="tech-tag">Django</span>
@@ -146,27 +159,7 @@ function App() {
               </div>
             </a>
             <div className="project-actions">
-              <button type="button" className="btn-link" onClick={() => openProject(projectLinks.bugFinder)}>Open Website</button>
-            </div>
-          </div>
-
-          <div className="project-card">
-            <a className="project-card-link" href={projectLinks.hostelHub} target="_blank" rel="noreferrer">
-              <div className="project-image">
-                <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80" alt="Hostel Hub" />
-              </div>
-              <div className="project-content">
-                <h3>Hostel Hub</h3>
-                <p>Open the Hostel Hub application.</p>
-                <div className="project-tech">
-                  <span className="tech-tag">React</span>
-                  <span className="tech-tag">Node</span>
-                  <span className="tech-tag">MongoDB</span>
-                </div>
-              </div>
-            </a>
-            <div className="project-actions">
-              <button type="button" className="btn-link" onClick={() => openProject(projectLinks.hostelHub)}>Open Website</button>
+              <a href="/bugs-finder/index.html" className="btn-link">Open Project</a>
             </div>
           </div>
         </div>
@@ -177,7 +170,11 @@ function App() {
         <h2>Contact</h2>
         <div className="contact-content">
           <form className="contact-form" onSubmit={handleSubmit}>
-            {submitMessage && <div className="submit-message">{submitMessage}</div>}
+            {submitMessage && (
+              <div className={`submit-message${submitError ? ' error' : ''}`} role="status" aria-live="polite">
+                {submitMessage}
+              </div>
+            )}
             <div className="form-group">
               <label>Name :</label>
               <input
@@ -186,6 +183,8 @@ function App() {
                 value={formData.name}
                 onChange={handleInputChange}
                 placeholder="Your name"
+                maxLength="100"
+                required
               />
             </div>
             <div className="form-group">
@@ -196,6 +195,8 @@ function App() {
                 value={formData.email}
                 onChange={handleInputChange}
                 placeholder="Your email"
+                maxLength="254"
+                required
               />
             </div>
             <div className="form-group">
@@ -206,6 +207,7 @@ function App() {
                 value={formData.phone}
                 onChange={handleInputChange}
                 placeholder="Your phone number"
+                maxLength="30"
               />
             </div>
             <div className="form-group">
@@ -216,14 +218,18 @@ function App() {
                 onChange={handleInputChange}
                 placeholder="Your message"
                 rows="5"
+                maxLength="5000"
+                required
               ></textarea>
             </div>
-            <button type="submit" className="submit-btn">Submit Now</button>
+            <button type="submit" className="submit-btn" disabled={isSubmitting}>
+              {isSubmitting ? 'Sending...' : 'Submit Now'}
+            </button>
           </form>
 
           <div className="contact-info">
             <h3>Mail:</h3>
-            <a href="mailto:bikashbanjade@gmail.com?subject=Portfolio%20Inquiry" onClick={handleMailClick}>bikashbanjade@gmail.com</a>
+            <a href="mailto:bikashbanjade@gmail.com">bikashbanjade@gmail.com</a>
 
             <h3>You can also find me on:</h3>
             <div className="social-links">
@@ -233,7 +239,7 @@ function App() {
               <a href="https://www.instagram.com/bikas.banjade22/" target="_blank" rel="noopener noreferrer" title="Instagram">
                 <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/instra.jpg" alt="Instagram" className="social-icon-img" />
               </a>
-              <a href="mailto:bikashbanjade@gmail.com?subject=Portfolio%20Inquiry" onClick={handleMailClick} title="Gmail">
+              <a href="mailto:bikashbanjade@gmail.com" target="_blank" rel="noopener noreferrer" title="Gmail">
                 <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/gmail.png" alt="Gmail" className="social-icon-img" />
               </a>
             </div>
