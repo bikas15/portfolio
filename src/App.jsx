@@ -258,7 +258,7 @@ function App() {
 
           <div className="contact-info">
             <h3>Mail:</h3>
-            <a href="mailto:bikashbanjade@gmail.com">bikashbanjade@gmail.com</a>
+            <a href="mailto:bikashbanjade15@gmail.com">bikashbanjade15@gmail.com</a>
 
             <h3>You can also find me on:</h3>
             <div className="social-links">
@@ -268,7 +268,7 @@ function App() {
               <a href="https://www.instagram.com/bikas.banjade22/" target="_blank" rel="noopener noreferrer" title="Instagram">
                 <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/instra.jpg" alt="Instagram" className="social-icon-img" />
               </a>
-              <a href="mailto:bikashbanjade@gmail.com" target="_blank" rel="noopener noreferrer" title="Gmail">
+              <a href="mailto:bikashbanjade15@gmail.com" target="_blank" rel="noopener noreferrer" title="Gmail">
                 <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/gmail.png" alt="Gmail" className="social-icon-img" />
               </a>
             </div>
