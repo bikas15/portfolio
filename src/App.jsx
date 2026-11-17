@@ -83,7 +83,10 @@ function App() {
       <nav className="navbar">
         <div className="nav-container">
           <div className="logo">
-            <img src={brandLogo} alt="Bikas" width="145" style={{ display: 'block', height: 'auto' }} />
+            <span aria-hidden="true" style={{ display: 'block', width: 23, overflow: 'hidden', flexShrink: 0 }}>
+              <img src={brandLogo} alt="" style={{ display: 'block', height: 34, width: 'auto', maxWidth: 'none' }} />
+            </span>
+            <span style={{ color: 'var(--text-dark)', fontWeight: 600, fontSize: '0.95rem' }}>Bikas</span>
           </div>
           <ul className="nav-links">
             <li><a href="#home">Home</a></li>
