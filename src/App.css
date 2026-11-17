@@ -803,3 +803,30 @@ section h2::after {
     font-size: 1.5rem;
   }
 }
+
+@media (max-width: 768px) {
+  .navbar { padding-block: 8px; }
+  .nav-container { flex-direction: column; gap: 4px; padding-inline: 8px; }
+  .nav-links { width: 100%; justify-content: center; flex-wrap: wrap; gap: 0 4px; }
+  .nav-links a { display: flex; align-items: center; min-height: 44px; padding: 0 6px; font-size: clamp(0.75rem, 2.8vw, 0.95rem); }
+  section[id] { scroll-margin-top: 120px; }
+  .hero-image, .about-image, .about-text { min-width: 0; max-width: 100%; }
+  .hero-image img, .about-image img { max-width: 100%; height: auto; aspect-ratio: 1; }
+  .skills-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 16px; }
+  .skill-item img { max-width: 100%; height: auto; }
+  .projects-grid, .contact-content { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .contact-info a { overflow-wrap: anywhere; }
+  .form-group input, .form-group textarea { min-width: 0; max-width: 100%; font-size: 1rem; }
+}
+
+@media (max-width: 480px) {
+  .app-container { padding-inline: 14px; }
+  .hero { padding-block: 40px 24px; }
+  .hero-content h1 { font-size: clamp(2rem, 10vw, 2.8rem); }
+  .hero-content h2 { font-size: 1.2rem; }
+  .hero-image img, .about-image img { max-width: min(100%, 250px); }
+  .project-image { height: auto; aspect-ratio: 16 / 10; }
+  .project-content, .contact-form, .contact-info { padding: 20px; }
+  .project-actions { padding: 0 20px 20px; }
+  .submit-btn { width: 100%; }
+}
