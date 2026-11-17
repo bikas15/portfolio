@@ -181,6 +181,7 @@ function App() {
             </a>
             <div className="project-actions">
               <button type="button" className="btn-link" onClick={() => openProject(projectLinks.bugFinder)}>Open Website</button>
+              <a className="btn-link" href={import.meta.env.BASE_URL + 'bug-finder-presentation.pptx'} download>Download PPT</a>
             </div>
           </div>
 
