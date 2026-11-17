@@ -158,7 +158,7 @@ function App() {
           <div className="project-card">
             <a className="project-card-link" href={projectLinks.bugFinder} target="_blank" rel="noreferrer">
               <div className="project-image">
-                <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/perfil.jpg" alt="Bugs Finder" />
+                <img src="https://bikas15.github.io/-bugs_finder/bug.svg" alt="Bug Finder logo" style={{ objectFit: 'contain', padding: '2rem' }} />
               </div>
               <div className="project-content">
                 <h3>Bugs Finder</h3>
