@@ -86,7 +86,7 @@ function App() {
             <span aria-hidden="true" style={{ display: 'block', width: 23, overflow: 'hidden', flexShrink: 0 }}>
               <img src={brandLogo} alt="" style={{ display: 'block', height: 34, width: 'auto', maxWidth: 'none' }} />
             </span>
-            <span style={{ color: 'var(--text-dark)', fontWeight: 600, fontSize: '0.95rem' }}>Bikas</span>
+            <span style={{ borderInlineStart: '1px solid currentColor', paddingInlineStart: '0.4rem', color: 'var(--text-dark)', fontWeight: 600, fontSize: '1.15rem' }}>Bikas</span>
           </div>
           <ul className="nav-links">
             <li><a href="#home">Home</a></li>
