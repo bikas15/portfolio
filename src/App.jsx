@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import brandLogo from '../bikaslogo.png'
 
 // SVG placeholder component
 const PlaceholderImage = ({ width = 300, height = 300, text = 'Image' }) => (
@@ -82,8 +83,7 @@ function App() {
       <nav className="navbar">
         <div className="nav-container">
           <div className="logo">
-            <span className="logo-icon">⚙️</span>
-            <span className="logo-text">Bikas</span>
+            <img src={brandLogo} alt="Bikas" width="145" style={{ display: 'block', height: 'auto' }} />
           </div>
           <ul className="nav-links">
             <li><a href="#home">Home</a></li>
