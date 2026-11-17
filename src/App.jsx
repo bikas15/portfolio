@@ -148,6 +148,9 @@ function App() {
           <div className="skill-item">
             <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/php.png" alt="PHP" />
           </div>
+          <div className="skill-item" style={{ fontSize: 'clamp(1.25rem, 4vw, 2rem)', fontWeight: 700, color: 'var(--text-dark)' }}>C</div>
+          <div className="skill-item" style={{ fontSize: 'clamp(1.25rem, 4vw, 2rem)', fontWeight: 700, color: 'var(--text-dark)' }}>C++</div>
+          <div className="skill-item" style={{ fontSize: 'clamp(1.25rem, 4vw, 2rem)', fontWeight: 700, color: 'var(--text-dark)' }}>Java</div>
         </div>
       </section>
 
