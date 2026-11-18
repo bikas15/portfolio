@@ -265,6 +265,11 @@ section h2::after {
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
+/* Hide the PDF viewer extension shortcut beside the CV link. */
+.about-cv-link + a[title="View this pdf file"][original-url] {
+  display: none;
+}
+
 .about-cv-link:hover {
   border-color: var(--secondary-color);
   background: rgba(118, 75, 162, 0.14);
