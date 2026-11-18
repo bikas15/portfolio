@@ -279,13 +279,13 @@ function App() {
             <h3>You can also find me on:</h3>
             <div className="social-links">
               <a href="https://www.facebook.com/bikash.banjade15/" target="_blank" rel="noopener noreferrer" title="Facebook">
-                <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/facebook.jpg" alt="Facebook" className="social-icon-img" />
+                <img src={import.meta.env.BASE_URL + 'portfolio/social/facebook.svg'} alt="Facebook" className="social-icon-img" />
               </a>
               <a href="https://www.instagram.com/bikas.banjade22/" target="_blank" rel="noopener noreferrer" title="Instagram">
-                <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/instra.jpg" alt="Instagram" className="social-icon-img" />
+                <img src={import.meta.env.BASE_URL + 'portfolio/social/instagram.svg'} alt="Instagram" className="social-icon-img" />
               </a>
               <a href="mailto:bikashbanjade15@gmail.com" target="_blank" rel="noopener noreferrer" title="Gmail">
-                <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/gmail.png" alt="Gmail" className="social-icon-img" />
+                <img src={import.meta.env.BASE_URL + 'portfolio/social/gmail.svg'} alt="Gmail" className="social-icon-img" />
               </a>
             </div>
           </div>
