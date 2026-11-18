@@ -128,7 +128,7 @@ function App() {
               my main focus to be on. But for now I am just exploring different fields.
             </p>
             <p><strong>In short:</strong> A guy not sure what he is doing but trying to figure it out.</p>
-            <a href={import.meta.env.BASE_URL + 'Bikas-Banjade-CV.pdf'} target="_blank" rel="noopener noreferrer">
+            <a className="about-cv-link" href={import.meta.env.BASE_URL + 'Bikas-Banjade-CV.pdf'} target="_blank" rel="noopener noreferrer">
               View CV ↗
             </a>
           </div>

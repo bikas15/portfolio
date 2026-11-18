@@ -250,6 +250,31 @@ section h2::after {
   font-weight: 500;
 }
 
+.about-cv-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 18px;
+  border: 1px solid rgba(118, 75, 162, 0.35);
+  border-radius: 10px;
+  background: rgba(118, 75, 162, 0.07);
+  color: var(--secondary-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.about-cv-link:hover {
+  border-color: var(--secondary-color);
+  background: rgba(118, 75, 162, 0.14);
+}
+
+.about-cv-link:focus-visible {
+  outline: 2px solid var(--secondary-color);
+  outline-offset: 3px;
+}
+
 .about-text strong {
   color: var(--text-dark);
   background: linear-gradient(120deg, #667eea 0%, #764ba2 100%);
