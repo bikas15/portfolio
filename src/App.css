@@ -63,12 +63,10 @@ html {
 .logo {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
   font-size: 1.5rem;
   font-weight: 700;
-  background: var(--gradient-1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  white-space: nowrap;
   gap: 8px;
   transition: transform 0.3s ease;
 }
