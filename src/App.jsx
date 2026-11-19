@@ -13,7 +13,7 @@ const PlaceholderImage = ({ width = 300, height = 300, text = 'Image' }) => (
 )
 
 const projectLinks = {
-  gridRush: import.meta.env.BASE_URL + 'games/gridrush/?discovered=1',
+  gridRush: import.meta.env.BASE_URL + 'games/gridrush/?discovered=party',
   bugFinder: 'https://bikas15.github.io/-bugs_finder/#/',
   hostelHub: 'https://bikas15.github.io/Hostel-Khojau/#/'
 }

@@ -526,7 +526,7 @@ soundButton.addEventListener('click', () => {
 
 function announceDiscovery() {
   const url = new URL(window.location.href);
-  if (url.searchParams.get('discovered') !== '1') return;
+  if (!['1', 'party'].includes(url.searchParams.get('discovered'))) return;
 
   const toast = get('discovery-toast');
   const message = get('discovery-message');
