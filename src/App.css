@@ -77,6 +77,33 @@ html {
   transform: scale(1.05);
 }
 
+.logo-game-link {
+  display: grid;
+  place-items: center;
+  flex: 0 0 44px;
+  min-height: 44px;
+  margin-inline-start: -10px;
+  border-radius: 8px;
+}
+
+.logo-game-link:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.logo-game-icon {
+  display: block;
+  width: 23px;
+  overflow: hidden;
+}
+
+.logo-game-icon img {
+  display: block;
+  width: auto;
+  max-width: none;
+  height: 34px;
+}
+
 .logo-icon {
   font-size: 1.8rem;
   -webkit-text-fill-color: unset;

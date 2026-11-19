@@ -13,6 +13,7 @@ const PlaceholderImage = ({ width = 300, height = 300, text = 'Image' }) => (
 )
 
 const projectLinks = {
+  gridRush: import.meta.env.BASE_URL + 'games/gridrush/?discovered=1',
   bugFinder: 'https://bikas15.github.io/-bugs_finder/#/',
   hostelHub: 'https://bikas15.github.io/Hostel-Khojau/#/'
 }
@@ -83,9 +84,11 @@ function App() {
       <nav className="navbar">
         <div className="nav-container">
           <div className="logo">
-            <span aria-hidden="true" style={{ display: 'block', width: 23, overflow: 'hidden', flexShrink: 0 }}>
-              <img src={brandLogo} alt="" style={{ display: 'block', height: 34, width: 'auto', maxWidth: 'none' }} />
-            </span>
+            <a className="logo-game-link" href={projectLinks.gridRush} aria-label="Play Turn Every Tile Blue">
+              <span className="logo-game-icon" aria-hidden="true">
+                <img src={brandLogo} alt="" />
+              </span>
+            </a>
             <span style={{ borderInlineStart: '1px solid currentColor', paddingInlineStart: '0.4rem', color: 'var(--text-dark)', fontWeight: 600, fontSize: '1.15rem' }}>Bikas</span>
           </div>
           <ul className="nav-links">
