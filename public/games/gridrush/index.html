@@ -72,7 +72,19 @@ footer{color:#9caecc;font-size:13px;display:flex;justify-content:space-between;g
 @media(max-width:820px){.bar,main,footer{padding-inline:20px}.layout{grid-template-columns:minmax(0,1fr) minmax(270px,.85fr)}.map{padding:13px}.play-head{padding:13px;gap:8px}.stat{min-width:64px}.board{width:min(100%,282px)}}
 @media(max-width:660px){.bar,main,footer{padding-inline:14px}.bar{height:58px;gap:10px}nav{display:none}.hero{align-items:stretch;flex-direction:column;gap:16px;padding:27px 0 17px}.hero h1{margin-bottom:8px}.overview{width:100%;padding:11px 13px}.overview small{display:none}.overview progress{margin-top:7px}.layout{grid-template-columns:1fr;gap:14px}.arena{padding-top:14px}.board{width:min(100%,300px)}.play-title h2{font-size:22px}.map,.rules{padding:14px}.feedback{flex-basis:100%}.play-foot{padding:10px 12px}.level{min-height:43px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
-.discovery-toast{position:fixed;z-index:10;inset-inline-start:50%;inset-block-end:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);max-width:calc(100% - 24px);width:max-content;padding:10px 16px;border:1px solid #6ba1ff;border-radius:11px;background:#182e55;color:#f4f7ff;font-weight:700;text-align:center;box-shadow:0 7px 24px #03081399;pointer-events:none}
+.discovery-fx{position:fixed;z-index:10;inset:0;overflow:hidden;pointer-events:none}
+.discovery-toast{position:fixed;z-index:11;inset-inline-start:50%;inset-block-end:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);width:min(calc(100% - 24px),365px);display:flex;align-items:center;gap:13px;padding:14px 17px;border:1px solid #f3cd8277;border-radius:16px;background:linear-gradient(135deg,#213962,#121d35 72%);color:var(--text);box-shadow:0 12px 38px #030813b0;pointer-events:none;animation:discovery-pop .3s ease-out both}
+.discovery-star{display:grid;place-items:center;flex:0 0 48px;height:48px;border-radius:13px;background:#ffd477;color:#2b1c08;font-size:26px;line-height:1}
+.discovery-copy{display:grid;gap:1px}.discovery-title{color:var(--gold);font-size:19px;line-height:1.2;letter-spacing:-.02em}.discovery-message{font-size:15px}
+.discovery-confetti{position:absolute;inset-inline-start:var(--left);inset-block-start:-14px;width:8px;height:13px;border-radius:2px;background:var(--color);animation:discovery-fall 3s linear var(--delay) both}
+.discovery-confetti:nth-child(3n){width:8px;height:8px;border-radius:50%}
+.discovery-balloon{position:absolute;inset-inline-start:var(--left);inset-block-end:-85px;width:clamp(31px,6vw,65px);aspect-ratio:4/5;border-radius:50% 50% 47% 47%;background:radial-gradient(ellipse at 28% 22%,hsl(var(--hue) 92% 88%),hsl(var(--hue) 81% 62%) 43%,hsl(var(--hue) 69% 48%) 96%);box-shadow:inset -5px -8px 12px #10172b30;animation:discovery-rise 3s ease-out var(--delay) both}
+.discovery-balloon::before{content:"";position:absolute;top:98%;left:calc(50% - 4px);width:8px;height:6px;background:hsl(var(--hue) 68% 51%);clip-path:polygon(50% 0,100% 100%,0 100%)}
+.discovery-balloon::after{content:"";position:absolute;top:calc(100% + 5px);left:50%;width:9px;height:29px;border-left:1px solid #e9eeffad;border-radius:50%;transform:rotate(11deg);transform-origin:top left}
+@keyframes discovery-pop{from{opacity:0;transform:translate(-50%,9px) scale(.96)}to{opacity:1;transform:translate(-50%,0) scale(1)}}
+@keyframes discovery-fall{0%{opacity:0;transform:translate(0,-8vh) rotate(0deg)}12%,80%{opacity:1}100%{opacity:0;transform:translate(var(--drift),83vh) rotate(var(--spin))}}
+@keyframes discovery-rise{0%{opacity:0;transform:translate(0,7vh) rotate(-9deg)}18%,76%{opacity:.94}100%{opacity:0;transform:translate(var(--drift),-109vh) rotate(12deg)}}
+@media(prefers-reduced-motion:reduce){.discovery-toast,.discovery-balloon,.discovery-confetti{animation:none}.discovery-balloon{inset-block-end:var(--rest);transform:scale(.72);opacity:.8}.discovery-confetti{inset-block-start:var(--rest);transform:rotate(var(--spin));opacity:.75}}
 </style>
 </head>
 <body>
@@ -125,7 +137,16 @@ footer{color:#9caecc;font-size:13px;display:flex;justify-content:space-between;g
 </div>
 </main>
 <footer><a href="../../#home">Back to portfolio</a><span>Progress saves on this browser.</span></footer>
-<div role="status" aria-atomic="true"><span id="discovery-toast" class="discovery-toast" hidden></span></div>
+<div id="discovery-fx" class="discovery-fx" aria-hidden="true" hidden></div>
+<div role="status" aria-atomic="true">
+  <div id="discovery-toast" class="discovery-toast" hidden>
+    <span class="discovery-star" aria-hidden="true">✦</span>
+    <div class="discovery-copy">
+      <strong class="discovery-title">Congratulations!</strong>
+      <span id="discovery-message" class="discovery-message"></span>
+    </div>
+  </div>
+</div>
 <script>
 const get = id => document.getElementById(id);
 const boardElement = get('board');
@@ -508,11 +529,40 @@ function announceDiscovery() {
   if (url.searchParams.get('discovered') !== '1') return;
 
   const toast = get('discovery-toast');
+  const message = get('discovery-message');
+  const effects = get('discovery-fx');
+  const colors = ['#ffd477', '#87adff', '#65e5db', '#ff99bd', '#bf9dff'];
+  const confetti = Array.from({ length: 28 }, (_, index) => {
+    const particle = document.createElement('i');
+    particle.className = 'discovery-confetti';
+    particle.style.setProperty('--left', 2 + (index * 37) % 96 + '%');
+    particle.style.setProperty('--delay', -(index * 113 % 750) + 'ms');
+    particle.style.setProperty('--drift', (index * 23 % 97) - 48 + 'px');
+    particle.style.setProperty('--spin', (index % 2 ? -1 : 1) * (250 + index * 29) + 'deg');
+    particle.style.setProperty('--rest', 5 + (index * 13) % 53 + '%');
+    particle.style.setProperty('--color', colors[index % colors.length]);
+    return particle;
+  });
+  const balloons = [5, 14, 24, 70, 81, 90].map((position, index) => {
+    const balloon = document.createElement('i');
+    balloon.className = 'discovery-balloon';
+    balloon.style.setProperty('--left', position + '%');
+    balloon.style.setProperty('--delay', -(index * 193 % 660) + 'ms');
+    balloon.style.setProperty('--drift', (index % 2 ? -1 : 1) * 28 + 'px');
+    balloon.style.setProperty('--rest', 15 + (index * 13) % 44 + '%');
+    balloon.style.setProperty('--hue', [220, 43, 166, 323, 258, 199][index]);
+    return balloon;
+  });
+  effects.replaceChildren(...confetti, ...balloons);
+  effects.hidden = false;
   toast.hidden = false;
-  toast.textContent = 'You found the hidden game!';
+  message.textContent = 'You found the hidden game!';
+
   setTimeout(() => {
     toast.hidden = true;
-    toast.textContent = '';
+    message.textContent = '';
+    effects.hidden = true;
+    effects.replaceChildren();
   }, 3000);
 
   url.searchParams.delete('discovered');
