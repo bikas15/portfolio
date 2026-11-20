@@ -17,7 +17,7 @@ const panels = [
 ]
 
 const projects = [
-  { id: 'bugs-finder', title: 'Bugs Finder', stack: 'React · Django · MySQL', description: 'Explore the bug tracking app and its project presentation.', url: 'https://bikas15.github.io/-bugs_finder/#/', slides: portfolioAsset('bug-finder-presentation.pdf') },
+  { id: 'bugs-finder', title: 'Bugs Finder', stack: 'React · Django REST · Gemini · PostgreSQL', description: 'Analyze code with AI and save the suggested fixes as reports.', url: 'https://bikas15.github.io/-bugs_finder/#/', slides: portfolioAsset('bug-finder-presentation.pdf') },
   { id: 'hostel-hub', title: 'Hostel Hub', stack: 'React · Node · MongoDB', description: 'Explore the live hostel discovery app.', url: 'https://bikas15.github.io/Hostel-Khojau/#/' },
 ]
 

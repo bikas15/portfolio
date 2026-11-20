@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import ProjectCaseStudies from './ProjectCaseStudies.jsx'
 import brandLogo from '../bikaslogo.png'
 import { portfolioAsset } from './portfolioPaths.js'
 
@@ -13,11 +14,6 @@ const PlaceholderImage = ({ width = 300, height = 300, text = 'Image' }) => (
   </svg>
 )
 
-const projectLinks = {
-  bugFinder: 'https://bikas15.github.io/-bugs_finder/#/',
-  hostelHub: 'https://bikas15.github.io/Hostel-Khojau/#/'
-}
-
 function App({ onDarkMode, showOpening }) {
   const [formData, setFormData] = useState({
     name: '',
@@ -29,10 +25,6 @@ function App({ onDarkMode, showOpening }) {
   const [submitMessage, setSubmitMessage] = useState('')
   const [submitError, setSubmitError] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const openProject = (url) => {
-    window.open(url, '_blank', 'noopener,noreferrer')
-  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -97,7 +89,7 @@ function App({ onDarkMode, showOpening }) {
       <nav className="navbar">
         <div className="nav-container">
           <div className="logo">
-            <a className="brand-mark-link" href="#home" aria-label="Home">
+            <a className="brand-mark-link" href={portfolioAsset('games/gridrush/index.html?discovered=party')} aria-label="Play Turn Every Tile Blue">
               <span className="brand-mark-icon" aria-hidden="true">
                 <img src={brandLogo} alt="" />
               </span>
@@ -182,52 +174,7 @@ function App({ onDarkMode, showOpening }) {
         </div>
       </section>
 
-      {/* Projects Section */}
-      <section id="projects" className="projects">
-        <h2>Projects</h2>
-        <div className="projects-grid">
-          <div className="project-card">
-            <a className="project-card-link" href={projectLinks.bugFinder} target="_blank" rel="noreferrer" data-pointer-label="VIEW">
-              <div className="project-image">
-                <img src="https://bikas15.github.io/-bugs_finder/bug.svg" alt="Bug Finder logo" style={{ objectFit: 'contain', padding: '2rem' }} />
-              </div>
-              <div className="project-content">
-                <h3>Bugs Finder</h3>
-                <p>Open the Bug Finder application.</p>
-                <div className="project-tech">
-                  <span className="tech-tag">React</span>
-                  <span className="tech-tag">Django</span>
-                  <span className="tech-tag">MySQL</span>
-                </div>
-              </div>
-            </a>
-            <div className="project-actions">
-              <button type="button" className="btn-link" onClick={() => openProject(projectLinks.bugFinder)}>Open Website</button>
-              <button type="button" className="btn-link" onClick={() => openProject(portfolioAsset('bug-finder-presentation.pdf'))}>View PPT</button>
-            </div>
-          </div>
-
-          <div className="project-card">
-            <a className="project-card-link" href={projectLinks.hostelHub} target="_blank" rel="noreferrer" data-pointer-label="VIEW">
-              <div className="project-image">
-                <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80" alt="Hostel Hub" />
-              </div>
-              <div className="project-content">
-                <h3>Hostel Hub</h3>
-                <p>Open the Hostel Hub application.</p>
-                <div className="project-tech">
-                  <span className="tech-tag">React</span>
-                  <span className="tech-tag">Node</span>
-                  <span className="tech-tag">MongoDB</span>
-                </div>
-              </div>
-            </a>
-            <div className="project-actions">
-              <button type="button" className="btn-link" onClick={() => openProject(projectLinks.hostelHub)}>Open Website</button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ProjectCaseStudies showOpening={showOpening} />
 
       {/* Contact Section */}
       <section id="contact" className="contact">
