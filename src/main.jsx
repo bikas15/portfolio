@@ -18,7 +18,7 @@ function PortfolioModes() {
   const currentMode = useRef(desk)
   const returnScroll = useRef(0)
   const portfolioUrl = useRef(isDeskRoute() ? portfolioRoot.href : location.href)
-  const portfolioTitle = 'Bikas Banjade (Bikas Banjade) | Software Engineer | NCIT'
+  const portfolioTitle = 'Bikas Banjade | Software Engineering Student at NCIT'
 
   useLayoutEffect(() => {
     document.body.classList.toggle('desk-active', desk)

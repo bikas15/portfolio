@@ -20,7 +20,7 @@ export const caseStudies = [
   {
     id: 'bugs-finder',
     title: 'Bugs Finder',
-    summary: 'An AI-assisted code debugger that explains likely bugs and suggests fixes.',
+    summary: 'An LLM-powered code debugger that explains likely bugs and suggests fixes.',
     stack: ['React', 'Django REST', 'Gemini', 'PostgreSQL'],
     demo: 'https://bikas15.github.io/-bugs_finder/#/',
     source: 'https://github.com/bikas15/-bugs_finder',
@@ -31,7 +31,7 @@ export const caseStudies = [
     imageAlt: 'Signed-in Bugs Finder workspace showing a sample Python snippet, the Analyse Code button, and the output panel.',
     caption: 'Bugs Finder code editor after sign-in',
     problem: 'When code fails, developers need to understand the cause and know what to try next.',
-    workflow: 'Submit a code snippet, review the AI analysis and suggested fixes, then save the result as a report in your account.',
+    workflow: 'Submit a code snippet, review Gemini’s analysis and suggested fixes, then save a report to your account.',
     contribution: 'Developed the React interface and Django REST API, with server-side Gemini analysis and private report history.',
     engineering: 'Code is submitted from the React editor to Django for analysis. The Gemini integration runs on the server, and saved reports are associated with the signed-in account in PostgreSQL.',
   },

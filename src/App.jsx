@@ -144,19 +144,25 @@ function App({ onDarkMode, showOpening }) {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="hero">
+      <section id="home" className="hero" aria-labelledby="home-title">
         <div className="hero-content">
-          <h1>Hi,<br />I'm Bikas</h1>
-          <h2>A software engineer.</h2>
+          <p className="hero-role">Software Engineering Student <span aria-hidden="true">·</span> NCIT</p>
+          <h1 id="home-title">Bikas <strong>Banjade<span aria-hidden="true">.</span></strong></h1>
+          <p className="hero-lead">I build web apps from interface to API.</p>
+          <div className="hero-actions">
+            <a className="hero-primary" href="#projects">View my work</a>
+            <a href={portfolioAsset('Bikas-Banjade-CV.pdf')} target="_blank" rel="noopener noreferrer">View résumé</a>
+          </div>
         </div>
-        <div className="hero-image">
-          <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/perfil.jpg" alt="Profile" />
-        </div>
+        <figure className="hero-image">
+          <img src={portfolioAsset('portfolio/perfil.jpg')} alt="Bikas Banjade in front of a brick wall" width="559" height="485" fetchPriority="high" />
+          <figcaption>From Pyuthan, Nepal</figcaption>
+        </figure>
+        <nav className="hero-projects" aria-label="Featured projects">
+          <a href="#bugs-finder"><strong>Bugs Finder</strong><span>LLM-powered code analysis</span></a>
+          <a href="#hostel-hub"><strong>Hostel Hub</strong><span>Map-based hostel search</span></a>
+        </nav>
       </section>
-
-      <div className="explore-text">
-        <h2>Feel Free to Explore my Website!</h2>
-      </div>
 
       <ProjectCaseStudies showOpening={showOpening} />
 
@@ -168,13 +174,8 @@ function App({ onDarkMode, showOpening }) {
             <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/bikas.jpg" alt="About Me" />
           </div>
           <div className="about-text">
-            <p>
-              HI! I'm Bikas and I am currently studying Software Engineering at Nepal College of Information Technology. 
-              I am a tech enthusiast from Pyuthan. I'm super interested in new technologies. I am trying my best to learn 
-              different technologies that interests me and also pursuing my engineering career. I am not sure what I want 
-              my main focus to be on. But for now I am just exploring different fields.
-            </p>
-            <p><strong>In short:</strong> A guy not sure what he is doing but trying to figure it out.</p>
+            <p>I’m studying Software Engineering at Nepal College of Information Technology. Outside class, I build projects that connect a web interface to an API and a database.</p>
+            <p>For Hostel Hub, I designed the search around how students compare listings on a map. For Bugs Finder, I displayed Gemini’s analysis alongside the code editor and kept saved reports private to each account.</p>
             <a className="about-cv-link" href={portfolioAsset('Bikas-Banjade-CV.pdf')} target="_blank" rel="noopener noreferrer">
               View CV
             </a>
