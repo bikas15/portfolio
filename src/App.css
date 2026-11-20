@@ -6,6 +6,10 @@
 }
 
 :root {
+  --page-bg: #f4f6fb;
+  --page-surface: #fff;
+  --page-line: #d8deeb;
+  --page-shadow: 0 8px 24px rgba(34, 48, 86, .07);
   --primary-color: #667eea;
   --secondary-color: #764ba2;
   --accent-color: #f093fb;
@@ -22,7 +26,6 @@
 
 body {
   font-family: 'Poppins', 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   color: var(--text-dark);
   min-height: 100vh;
   line-height: 1.6;
@@ -37,6 +40,7 @@ html {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  overflow-x: clip;
 }
 
 .opening-intro {
@@ -132,14 +136,13 @@ html {
 
 /* Navigation */
 .navbar {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+  background: var(--page-surface);
   padding: 20px 0;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: var(--shadow-md);
-  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+  box-shadow: var(--page-shadow);
+  border-bottom: 1px solid var(--page-line);
 }
 
 .nav-container {
@@ -455,7 +458,7 @@ html {
 #skills.portfolio-stack {
   margin-block-end: clamp(40px, 6vw, 80px);
   padding-block: 17px 0;
-  border-top: 1px solid #d8d8df;
+  border-top: 1px solid var(--page-line);
   font-family: 'DM Sans', 'Segoe UI', sans-serif;
 }
 #skills.portfolio-stack h2 {
@@ -468,6 +471,17 @@ html {
 .portfolio-stack dl { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
 .portfolio-stack dt { color: #172694; font: 500 .75rem/1.4 'IBM Plex Mono', Consolas, monospace; }
 .portfolio-stack dd { color: #565a6b; font-size: .93rem; }
+.portfolio-skill-list { display: flex; flex-wrap: wrap; gap: 6px 12px; padding: 0; list-style: none; }
+.portfolio-skill-list li { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.portfolio-skill-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--page-line);
+  border-radius: 50%;
+  background: var(--page-surface);
+}
 
 @media (max-width: 620px) {
   .portfolio-stack dl { grid-template-columns: 1fr; gap: 8px; }
@@ -480,13 +494,10 @@ html {
   --muted: #565a6b;
   --accent: #2939c9;
   --accent-deep: #172694;
-  --line: #d8d8df;
-  --white: #fffefa;
   display: grid;
   align-items: start;
-  padding: clamp(28px, 6vw, 65px) clamp(14px, 3vw, 35px);
-  border-block: 1px solid var(--line);
-  background: #f7f6f1;
+  padding-block: clamp(28px, 6vw, 65px);
+  border-block: 1px solid var(--page-line);
   color: var(--ink);
   font: 400 1.125rem/1.55 'DM Sans', 'Segoe UI', sans-serif;
   grid-template-columns: minmax(0, .83fr) minmax(0, 1.17fr);
@@ -510,16 +521,17 @@ html {
   place-items: center;
   width: 44px;
   height: 44px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--page-line);
   border-radius: 100%;
+  background: var(--page-surface);
   color: var(--ink);
 }
 .portfolio-social-link:hover { border-color: var(--accent); color: var(--accent); }
-.portfolio-contact-form { display: grid; gap: 12px; padding: clamp(14px, 3vw, 26px); border: 1px solid var(--line); border-radius: 14px; background: var(--white); }
+.portfolio-contact-form { display: grid; gap: 12px; padding: clamp(14px, 3vw, 26px); border: 1px solid var(--page-line); border-radius: 14px; background: var(--page-surface); }
 .portfolio-form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .portfolio-contact-form label { display: grid; gap: 4px; min-width: 0; font-size: 1rem; font-weight: 700; }
 .portfolio-contact-form label small { color: var(--muted); font-size: inherit; font-weight: 500; }
-.portfolio-contact-form :is(input, textarea) { width: 100%; min-height: 44px; padding: 8px 10px; border: 1px solid #bcbecb; border-radius: 6px; background: #faf9f6; color: var(--ink); font-family: inherit; font-size: 1rem; font-weight: 400; line-height: 1.45; }
+.portfolio-contact-form :is(input, textarea) { width: 100%; min-height: 44px; padding: 8px 10px; border: 1px solid #8792aa; border-radius: 6px; background: var(--page-bg); color: var(--ink); font-family: inherit; font-size: 1rem; font-weight: 400; line-height: 1.45; }
 .portfolio-contact-form textarea { resize: vertical; }
 .portfolio-contact-submit {
   display: inline-flex;
@@ -609,10 +621,10 @@ html {
   align-items: center;
   padding: clamp(22px, 3.75vw, 46px);
   margin-bottom: 28px;
-  border: 1px solid #d7ddfa;
+  border: 1px solid var(--page-line);
   border-radius: 24px;
-  background: linear-gradient(140deg, #fff 30%, #f0f1ff 100%);
-  box-shadow: var(--shadow-md);
+  background: var(--page-surface);
+  box-shadow: var(--page-shadow);
   scroll-margin-top: 130px;
 }
 
@@ -677,19 +689,15 @@ html {
   gap: 8px;
   min-width: 0;
   margin: 0;
-  padding: 10px 10px 8px;
-  border: 1px solid #d9dffc;
-  border-radius: 16px;
-  background: #e3e7fb;
 }
 
 .featured-project-preview img {
   display: block;
   width: 100%;
   height: auto;
-  border: 1px solid #d4dcf6;
+  border: 1px solid var(--page-line);
   border-radius: 9px;
-  background: #fff;
+  background: var(--page-bg);
 }
 
 .featured-project-preview figcaption {
@@ -710,7 +718,7 @@ html {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 22px;
   padding-top: 22px;
-  border-top: 1px solid #d7ddfa;
+  border-top: 1px solid var(--page-line);
 }
 
 .featured-project-details h4 {

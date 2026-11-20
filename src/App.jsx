@@ -7,6 +7,28 @@ import { portfolioAsset } from './portfolioPaths.js'
 const email = 'bikashbanjade15@gmail.com'
 const github = 'https://github.com/bikas15'
 
+const skillGroups = [
+  { label: 'Frontend', skills: [
+    { name: 'React', icon: 'react' },
+    { name: 'JavaScript', icon: 'javascript' },
+    { name: 'Leaflet', icon: 'leaflet' },
+  ] },
+  { label: 'Backend', skills: [
+    { name: 'Express', icon: 'express' },
+    { name: 'Django REST', icon: 'djangorest' },
+  ] },
+  { label: 'Data', skills: [
+    { name: 'MongoDB', icon: 'mongodb' },
+    { name: 'PostgreSQL', icon: 'postgresql' },
+  ] },
+  { label: 'Programming languages', skills: [
+    { name: 'C', icon: 'c' },
+    { name: 'C++', icon: 'cplusplus' },
+    { name: 'Java', icon: 'java' },
+    { name: 'PHP', icon: 'php' },
+  ] },
+]
+
 function SocialLink({ name, href, icon }) {
   return <a className="portfolio-social-link" href={href} aria-label={name} title={name} target="_blank" rel="noopener noreferrer">
     {icon ? <img src={portfolioAsset('portfolio/social/' + icon)} alt="" width="20" height="20" /> :
@@ -164,10 +186,19 @@ function App({ onDarkMode, showOpening }) {
       <section id="skills" className="portfolio-stack" aria-labelledby="skills-title">
         <h2 id="skills-title">Skills</h2>
         <dl>
-          <div><dt>Frontend</dt><dd>React, JavaScript, Leaflet</dd></div>
-          <div><dt>Backend</dt><dd>Express, Django REST</dd></div>
-          <div><dt>Data</dt><dd>MongoDB, PostgreSQL</dd></div>
-          <div><dt>Programming languages</dt><dd>C, C++, Java, PHP</dd></div>
+          {skillGroups.map(({ label, skills }) => <div key={label}>
+            <dt>{label}</dt>
+            <dd>
+              <ul className="portfolio-skill-list">
+                {skills.map(({ name, icon }) => <li key={name}>
+                  <span className="portfolio-skill-icon" aria-hidden="true">
+                    <img src={portfolioAsset(`portfolio/skills/${icon}.svg`)} alt="" width="15" height="15" />
+                  </span>
+                  {name}
+                </li>)}
+              </ul>
+            </dd>
+          </div>)}
         </dl>
       </section>
 
