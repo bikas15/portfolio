@@ -1,92 +1,58 @@
-import { useEffect } from 'react'
+import { useRef } from 'react'
 import { portfolioAsset } from './portfolioPaths.js'
+import { caseStudies } from './portfolioProjects.js'
 
-const caseStudies = [
-  {
-    id: 'hostel-hub',
-    title: 'Hostel Hub',
-    summary: 'A map-based hostel finder for students in Kathmandu and nearby cities.',
-    stack: ['React', 'Leaflet', 'Node.js', 'MongoDB'],
-    demo: 'https://bikas15.github.io/Hostel-Khojau/#/',
-    source: 'https://github.com/bikas15/Hostel-Khojau',
-    image: 'portfolio/hostel-hub-map.jpg',
-    imageWidth: 1265,
-    imageHeight: 712,
-    imageAlt: 'Hostel Hub map search showing filters, a map of Kathmandu, and hostel listings.',
-    caption: 'Map search in Hostel Hub',
-    attribution: { label: '© OpenStreetMap contributors', url: 'https://www.openstreetmap.org/copyright' },
-    problem: 'Students need to compare prices and see how close each hostel is to campus before arranging a visit.',
-    workflow: 'Filter by city, hostel type and price, then switch between the map and list to compare options and open a listing.',
-    contribution: 'Developed Hostel Hub end to end with responsive map search, an Express API, and MongoDB data models.',
-  },
-  {
-    id: 'bugs-finder',
-    title: 'Bugs Finder',
-    summary: 'An AI-assisted code debugger that explains likely bugs and suggests fixes.',
-    stack: ['React', 'Django REST', 'Gemini', 'PostgreSQL'],
-    demo: 'https://bikas15.github.io/-bugs_finder/#/',
-    source: 'https://github.com/bikas15/-bugs_finder',
-    presentation: 'bug-finder-presentation.pdf',
-    image: 'portfolio/bugs-finder-workspace.jpg',
-    imageWidth: 1536,
-    imageHeight: 639,
-    imageAlt: 'Signed-in Bugs Finder workspace showing a sample Python snippet, the Analyse Code button, and the output panel.',
-    caption: 'Bugs Finder code editor after sign-in',
-    problem: 'When code fails, developers need to understand the cause and know what to try next.',
-    workflow: 'Submit a code snippet, review the AI analysis and suggested fixes, then save the result as a report in your account.',
-    contribution: 'I built the React interface and Django REST API, integrated Gemini on the server, and added sign-in and per-account report history.',
-  },
-]
+function ProjectPreview({ project }) {
+  const dialog = useRef(null)
+  const titleId = project.id + '-preview-title'
+  const imageUrl = portfolioAsset(project.image)
 
-export default function ProjectCaseStudies({ showOpening }) {
-  useEffect(() => {
-    const id = location.hash.slice(1)
-    if (!showOpening || !caseStudies.some(project => project.id === id)) return
-    let active = true
-    function revealCaseStudy() {
-      document.fonts.ready.then(() => {
-        if (active && location.hash === '#' + id) {
-          document.getElementById(id)?.scrollIntoView({ behavior: 'instant' })
-        }
-      })
-    }
-    if (document.readyState === 'complete') revealCaseStudy()
-    else window.addEventListener('load', revealCaseStudy, { once: true })
-    return () => {
-      active = false
-      window.removeEventListener('load', revealCaseStudy)
-    }
-  }, [showOpening])
+  return <figure className="featured-project-preview">
+    <button className="project-preview-button" type="button" aria-label={'Enlarge ' + project.title + ' screenshot'} onClick={() => dialog.current.showModal()}>
+      <img src={imageUrl} width={project.imageWidth} height={project.imageHeight} loading="lazy" decoding="async" alt={project.imageAlt} />
+      <span aria-hidden="true">Enlarge ↗</span>
+    </button>
+    <figcaption>
+      <span>{project.caption}</span>
+      {project.attribution && <a href={project.attribution.url} target="_blank" rel="noopener noreferrer">{project.attribution.label}</a>}
+    </figcaption>
+    <dialog ref={dialog} className="project-image-dialog" aria-labelledby={titleId}>
+      <div className="project-image-dialog-header">
+        <h4 id={titleId}>{project.title} preview</h4>
+        <button type="button" className="portfolio-button portfolio-button-outline" onClick={() => dialog.current.close()} autoFocus>Close</button>
+      </div>
+      <img src={imageUrl} width={project.imageWidth} height={project.imageHeight} loading="lazy" alt={project.imageAlt} />
+    </dialog>
+  </figure>
+}
 
-  return <section id="projects" className="projects">
-    <h2>Projects</h2>
-    {caseStudies.map((project, index) => (
-      <article key={project.id} id={project.id} className="featured-project" aria-labelledby={project.id + '-title'}>
+export default function ProjectCaseStudies({ onDarkMode }) {
+  return <section id="projects" className="portfolio-projects" aria-labelledby="projects-title">
+    <div className="portfolio-section-title">
+      <h2 id="projects-title">Selected work<span aria-hidden="true">.</span></h2>
+      <ul className="portfolio-work-index" aria-label="Jump to a project">
+        {caseStudies.map(project => <li key={project.id}><a href={'#' + project.id}>{project.title} <span aria-hidden="true">↓</span></a></li>)}
+        <li><a href="#desk-preview">Bikas Desk <span aria-hidden="true">↓</span></a></li>
+      </ul>
+    </div>
+    {caseStudies.map(project => (
+      <article key={project.id} id={project.id} className="featured-project" data-project={project.id} aria-labelledby={project.id + '-title'}>
         <div className="featured-project-intro">
-          <p className="featured-project-label">{index === 0 ? 'Featured case study' : 'Case study'}</p>
           <h3 id={project.id + '-title'}>{project.title}</h3>
           <p className="featured-project-summary">{project.summary}</p>
           <ul className="featured-project-stack" aria-label="Technology stack">
             {project.stack.map(technology => <li className="tech-tag" key={technology}>{technology}</li>)}
           </ul>
           <div className="featured-project-actions">
-            <a className="featured-project-demo" href={project.demo} target="_blank" rel="noopener noreferrer">Live demo <span aria-hidden="true">↗</span></a>
-            <a className="featured-project-source" href={project.source} target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+            <a className="portfolio-button portfolio-button-primary" href={project.demo} target="_blank" rel="noopener noreferrer">Live demo <span aria-hidden="true">↗</span></a>
+            <a className="portfolio-button portfolio-button-outline" href={project.source} target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
             {project.presentation && (
-              <a className="featured-project-source" href={portfolioAsset(project.presentation)} target="_blank" rel="noopener noreferrer">View PPT <span aria-hidden="true">↗</span></a>
+              <a className="portfolio-button portfolio-button-outline" href={portfolioAsset(project.presentation)} target="_blank" rel="noopener noreferrer">Slides <span aria-hidden="true">↗</span></a>
             )}
           </div>
         </div>
 
-        <figure className="featured-project-preview">
-          <img src={portfolioAsset(project.image)} width={project.imageWidth} height={project.imageHeight} loading="lazy" decoding="async" alt={project.imageAlt} />
-          <figcaption>
-            <span>{project.caption}</span>
-            {project.attribution && (
-              <a href={project.attribution.url} target="_blank" rel="noopener noreferrer">{project.attribution.label}</a>
-            )}
-          </figcaption>
-        </figure>
+        <ProjectPreview project={project} />
 
         <div className="featured-project-details">
           <div>
@@ -102,7 +68,19 @@ export default function ProjectCaseStudies({ showOpening }) {
             <p>{project.contribution}</p>
           </div>
         </div>
+        <details className="project-engineering">
+          <summary>Engineering notes</summary>
+          <p>{project.engineering}</p>
+        </details>
       </article>
     ))}
+    <article id="desk-preview" className="portfolio-desk-preview" aria-labelledby="desk-preview-title">
+      <div>
+        <h3 id="desk-preview-title">Bikas Desk</h3>
+        <p>I built a second way to explore this portfolio. Open projects in draggable windows, use the keyboard-driven terminal, or leave a note in the Scratchpad.</p>
+        <button className="portfolio-button portfolio-button-primary" type="button" onClick={onDarkMode}>Open Bikas Desk <span aria-hidden="true">↗</span></button>
+      </div>
+      <img src={portfolioAsset('portfolio/bikas-desk-preview.jpg')} alt="Bikas Desk with the About window, app shortcuts and dock over a mountain landscape." width="1280" height="760" loading="lazy" decoding="async" />
+    </article>
   </section>
 }

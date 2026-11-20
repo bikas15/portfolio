@@ -1,48 +1,57 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import ProjectCaseStudies from './ProjectCaseStudies.jsx'
 import brandLogo from '../bikaslogo.png'
 import { portfolioAsset } from './portfolioPaths.js'
 
-// SVG placeholder component
-const PlaceholderImage = ({ width = 300, height = 300, text = 'Image' }) => (
-  <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} xmlns="http://www.w3.org/2000/svg">
-    <rect width={width} height={height} fill="#e0e0e0" />
-    <circle cx={width/2} cy={height/2 - 40} r="40" fill="#999" />
-    <path d={`M${width/2 - 60} ${height/2 + 20} L${width/2} ${height/2 + 60} L${width/2 + 60} ${height/2 + 20}`} fill="#999" />
-    <text x={width/2} y={height - 20} textAnchor="middle" fill="#666" fontSize="16">{text}</text>
-  </svg>
-)
+const email = 'bikashbanjade15@gmail.com'
+const github = 'https://github.com/bikas15'
+const emptyMessage = { name: '', email: '', phone: '', message: '' }
+
+function SocialLink({ name, href, icon }) {
+  return <a className="portfolio-social-link" href={href} aria-label={name} title={name} target="_blank" rel="noopener noreferrer">
+    {icon ? <img src={portfolioAsset('portfolio/social/' + icon)} alt="" width="20" height="20" /> :
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="currentColor">
+        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.23c-3.34.72-4.04-1.42-4.04-1.42-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.23 1.84 1.23 1.07 1.83 2.81 1.3 3.49.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.93 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6.01 0c2.29-1.55 3.29-1.23 3.29-1.23.65 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.6-2.81 5.62-5.49 5.92.43.37.82 1.1.82 2.22v3.31c0 .32.22.69.83.57A12 12 0 0 0 24 12C24 5.37 18.63 0 12 0Z" />
+      </svg>}
+  </a>
+}
+
+function ResumeLink({ className }) {
+  return <a className={className} href={portfolioAsset('Bikas-Banjade-CV.pdf')} target="_blank" rel="noopener noreferrer">
+    Résumé <span aria-hidden="true">↗</span>
+  </a>
+}
 
 function App({ onDarkMode, showOpening }) {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
-  })
-  
-  const [submitMessage, setSubmitMessage] = useState('')
-  const [submitError, setSubmitError] = useState(false)
+  const [formData, setFormData] = useState(emptyMessage)
+  const [feedback, setFeedback] = useState(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
+  useEffect(() => {
+    const hash = location.hash
+    if (!showOpening || !hash || hash === '#home') return
+
+    let active = true
+    document.fonts.ready.then(() => {
+      if (active && location.hash === hash) {
+        document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: 'instant' })
+      }
+    })
+    return () => { active = false }
+  }, [showOpening])
+
+  function updateMessage(event) {
+    const { name, value } = event.target
+    setFormData(previous => ({ ...previous, [name]: value }))
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setSubmitMessage('')
-    setSubmitError(false)
-
+  async function sendMessage(event) {
+    event.preventDefault()
+    setFeedback(null)
     const apiUrl = import.meta.env.VITE_CONTACT_API_URL?.replace(/\/+$/, '')
     if (!apiUrl) {
-      setSubmitError(true)
-      setSubmitMessage('Contact form is not configured. Please try again later.')
+      setFeedback({ message: 'The form is unavailable here. You can reach me by email.', error: true })
       return
     }
 
@@ -51,214 +60,119 @@ function App({ onDarkMode, showOpening }) {
       const response = await fetch(`${apiUrl}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       })
       const result = await response.json()
-
-      if (!response.ok) {
-        throw new Error(result.message || 'Unable to send your message.')
-      }
-
-      setSubmitMessage('Message sent successfully!')
-      setFormData({ name: '', email: '', phone: '', message: '' })
+      if (!response.ok) throw new Error(result.message || 'Unable to send your message.')
+      setFeedback({ message: 'Message sent. Thanks for getting in touch!', error: false })
+      setFormData(emptyMessage)
     } catch (error) {
-      console.error('Contact form submission failed:', error)
-      setSubmitError(true)
-      setSubmitMessage(error.message || 'Unable to send your message. Please try again.')
+      setFeedback({ message: error.message || 'Unable to send your message. Please try again.', error: true })
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  return (
-    <div className="app-container">
-      <div className="opening-intro" hidden={!showOpening} aria-hidden="true">
-        <div className="opening-composition">
-          <div className="opening-name">
-            <span><b>Bikas</b></span>
-            <span><b>Banjade</b></span>
-          </div>
-          <div className="opening-tiles">
-            {[4, 2, 3, 1, 0, 5, 6, 7, 8].map(step => (
-              <span key={step} style={{ '--tile-delay': `${130 + step * 54}ms` }} />
-            ))}
-          </div>
+  return <div className="app-container">
+    <div className="opening-intro" hidden={!showOpening} aria-hidden="true" />
+    <a className="skip-link" href="#main-content">Skip to content</a>
+    <header className="portfolio-header">
+      <div className="portfolio-shell portfolio-header-inner">
+        <div className="portfolio-brand">
+          <a className="brand-mark-link" href={portfolioAsset('games/gridrush/index.html?discovered=party')} aria-label="Play Turn Every Tile Blue">
+            <span className="brand-mark-icon" aria-hidden="true"><img src={brandLogo} alt="" /></span>
+          </a>
+          <a className="portfolio-wordmark" href="#home">Bikas Banjade</a>
         </div>
-      </div>
-      {/* Navigation */}
-      <nav className="navbar">
-        <div className="nav-container">
-          <div className="logo">
-            <a className="brand-mark-link" href={portfolioAsset('games/gridrush/index.html?discovered=party')} aria-label="Play Turn Every Tile Blue">
-              <span className="brand-mark-icon" aria-hidden="true">
-                <img src={brandLogo} alt="" />
-              </span>
-            </a>
-            <span style={{ borderInlineStart: '1px solid currentColor', paddingInlineStart: '0.4rem', color: 'var(--text-dark)', fontWeight: 600, fontSize: '1.15rem' }}>Bikas</span>
-          </div>
+        <nav aria-label="Main navigation">
           <ul className="nav-links">
-            <li><a href="#home">Home</a></li>
+            <li><a href="#projects">Work</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
-          <button className="portfolio-theme-switch" type="button" aria-label="Flip the Switch" title="Open Bikas Desk" data-pointer-label="ENTER" onClick={onDarkMode}>
-            <span className="portfolio-mode-moon" aria-hidden="true" /><span className="portfolio-theme-label">Flip the Switch</span>
-          </button>
-        </div>
-      </nav>
-
-      {/* Hero Section */}
-      <section id="home" className="hero">
-        <div className="hero-content">
-          <h1>Hi,<br />I'm Bikas</h1>
-          <h2>A software engineer.</h2>
-        </div>
-        <div className="hero-image">
-          <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/perfil.jpg" alt="Profile" />
-        </div>
-      </section>
-
-      <div className="explore-text">
-        <h2>Feel Free to Explore my Website!</h2>
+        </nav>
+        <button className="portfolio-theme-switch" type="button" aria-label="Flip the Switch" title="Open Bikas Desk" onClick={onDarkMode}>
+          <span className="portfolio-switch-indicator" aria-hidden="true" />
+          Flip the Switch
+        </button>
       </div>
+    </header>
 
-      {/* About Section */}
-      <section id="about" className="about">
-        <h2>About</h2>
-        <div className="about-content">
-          <div className="about-image">
-            <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/bikas.jpg" alt="About Me" />
+    <main id="main-content" className="portfolio-shell" tabIndex={-1}>
+      <section id="home" className="portfolio-hero" aria-labelledby="portfolio-name">
+        <div className="portfolio-hero-copy">
+          <p className="portfolio-kicker"><span aria-hidden="true" />Software Engineering Student · NCIT</p>
+          <h1 id="portfolio-name">Bikas<br /><em>Banjade<span aria-hidden="true">.</span></em></h1>
+          <p className="portfolio-intro">I build full-stack web apps, from the interfaces people use to the APIs that power them.</p>
+          <div className="portfolio-actions">
+            <a className="portfolio-button portfolio-button-primary" href="#projects">View my work <span aria-hidden="true">↓</span></a>
+            <ResumeLink className="portfolio-button portfolio-button-outline" />
           </div>
-          <div className="about-text">
-            <p>
-              HI! I'm Bikas and I am currently studying Software Engineering at Nepal College of Information Technology. 
-              I am a tech enthusiast from Pyuthan. I'm super interested in new technologies. I am trying my best to learn 
-              different technologies that interests me and also pursuing my engineering career. I am not sure what I want 
-              my main focus to be on. But for now I am just exploring different fields.
-            </p>
-            <p><strong>In short:</strong> A guy not sure what he is doing but trying to figure it out.</p>
-            <a className="about-cv-link" href={portfolioAsset('Bikas-Banjade-CV.pdf')} target="_blank" rel="noopener noreferrer">
-              View CV ↗
-            </a>
+        </div>
+        <figure className="portfolio-portrait">
+          <div className="portfolio-portrait-frame">
+            <img src={portfolioAsset('portfolio/perfil.jpg')} alt="Bikas Banjade in front of a brick wall" width="559" height="485" fetchPriority="high" />
           </div>
+          <figcaption><span>From Pyuthan, Nepal</span><span>Based in Kathmandu</span></figcaption>
+        </figure>
+      </section>
+
+      <ProjectCaseStudies onDarkMode={onDarkMode} />
+
+      <section id="about" className="portfolio-about" aria-labelledby="about-title">
+        <figure className="portfolio-about-photo">
+          <img src={portfolioAsset('portfolio/bikas.jpg')} alt="Bikas Banjade in a historic square in Nepal" width="640" height="640" loading="lazy" decoding="async" />
+        </figure>
+        <div className="portfolio-about-copy">
+          <h2 id="about-title">About me<span aria-hidden="true">.</span></h2>
+          <p>I’m studying Software Engineering at Nepal College of Information Technology. Outside class, I build web apps to learn how interfaces, APIs and databases work together in a deployed product.</p>
+          <p>With Hostel Hub, that meant making listings easy to explore on a phone and on a map. With Bugs Finder, it meant connecting a code editor to server-side AI analysis and private report history.</p>
+          <div className="portfolio-about-links">
+            <ResumeLink className="portfolio-text-link" />
+            <SocialLink name="GitHub" href={github} />
+          </div>
+        </div>
+        <div className="portfolio-stack" id="skills">
+          <h3>Tools I’ve used in these projects</h3>
+          <dl>
+            <div><dt>Frontend</dt><dd>React, JavaScript, Leaflet</dd></div>
+            <div><dt>Backend</dt><dd>Express, Django REST</dd></div>
+            <div><dt>Data</dt><dd>MongoDB, PostgreSQL</dd></div>
+          </dl>
         </div>
       </section>
 
-      {/* Skills Section */}
-      <section id="skills" className="skills">
-        <h2>Skills</h2>
-        <div className="skills-grid">
-          <div className="skill-item">
-            <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/js.png" alt="JavaScript" />
-          </div>
-          <div className="skill-item">
-            <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/html.png" alt="HTML" />
-          </div>
-          <div className="skill-item">
-            <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/css.png" alt="CSS" />
-          </div>
-          <div className="skill-item">
-            <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/php.png" alt="PHP" />
-          </div>
-          <div className="skill-item">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/c/c-original.svg" alt="C" />
-          </div>
-          <div className="skill-item">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/cplusplus/cplusplus-original.svg" alt="C++" />
-          </div>
-          <div className="skill-item">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/java/java-original.svg" alt="Java" />
+      <section id="contact" className="portfolio-contact" aria-labelledby="contact-title">
+        <div className="portfolio-contact-copy">
+          <h2 id="contact-title">Let’s talk<span aria-hidden="true">.</span></h2>
+          <p>Get in touch about a project, internship or collaboration.</p>
+          <a href={`mailto:${email}`} className="portfolio-email">{email} <span aria-hidden="true">↗</span></a>
+          <div className="portfolio-socials">
+            <SocialLink name="GitHub" href={github} />
+            <SocialLink name="Instagram" href="https://www.instagram.com/bikas.banjade22/" icon="instagram.svg" />
+            <SocialLink name="Facebook" href="https://www.facebook.com/bikash.banjade15/" icon="facebook.svg" />
           </div>
         </div>
-      </section>
-
-      <ProjectCaseStudies showOpening={showOpening} />
-
-      {/* Contact Section */}
-      <section id="contact" className="contact">
-        <h2>Contact</h2>
-        <div className="contact-content">
-          <form className="contact-form" onSubmit={handleSubmit}>
-            {submitMessage && (
-              <div className={`submit-message${submitError ? ' error' : ''}`} role="status" aria-live="polite">
-                {submitMessage}
-              </div>
-            )}
-            <div className="form-group">
-              <label>Name :</label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                placeholder="Your name"
-                maxLength="100"
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>Email :</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="Your email"
-                maxLength="254"
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>Phone Number :</label>
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-                placeholder="Your phone number"
-                maxLength="30"
-              />
-            </div>
-            <div className="form-group">
-              <label>Message :</label>
-              <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleInputChange}
-                placeholder="Your message"
-                rows="5"
-                maxLength="5000"
-                required
-              ></textarea>
-            </div>
-            <button type="submit" className="submit-btn" disabled={isSubmitting}>
-              {isSubmitting ? 'Sending...' : 'Submit Now'}
-            </button>
-          </form>
-
-          <div className="contact-info">
-            <h3>Mail:</h3>
-            <a href="mailto:bikashbanjade15@gmail.com">bikashbanjade15@gmail.com</a>
-
-            <h3>You can also find me on:</h3>
-            <div className="social-links">
-              <a href="https://www.facebook.com/bikash.banjade15/" target="_blank" rel="noopener noreferrer" title="Facebook">
-                <img src={portfolioAsset('portfolio/social/facebook.svg')} alt="Facebook" className="social-icon-img" />
-              </a>
-              <a href="https://www.instagram.com/bikas.banjade22/" target="_blank" rel="noopener noreferrer" title="Instagram">
-                <img src={portfolioAsset('portfolio/social/instagram.svg')} alt="Instagram" className="social-icon-img" />
-              </a>
-              <a href="mailto:bikashbanjade15@gmail.com" target="_blank" rel="noopener noreferrer" title="Gmail">
-                <img src={portfolioAsset('portfolio/social/gmail.svg')} alt="Gmail" className="social-icon-img" />
-              </a>
-            </div>
+        <form className="portfolio-contact-form" onSubmit={sendMessage}>
+          <div className="portfolio-form-row">
+            <label>Name<input name="name" autoComplete="name" maxLength={100} value={formData.name} onChange={updateMessage} required /></label>
+            <label>Email<input type="email" name="email" autoComplete="email" maxLength={254} value={formData.email} onChange={updateMessage} required /></label>
           </div>
-        </div>
+          <label><span>Phone <small>(optional)</small></span><input type="tel" name="phone" autoComplete="tel" maxLength={30} value={formData.phone} onChange={updateMessage} /></label>
+          <label>Message<textarea name="message" rows={4} maxLength={5000} value={formData.message} onChange={updateMessage} required /></label>
+          {feedback && <p role="status" className={feedback.error ? 'portfolio-form-error' : 'portfolio-form-success'}>{feedback.message}</p>}
+          <button type="submit" className="portfolio-button portfolio-button-primary" disabled={isSubmitting}>
+            {isSubmitting ? 'Sending…' : 'Send message'} <span aria-hidden="true">↗</span>
+          </button>
+        </form>
       </section>
-    </div>
-  )
+    </main>
+
+    <footer className="portfolio-shell portfolio-footer">
+      <span>Bikas Banjade</span>
+      <a href="#home">Back to top <span aria-hidden="true">↑</span></a>
+    </footer>
+  </div>
 }
 
 export default App
