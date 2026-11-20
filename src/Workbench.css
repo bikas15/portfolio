@@ -164,7 +164,7 @@ body.desk-active { overflow: hidden; }
 .desk-search-results { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
 .desk-search-results button {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr;
   gap: 9px;
   align-items: center;
   width: 100%;

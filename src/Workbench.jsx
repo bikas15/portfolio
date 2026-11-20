@@ -105,7 +105,7 @@ function DeskAppSearch({ enabled, onOpen }) {
       </form>
       {matches.length > 0 ? <ul className="desk-search-results" ref={results}>
         {matches.map(panel => <li key={panel.id}><button type="button" onClick={() => launch(panel.id)}>
-          <AppIcon name={panel.id} />{panel.label}<span aria-hidden="true">↗</span>
+          <AppIcon name={panel.id} />{panel.label}
         </button></li>)}
       </ul> : <p role="status">No matching apps.</p>}
     </dialog>
@@ -324,7 +324,7 @@ export default function Workbench({ animation, enabled, onLightMode }) {
             <h2 id={'title-' + item.id} tabIndex={-1}>{panel.id === 'about' ? 'About Bikas' : panel.label}</h2>
             <div className="window-controls">
               <button type="button" aria-label={'Minimize ' + panel.label} title="Minimize" onClick={() => setWindowMode(item.id, 'minimized')}>−</button>
-              <button type="button" className="window-expand" aria-label={(item.mode === 'maximized' ? 'Restore ' : 'Maximize ') + panel.label} title={item.mode === 'maximized' ? 'Restore' : 'Maximize'} onClick={() => setWindowMode(item.id, item.mode === 'maximized' ? 'normal' : 'maximized')}>{item.mode === 'maximized' ? '↙' : '⤢'}</button>
+              <button type="button" className="window-expand" aria-label={(item.mode === 'maximized' ? 'Restore ' : 'Maximize ') + panel.label} title={item.mode === 'maximized' ? 'Restore' : 'Maximize'} onClick={() => setWindowMode(item.id, item.mode === 'maximized' ? 'normal' : 'maximized')}>{item.mode === 'maximized' ? '❐' : '□'}</button>
               <button type="button" aria-label={'Close ' + panel.label} title="Close" onClick={() => setWindows(current => current.filter(window => window.id !== item.id))}>×</button>
             </div>
           </header>

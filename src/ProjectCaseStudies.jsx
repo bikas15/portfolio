@@ -3,23 +3,6 @@ import { portfolioAsset } from './portfolioPaths.js'
 
 const caseStudies = [
   {
-    id: 'hostel-hub',
-    title: 'Hostel Hub',
-    summary: 'A map-based hostel finder for students in Kathmandu and nearby cities.',
-    stack: ['React', 'Leaflet', 'Node.js', 'MongoDB'],
-    demo: 'https://bikas15.github.io/Hostel-Khojau/#/',
-    source: 'https://github.com/bikas15/Hostel-Khojau',
-    image: 'portfolio/hostel-hub-map.jpg',
-    imageWidth: 1265,
-    imageHeight: 712,
-    imageAlt: 'Hostel Hub map search showing filters, a map of Kathmandu, and hostel listings.',
-    caption: 'Map search in Hostel Hub',
-    attribution: { label: '© OpenStreetMap contributors', url: 'https://www.openstreetmap.org/copyright' },
-    problem: 'Students need to compare prices and see how close each hostel is to campus before arranging a visit.',
-    workflow: 'Filter by city, hostel type and price, then switch between the map and list to compare options and open a listing.',
-    contribution: 'Developed Hostel Hub end to end with responsive map search, an Express API, and MongoDB data models.',
-  },
-  {
     id: 'bugs-finder',
     title: 'Bugs Finder',
     summary: 'An AI-assisted code debugger that explains likely bugs and suggests fixes.',
@@ -35,6 +18,23 @@ const caseStudies = [
     problem: 'When code fails, developers need to understand the cause and know what to try next.',
     workflow: 'Submit a code snippet, review the AI analysis and suggested fixes, then save the result as a report in your account.',
     contribution: 'I built the React interface and Django REST API, integrated Gemini on the server, and added sign-in and per-account report history.',
+  },
+  {
+    id: 'hostel-hub',
+    title: 'Hostel Hub',
+    summary: 'A map-based hostel finder for students in Kathmandu and nearby cities.',
+    stack: ['React', 'Leaflet', 'Node.js', 'MongoDB'],
+    demo: 'https://bikas15.github.io/Hostel-Khojau/#/',
+    source: 'https://github.com/bikas15/Hostel-Khojau',
+    image: 'portfolio/hostel-hub-map.jpg',
+    imageWidth: 1265,
+    imageHeight: 712,
+    imageAlt: 'Hostel Hub map search showing filters, a map of Kathmandu, and hostel listings.',
+    caption: 'Map search in Hostel Hub',
+    attribution: { label: '© OpenStreetMap contributors', url: 'https://www.openstreetmap.org/copyright' },
+    problem: 'Students need to compare prices and see how close each hostel is to campus before arranging a visit.',
+    workflow: 'Filter by city, hostel type and price, then switch between the map and list to compare options and open a listing.',
+    contribution: 'Developed Hostel Hub end to end with responsive map search, an Express API, and MongoDB data models.',
   },
 ]
 
@@ -60,20 +60,19 @@ export default function ProjectCaseStudies({ showOpening }) {
 
   return <section id="projects" className="projects">
     <h2>Projects</h2>
-    {caseStudies.map((project, index) => (
+    {caseStudies.map(project => (
       <article key={project.id} id={project.id} className="featured-project" aria-labelledby={project.id + '-title'}>
         <div className="featured-project-intro">
-          <p className="featured-project-label">{index === 0 ? 'Featured case study' : 'Case study'}</p>
           <h3 id={project.id + '-title'}>{project.title}</h3>
           <p className="featured-project-summary">{project.summary}</p>
           <ul className="featured-project-stack" aria-label="Technology stack">
             {project.stack.map(technology => <li className="tech-tag" key={technology}>{technology}</li>)}
           </ul>
           <div className="featured-project-actions">
-            <a className="featured-project-demo" href={project.demo} target="_blank" rel="noopener noreferrer">Live demo <span aria-hidden="true">↗</span></a>
-            <a className="featured-project-source" href={project.source} target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+            <a className="featured-project-demo" href={project.demo} target="_blank" rel="noopener noreferrer">Live demo</a>
+            <a className="featured-project-source" href={project.source} target="_blank" rel="noopener noreferrer">GitHub</a>
             {project.presentation && (
-              <a className="featured-project-source" href={portfolioAsset(project.presentation)} target="_blank" rel="noopener noreferrer">View PPT <span aria-hidden="true">↗</span></a>
+              <a className="featured-project-source" href={portfolioAsset(project.presentation)} target="_blank" rel="noopener noreferrer">View PPT</a>
             )}
           </div>
         </div>
