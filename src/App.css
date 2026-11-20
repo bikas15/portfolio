@@ -425,8 +425,9 @@ html {
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-/* Hide the PDF viewer extension shortcut beside the CV link. */
-.about-cv-link + a[title="View this pdf file"][original-url] {
+/* Hide PDF viewer shortcuts injected beside portfolio document links. */
+.about-cv-link + a[title="View this pdf file"][original-url],
+.desktop a[title="View this pdf file"][original-url] {
   display: none;
 }
 
