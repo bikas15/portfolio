@@ -161,31 +161,14 @@ function App({ onDarkMode, showOpening }) {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="skills">
-        <h2>Skills</h2>
-        <div className="skills-grid">
-          <div className="skill-item">
-            <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/js.png" alt="JavaScript" />
-          </div>
-          <div className="skill-item">
-            <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/html.png" alt="HTML" />
-          </div>
-          <div className="skill-item">
-            <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/css.png" alt="CSS" />
-          </div>
-          <div className="skill-item">
-            <img src="https://raw.githubusercontent.com/bikas15/protfolio/main/php.png" alt="PHP" />
-          </div>
-          <div className="skill-item">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/c/c-original.svg" alt="C" />
-          </div>
-          <div className="skill-item">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/cplusplus/cplusplus-original.svg" alt="C++" />
-          </div>
-          <div className="skill-item">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/java/java-original.svg" alt="Java" />
-          </div>
-        </div>
+      <section id="skills" className="portfolio-stack" aria-labelledby="skills-title">
+        <h2 id="skills-title">Skills</h2>
+        <dl>
+          <div><dt>Frontend</dt><dd>React, JavaScript, Leaflet</dd></div>
+          <div><dt>Backend</dt><dd>Express, Django REST</dd></div>
+          <div><dt>Data</dt><dd>MongoDB, PostgreSQL</dd></div>
+          <div><dt>Programming languages</dt><dd>C, C++, Java, PHP</dd></div>
+        </dl>
       </section>
 
       {/* Contact Section */}

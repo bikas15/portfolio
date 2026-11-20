@@ -452,40 +452,26 @@ html {
 }
 
 /* Skills Section */
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 40px;
-  padding: 40px;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  border: 1px solid rgba(102, 126, 234, 0.1);
-  box-shadow: var(--shadow-md);
+#skills.portfolio-stack {
+  margin-block-end: clamp(40px, 6vw, 80px);
+  padding-block: 17px 0;
+  border-top: 1px solid #d8d8df;
+  font-family: 'DM Sans', 'Segoe UI', sans-serif;
 }
-
-.skill-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: scaleIn 0.6s ease-out;
+#skills.portfolio-stack h2 {
+  display: block;
+  margin-bottom: 10px;
+  color: #17182e;
+  font: 700 1rem/1.4 'Bricolage Grotesque', 'Segoe UI', sans-serif;
 }
+#skills.portfolio-stack h2::after { content: none; }
+.portfolio-stack dl { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.portfolio-stack dt { color: #172694; font: 500 .75rem/1.4 'IBM Plex Mono', Consolas, monospace; }
+.portfolio-stack dd { color: #565a6b; font-size: .93rem; }
 
-.skill-item img {
-  width: 120px;
-  height: 120px;
-  border-radius: 20px;
-  transition: all 0.3s ease;
-  background: white;
-  box-shadow: var(--shadow-sm);
-  filter: drop-shadow(0 10px 20px rgba(102, 126, 234, 0.1));
-  object-fit: cover;
-}
-
-.skill-item img:hover {
-  transform: translateY(-10px) scale(1.1) rotate(-5deg);
-  box-shadow: var(--shadow-lg);
-  filter: drop-shadow(0 20px 40px rgba(102, 126, 234, 0.3));
+@media (max-width: 620px) {
+  .portfolio-stack dl { grid-template-columns: 1fr; gap: 8px; }
+  .portfolio-stack dl > div { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 8px; }
 }
 
 /* Contact Section */
@@ -603,17 +589,6 @@ html {
   to {
     opacity: 1;
     transform: translateX(0);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
   }
 }
 
@@ -809,17 +784,6 @@ html {
     text-align: center;
   }
 
-  .skills-grid {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 25px;
-    padding: 25px;
-  }
-
-  .skill-item svg {
-    width: 100px;
-    height: 100px;
-  }
-
   :where(.app-container) section h2 {
     font-size: 2rem;
   }
@@ -862,8 +826,6 @@ html {
   .explore-text { margin: 28px 0 44px; }
   .hero-image, .about-image, .about-text { min-width: 0; max-width: 100%; }
   .hero-image img, .about-image img { max-width: 100%; height: auto; aspect-ratio: 1; }
-  .skills-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 16px; }
-  .skill-item img { max-width: 100%; height: auto; }
 }
 
 @media (max-width: 480px) {
