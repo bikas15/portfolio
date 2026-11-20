@@ -21,7 +21,8 @@ const projects = [
   { id: 'hostel-hub', title: 'Hostel Hub', stack: 'React · Node · MongoDB', description: 'Explore the live hostel discovery app.', url: 'https://bikas15.github.io/Hostel-Khojau/#/' },
 ]
 
-const initialWindows = [{ id: 'about', x: 0, y: 0, mode: 'normal' }]
+const compactDesk = '(max-width: 800px), (max-height: 480px) and (max-width: 1000px)'
+const initialWindows = () => matchMedia(compactDesk).matches ? [] : [{ id: 'about', x: 0, y: 0, mode: 'normal' }]
 const nepalClock = new Intl.DateTimeFormat('en-GB', {
   timeZone: 'Asia/Kathmandu', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
 })
@@ -151,7 +152,7 @@ export default function Workbench({ animation, enabled, onLightMode }) {
   }
 
   function startDrag(event, item) {
-    if (event.button !== 0 || item.mode !== 'normal' || event.target.closest('button') || matchMedia('(max-width: 680px)').matches) return
+    if (event.button !== 0 || item.mode !== 'normal' || event.target.closest('button') || matchMedia(compactDesk).matches) return
     const bounds = stage.current.getBoundingClientRect()
     const box = event.currentTarget.parentElement.getBoundingClientRect()
     drag.current = { id: item.id, fromX: event.clientX, fromY: event.clientY, x: item.x, y: item.y,

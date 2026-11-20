@@ -206,7 +206,7 @@ html {
 .nav-links {
   display: flex;
   list-style: none;
-  gap: 40px;
+  gap: clamp(16px, 3.2vw, 40px);
 }
 
 .nav-links a {
@@ -985,13 +985,37 @@ html {
   }
 }
 
-@media (max-width: 768px) {
-  .navbar { padding-block: 8px; }
-  .nav-container { flex-direction: column; gap: 4px; padding-inline: 8px; }
-  .portfolio-theme-switch { position: absolute; top: 10px; right: 10px; }
-  .nav-links { width: 100%; justify-content: center; flex-wrap: wrap; gap: 0 4px; }
-  .nav-links a { display: flex; align-items: center; min-height: 44px; padding: 0 6px; font-size: clamp(0.75rem, 2.8vw, 0.95rem); }
-  :where(.app-container) section[id] { scroll-margin-top: 120px; }
+@media (max-width: 800px) {
+  .navbar { padding-block: 5px 0; }
+  .nav-container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1px 12px;
+    padding-inline: 10px;
+  }
+  .logo { justify-self: start; }
+  .portfolio-theme-switch { grid-area: 1 / 2; min-height: 44px; white-space: nowrap; }
+  .nav-links {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0;
+  }
+  .nav-links a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 3px;
+    font-size: clamp(.7rem, 2.8vw, .95rem);
+  }
+  :where(.app-container) section[id] { scroll-margin-top: 106px; }
+  :where(.app-container) section:not(.hero) { margin-bottom: 44px; padding-block: 34px; }
+  :where(.app-container) section:not(.hero) > h2 { margin-bottom: 30px; }
+  .hero { flex-direction: column; gap: 24px; padding-block: 48px 28px; text-align: center; }
+  .hero-content h1 { word-spacing: normal; }
+  .hero-content h2 { margin-bottom: 12px; }
+  .explore-text { margin: 28px 0 44px; }
   .hero-image, .about-image, .about-text { min-width: 0; max-width: 100%; }
   .hero-image img, .about-image img { max-width: 100%; height: auto; aspect-ratio: 1; }
   .skills-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 16px; }
@@ -1011,12 +1035,11 @@ html {
   .submit-btn { width: 100%; }
 }
 
-@media (min-width: 361px) and (max-width: 450px) {
+@media (max-width: 450px) {
   .portfolio-theme-switch { padding-inline: .5rem; font-size: .72rem; }
-  .portfolio-mode-moon { display: none; }
 }
 
-@media (max-width: 360px) {
-  .portfolio-theme-switch { width: 42px; justify-content: center; padding-inline: 0; }
-  .portfolio-theme-label { display: none; }
+@media (max-height: 480px) and (orientation: landscape) {
+  .navbar { position: relative; }
+  :where(.app-container) section[id], .featured-project { scroll-margin-top: 12px; }
 }
