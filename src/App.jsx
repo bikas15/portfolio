@@ -4,6 +4,18 @@ import ProjectCaseStudies from './ProjectCaseStudies.jsx'
 import brandLogo from '../bikaslogo.png'
 import { portfolioAsset } from './portfolioPaths.js'
 
+const email = 'bikashbanjade15@gmail.com'
+const github = 'https://github.com/bikas15'
+
+function SocialLink({ name, href, icon }) {
+  return <a className="portfolio-social-link" href={href} aria-label={name} title={name} target="_blank" rel="noopener noreferrer">
+    {icon ? <img src={portfolioAsset('portfolio/social/' + icon)} alt="" width="20" height="20" /> :
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="currentColor">
+        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.23c-3.34.72-4.04-1.42-4.04-1.42-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.23 1.84 1.23 1.07 1.83 2.81 1.3 3.49.99.11-.77.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.93 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6.01 0c2.29-1.55 3.29-1.23 3.29-1.23.65 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.6-2.81 5.62-5.49 5.92.43.37.82 1.1.82 2.22v3.31c0 .32.22.69.83.57A12 12 0 0 0 24 12C24 5.37 18.63 0 12 0Z" />
+      </svg>}
+  </a>
+}
+
 // SVG placeholder component
 const PlaceholderImage = ({ width = 300, height = 300, text = 'Image' }) => (
   <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} xmlns="http://www.w3.org/2000/svg">
@@ -177,85 +189,29 @@ function App({ onDarkMode, showOpening }) {
       <ProjectCaseStudies showOpening={showOpening} />
 
       {/* Contact Section */}
-      <section id="contact" className="contact">
-        <h2>Contact</h2>
-        <div className="contact-content">
-          <form className="contact-form" onSubmit={handleSubmit}>
-            {submitMessage && (
-              <div className={`submit-message${submitError ? ' error' : ''}`} role="status" aria-live="polite">
-                {submitMessage}
-              </div>
-            )}
-            <div className="form-group">
-              <label>Name :</label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                placeholder="Your name"
-                maxLength="100"
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>Email :</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="Your email"
-                maxLength="254"
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>Phone Number :</label>
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-                placeholder="Your phone number"
-                maxLength="30"
-              />
-            </div>
-            <div className="form-group">
-              <label>Message :</label>
-              <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleInputChange}
-                placeholder="Your message"
-                rows="5"
-                maxLength="5000"
-                required
-              ></textarea>
-            </div>
-            <button type="submit" className="submit-btn" disabled={isSubmitting}>
-              {isSubmitting ? 'Sending...' : 'Submit Now'}
-            </button>
-          </form>
-
-          <div className="contact-info">
-            <h3>Mail:</h3>
-            <a href="mailto:bikashbanjade15@gmail.com">bikashbanjade15@gmail.com</a>
-
-            <h3>You can also find me on:</h3>
-            <div className="social-links">
-              <a href="https://www.facebook.com/bikash.banjade15/" target="_blank" rel="noopener noreferrer" title="Facebook">
-                <img src={portfolioAsset('portfolio/social/facebook.svg')} alt="Facebook" className="social-icon-img" />
-              </a>
-              <a href="https://www.instagram.com/bikas.banjade22/" target="_blank" rel="noopener noreferrer" title="Instagram">
-                <img src={portfolioAsset('portfolio/social/instagram.svg')} alt="Instagram" className="social-icon-img" />
-              </a>
-              <a href="mailto:bikashbanjade15@gmail.com" target="_blank" rel="noopener noreferrer" title="Gmail">
-                <img src={portfolioAsset('portfolio/social/gmail.svg')} alt="Gmail" className="social-icon-img" />
-              </a>
-            </div>
+      <section id="contact" className="portfolio-contact" aria-labelledby="contact-title">
+        <div className="portfolio-contact-copy">
+          <h2 id="contact-title">Let’s talk<span aria-hidden="true">.</span></h2>
+          <p>Get in touch about a project, internship or collaboration.</p>
+          <a href={`mailto:${email}`} className="portfolio-email">{email} <span aria-hidden="true">↗</span></a>
+          <div className="portfolio-socials">
+            <SocialLink name="GitHub" href={github} />
+            <SocialLink name="Instagram" href="https://www.instagram.com/bikas.banjade22/" icon="instagram.svg" />
+            <SocialLink name="Facebook" href="https://www.facebook.com/bikash.banjade15/" icon="facebook.svg" />
           </div>
         </div>
+        <form className="portfolio-contact-form" onSubmit={handleSubmit}>
+          <div className="portfolio-form-row">
+            <label>Name<input name="name" autoComplete="name" maxLength={100} value={formData.name} onChange={handleInputChange} required /></label>
+            <label>Email<input type="email" name="email" autoComplete="email" maxLength={254} value={formData.email} onChange={handleInputChange} required /></label>
+          </div>
+          <label><span>Phone <small>(optional)</small></span><input type="tel" name="phone" autoComplete="tel" maxLength={30} value={formData.phone} onChange={handleInputChange} /></label>
+          <label>Message<textarea name="message" rows={4} maxLength={5000} value={formData.message} onChange={handleInputChange} required /></label>
+          {submitMessage && <p role="status" className={submitError ? 'portfolio-form-error' : 'portfolio-form-success'}>{submitMessage}</p>}
+          <button type="submit" className="portfolio-contact-submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Sending…' : 'Send message'} <span aria-hidden="true">↗</span>
+          </button>
+        </form>
       </section>
     </div>
   )
