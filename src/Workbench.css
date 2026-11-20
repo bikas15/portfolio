@@ -346,9 +346,7 @@ body.desk-active { overflow: hidden; }
   width: clamp(82px, 13vw, 157px);
   height: auto;
   aspect-ratio: 1;
-  border: 1px solid #979fee76;
-  border-radius: 10px;
-  box-shadow: 7px 7px #4659b4;
+  border-radius: 50%;
   object-fit: cover;
   object-position: center 35%;
 }
