@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import './Workbench.css'
 import brandLogo from '../bikaslogo.png'
 import { deskUrl, portfolioAsset } from './portfolioPaths.js'
+import { caseStudies as projects } from './portfolioProjects.js'
 import DatabasePanel from './DatabasePanel.jsx'
 
 const localWorkbench = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)
@@ -14,11 +15,6 @@ const panels = [
   { id: 'contact', label: 'Contact' },
   { id: 'activity', label: 'Activity' },
   ...(databaseEnabled ? [{ id: 'database', label: 'Database' }] : []),
-]
-
-const projects = [
-  { id: 'bugs-finder', title: 'Bugs Finder', stack: 'React · Django REST · Gemini · PostgreSQL', description: 'Analyze code with AI and save the suggested fixes as reports.', url: 'https://bikas15.github.io/-bugs_finder/#/', slides: portfolioAsset('bug-finder-presentation.pdf') },
-  { id: 'hostel-hub', title: 'Hostel Hub', stack: 'React · Node · MongoDB', description: 'Explore the live hostel discovery app.', url: 'https://bikas15.github.io/Hostel-Khojau/#/' },
 ]
 
 const compactDesk = '(max-width: 800px), (max-height: 480px) and (max-width: 1000px)'
@@ -58,6 +54,62 @@ function DeskClock({ enabled }) {
 
 function AppIcon({ name }) {
   return <span className={'app-icon app-icon--' + name} aria-hidden="true"><i /></span>
+}
+
+function DeskAppSearch({ enabled, onOpen }) {
+  const [query, setQuery] = useState('')
+  const dialog = useRef(null)
+  const searchInput = useRef(null)
+  const results = useRef(null)
+  const term = query.trim().toLowerCase()
+  const matches = panels.filter(panel => panel.label.toLowerCase().includes(term) || panel.id.includes(term))
+
+  function showSearch() {
+    if (!dialog.current.open) dialog.current.showModal()
+    searchInput.current?.focus()
+  }
+
+  useEffect(() => {
+    if (!enabled) {
+      dialog.current?.close()
+      return
+    }
+    function openOnShortcut(event) {
+      if (event.defaultPrevented || !(event.ctrlKey || event.metaKey) || event.key.toLowerCase() !== 'k') return
+      event.preventDefault()
+      showSearch()
+    }
+    window.addEventListener('keydown', openOnShortcut)
+    return () => window.removeEventListener('keydown', openOnShortcut)
+  }, [enabled])
+
+  function launch(id) {
+    dialog.current.close()
+    onOpen(id)
+    requestAnimationFrame(() => document.getElementById('title-' + id)?.focus({ preventScroll: true }))
+  }
+
+  return <>
+    <button className="desk-search-trigger" type="button" aria-label="Search apps" title="Search apps (Ctrl or Command + K)" aria-haspopup="dialog"
+      onClick={showSearch}>
+      <span className="desk-search-icon" aria-hidden="true" /><span>Search apps</span>
+    </button>
+    <dialog className="desk-search-dialog" aria-labelledby="desk-search-title" ref={dialog} onClose={() => setQuery('')}>
+      <div className="desk-search-heading">
+        <h2 id="desk-search-title">Find an app</h2>
+        <button className="soft-button" type="button" onClick={() => dialog.current.close()}>Close</button>
+      </div>
+      <form onSubmit={event => { event.preventDefault(); if (matches.length) launch(matches[0].id) }}>
+        <input ref={searchInput} type="search" value={query} onChange={event => setQuery(event.target.value)} aria-label="App name" placeholder="Search by app name"
+          onKeyDown={event => { if (event.key === 'ArrowDown') { event.preventDefault(); results.current?.querySelector('button')?.focus() } }} />
+      </form>
+      {matches.length > 0 ? <ul className="desk-search-results" ref={results}>
+        {matches.map(panel => <li key={panel.id}><button type="button" onClick={() => launch(panel.id)}>
+          <AppIcon name={panel.id} />{panel.label}<span aria-hidden="true">↗</span>
+        </button></li>)}
+      </ul> : <p role="status">No matching apps.</p>}
+    </dialog>
+  </>
 }
 
 const hostedApi = import.meta.env.VITE_CONTACT_API_URL?.trim().replace(/\/+$/, '') || 'https://bikas-portfolio-contact-api.onrender.com'
@@ -182,7 +234,7 @@ export default function Workbench({ animation, enabled, onLightMode }) {
   useEffect(() => {
     if (!enabled) return
     function handleShortcut(event) {
-      if (event.ctrlKey || event.metaKey || event.altKey || event.target.closest('input, textarea, [contenteditable]')) return
+      if (event.ctrlKey || event.metaKey || event.altKey || event.target.closest('input, textarea, [contenteditable], dialog[open]')) return
       if (event.key === '/') {
         event.preventDefault()
         openWindow('terminal')
@@ -246,14 +298,15 @@ export default function Workbench({ animation, enabled, onLightMode }) {
       <a className="desktop-brand" href={deskUrl}><span className="desktop-logo" aria-hidden="true"><span><img src={brandLogo} alt="" /></span></span>Bikas Desk</a>
       <div className="desktop-top-actions">
         <span className="local-state" role="status"><i className={workspace ? 'ready' : ''} />{workspace ? (localWorkbench ? 'Local server online' : 'Workspace online') : serverMessage || 'Connecting'}</span>
-        <button className="theme-switch" type="button" title="Return to the portfolio" data-pointer-label="BACK" onClick={onLightMode}><span aria-hidden="true" />Lights on</button>
+        <DeskAppSearch enabled={enabled && !animation} onOpen={openWindow} />
+        <button className="theme-switch" type="button" title="Return to the portfolio" onClick={onLightMode}><span aria-hidden="true" />Lights on</button>
         <DeskClock enabled={enabled} />
       </div>
     </header>
 
     <main className="desktop-stage" ref={stage} aria-label="Bikas Desk">
-      <div className="desktop-signature" aria-hidden="true">Bikas<br />Banjade<span>.</span></div>
       <nav className="desktop-launcher" aria-label="Desktop apps">
+        <span className="desktop-launcher-label" aria-hidden="true">Apps</span>
         {panels.map(panel => <button type="button" className="desktop-app" key={panel.id} onClick={() => openWindow(panel.id)}>
           <AppIcon name={panel.id} /><span>{panel.label}</span>
         </button>)}
@@ -268,7 +321,7 @@ export default function Workbench({ animation, enabled, onLightMode }) {
           onPointerDown={() => { if (active !== item.id) openWindow(item.id) }}>
           <header className="window-bar" onPointerDown={event => startDrag(event, item)} onPointerMove={moveWindow} onPointerUp={() => { drag.current = null }} onLostPointerCapture={() => { drag.current = null }}>
             <AppIcon name={panel.id} />
-            <h2 id={'title-' + item.id}>{panel.id === 'about' ? 'About Bikas' : panel.label}</h2>
+            <h2 id={'title-' + item.id} tabIndex={-1}>{panel.id === 'about' ? 'About Bikas' : panel.label}</h2>
             <div className="window-controls">
               <button type="button" aria-label={'Minimize ' + panel.label} title="Minimize" onClick={() => setWindowMode(item.id, 'minimized')}>−</button>
               <button type="button" className="window-expand" aria-label={(item.mode === 'maximized' ? 'Restore ' : 'Maximize ') + panel.label} title={item.mode === 'maximized' ? 'Restore' : 'Maximize'} onClick={() => setWindowMode(item.id, item.mode === 'maximized' ? 'normal' : 'maximized')}>{item.mode === 'maximized' ? '↙' : '⤢'}</button>
@@ -279,10 +332,13 @@ export default function Workbench({ animation, enabled, onLightMode }) {
           <div className={'window-body window-body--' + item.id}>
             {item.id === 'about' && <>
               <div className="about-banner">
-                <img src={portfolioAsset('portfolio/perfil.jpg')} alt="Portrait of Bikas Banjade" />
-                <div><h1>Bikas Banjade</h1><p>Software engineering student · NCIT</p></div>
+                <div>
+                  <p className="desk-about-role">Software Engineering Student · NCIT</p>
+                  <h1>Bikas <span>Banjade<span aria-hidden="true">.</span></span></h1>
+                </div>
+                <img src={portfolioAsset('portfolio/perfil.jpg')} alt="Portrait of Bikas Banjade" width="559" height="485" />
               </div>
-              <p>I’m from Pyuthan, Nepal. I build web apps, backend APIs and small browser experiments.</p>
+              <p className="desk-about-summary">I’m from Pyuthan, Nepal. I build full-stack web apps, from the interfaces people use to the APIs that power them.</p>
               <div className="panel-actions">
                 <button className="feature-link" type="button" onClick={() => openWindow('projects')}>View projects</button>
                 <a className="soft-button" href={portfolioAsset('Bikas-Banjade-CV.pdf')} target="_blank" rel="noreferrer">Resume</a>
@@ -294,12 +350,21 @@ export default function Workbench({ animation, enabled, onLightMode }) {
                 {projects.map(({ id, title }, projectNumber) => <button className="soft-button" type="button" key={id} aria-pressed={projectNumber === projectIndex} onClick={() => { setProjectIndex(projectNumber); recordEvent(id) }}>{title}</button>)}
               </div>
               <article className="project-feature">
-                <p className="project-stack">{project.stack}</p>
                 <h3>{project.title}</h3>
-                <p>{project.description}</p>
+                <p>{project.summary}</p>
+                <p className="project-stack">{project.stack.join(' · ')}</p>
+                <figure className="desk-project-preview">
+                  <img src={portfolioAsset(project.image)} alt={project.imageAlt} width={project.imageWidth} height={project.imageHeight} loading="lazy" decoding="async" />
+                  <figcaption>
+                    <span>{project.caption}</span>
+                    {project.attribution && <a href={project.attribution.url} target="_blank" rel="noreferrer">{project.attribution.label}</a>}
+                  </figcaption>
+                </figure>
                 <div className="panel-actions">
-                  <a className="feature-link" href={project.url} target="_blank" rel="noreferrer">Live demo</a>
-                  {project.slides && <a className="soft-button" href={project.slides} target="_blank" rel="noreferrer">Presentation</a>}
+                  <a className="feature-link" href={portfolioAsset('#' + project.id)}>Case study</a>
+                  <a className="soft-button" href={project.demo} target="_blank" rel="noreferrer">Live demo</a>
+                  <a className="soft-button" href={project.source} target="_blank" rel="noreferrer">GitHub</a>
+                  {project.presentation && <a className="soft-button" href={portfolioAsset(project.presentation)} target="_blank" rel="noreferrer">Slides</a>}
                 </div>
               </article>
             </>}
