@@ -180,6 +180,7 @@ body.desk-active { overflow: hidden; }
 .app-icon--contact { --icon-hi: #f187ac; --icon-low: #b43770; }
 .app-icon--activity { --icon-hi: #78a7ff; --icon-low: #355ac2; }
 .app-icon--resume { --icon-hi: #aa94d5; --icon-low: #67538e; }
+.app-icon--database { --icon-hi: #38b7a0; --icon-low: #136579; }
 .app-icon i { display: block; width: 1.1em; height: .82em; position: relative; }
 .app-icon i::before, .app-icon i::after { content: ''; position: absolute; }
 .app-icon--about i::before { width: .31em; height: .31em; border: .1em solid; border-radius: 50%; left: .29em; top: -.14em; }
@@ -195,6 +196,9 @@ body.desk-active { overflow: hidden; }
 .app-icon--contact i::before { width: .74em; height: .74em; transform: rotate(45deg); border-bottom: .1em solid; border-right: .1em solid; left: .03em; top: -.48em; }
 .app-icon--activity i { width: 1.04em; height: 1.04em; border: .1em solid; border-radius: 50%; }
 .app-icon--activity i::before { top: .15em; left: .33em; width: .26em; height: .26em; border-left: .1em solid; border-bottom: .1em solid; border-radius: .02em; }
+.app-icon--database i { height: 1em; border: .1em solid; border-radius: 50% / 23%; }
+.app-icon--database i::before, .app-icon--database i::after { inset: 0 -.1em auto; height: .32em; border-bottom: .1em solid; border-radius: 50%; }
+.app-icon--database i::after { top: .24em; }
 
 .desk-window {
   --window-top: clamp(22px, 8vh, 90px);
@@ -249,6 +253,33 @@ body.desk-active { overflow: hidden; }
 .window-body { padding: clamp(15px, 3.2vw, 29px); overflow: auto; min-height: 0; }
 .window-body p { color: var(--muted); line-height: 1.52; }
 .window-body h3 { font-size: 1.45rem; letter-spacing: -.035em; }
+.database-login, .database-view { display: grid; gap: 12px; }
+.database-login { max-width: 340px; }
+.database-login label { font-size: .83rem; font-weight: 700; }
+.database-login input {
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--control-hover);
+  color: inherit;
+  font: inherit;
+}
+.database-login .feature-link { justify-self: start; margin-top: 4px; }
+.window-body .database-error { color: var(--ink); font-weight: 700; }
+.window-body .database-eyebrow, .window-body .database-source { font-size: .76rem; }
+.window-body .database-eyebrow { font-weight: 750; letter-spacing: .07em; text-transform: uppercase; }
+.database-heading { display: flex; gap: 12px; align-items: center; justify-content: space-between; }
+.database-record {
+  margin: 0;
+  padding: 14px;
+  border-radius: 8px;
+  background: #161b33;
+  color: #ecedff;
+  font: .8rem/1.55 ui-monospace, monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
 .about-banner {
   display: flex;
   align-items: center;

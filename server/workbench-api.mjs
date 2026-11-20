@@ -1,5 +1,6 @@
 import { mkdir, readFile, rename, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
+import { createHash, timingSafeEqual } from 'node:crypto'
 
 const eventNames = new Map([
   ['bugs-finder', 'Opened Bugs Finder'],
@@ -11,6 +12,18 @@ const localHosts = new Set(['127.0.0.1', 'localhost', '[::1]'])
 const emptyState = { note: '', updatedAt: null, activity: [] }
 const storeDirectory = fileURLToPath(new URL('../.workbench/', import.meta.url))
 const storePath = fileURLToPath(new URL('../.workbench/workspace.json', import.meta.url))
+const adminPath = '/api/workbench/admin/database'
+
+const demoMessages = [{
+  name: 'Demo visitor',
+  email: 'visitor@example.com',
+  phone: '',
+  message: 'I’d like to know more about your portfolio projects.',
+}]
+
+function digest(value) {
+  return createHash('sha256').update(value).digest()
+}
 
 function respond(response, status, value) {
   response.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' })
@@ -44,6 +57,38 @@ async function readBody(request) {
 
 export function workbenchBackend() {
   let operations = Promise.resolve()
+  const adminPassword = process.env.DESK_ADMIN_PASSWORD
+  const adminDigest = adminPassword ? digest(adminPassword) : null
+  let failedLogins = []
+
+  async function readAdminDatabase(request, response) {
+    if (!adminDigest) return respond(response, 503, { error: 'The local admin password has not been configured.' })
+    if (request.method !== 'POST') {
+      response.setHeader('Allow', 'POST')
+      return respond(response, 405, { error: 'Sign in to read the database.' })
+    }
+
+    const { username, password } = (await readBody(request)) ?? {}
+    const now = Date.now()
+    failedLogins = failedLogins.filter(time => now - time < 60_000)
+    if (failedLogins.length >= 5) {
+      response.setHeader('Retry-After', String(Math.ceil((failedLogins[0] + 60_000 - now) / 1000)))
+      return respond(response, 429, { error: 'Too many failed attempts. Try again in a minute.' })
+    }
+
+    if (username !== 'bikas' || typeof password !== 'string' || !timingSafeEqual(digest(password), adminDigest)) {
+      failedLogins.push(now)
+      return respond(response, 401, { error: 'Incorrect username or password.' })
+    }
+    failedLogins = []
+
+    await operations
+    const { note, updatedAt, activity } = await loadState()
+    return respond(response, 200, {
+      workbenchSessions: updatedAt || activity.length ? [{ note, updatedAt, activity }] : [],
+      contactMessages: demoMessages,
+    })
+  }
 
   async function loadState() {
     try {
@@ -71,7 +116,7 @@ export function workbenchBackend() {
     return [{ label, at }, ...state.activity].slice(0, 30)
   }
 
-  async function handle(request, response, next) {
+  async function handle(request, response, next, adminEnabled = false) {
     const path = request.url?.split('?')[0]
     if (!path?.startsWith('/api/workbench/')) return next()
     try {
@@ -79,6 +124,13 @@ export function workbenchBackend() {
       const origin = request.headers.origin
       if (!localHosts.has(destination.hostname) || (origin && origin !== destination.origin)) {
         return respond(response, 403, { error: 'Open the local Workbench to access its server.' })
+      }
+
+      if (path === adminPath && adminEnabled) {
+        if (!['127.0.0.1', '::1', '::ffff:127.0.0.1'].includes(request.socket.remoteAddress)) {
+          return respond(response, 403, { error: 'Open the admin demo from this computer.' })
+        }
+        return await readAdminDatabase(request, response)
       }
 
       if (path === '/api/workbench/state' && request.method === 'GET') {
@@ -113,7 +165,9 @@ export function workbenchBackend() {
 
   return {
     name: 'local-workbench-backend',
-    configureServer(server) { server.middlewares.use(handle) },
+    configureServer(server) {
+      server.middlewares.use((request, response, next) => handle(request, response, next, true))
+    },
     configurePreviewServer(server) { server.middlewares.use(handle) },
   }
 }

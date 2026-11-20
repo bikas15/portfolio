@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import './Workbench.css'
 import brandLogo from '../bikaslogo.png'
 import { deskUrl, portfolioAsset } from './portfolioPaths.js'
+import DatabasePanel from './DatabasePanel.jsx'
 
+const localWorkbench = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)
+const databaseEnabled = !localWorkbench || import.meta.env.DEV
 const panels = [
   { id: 'about', label: 'About' },
   { id: 'projects', label: 'Projects' },
@@ -10,6 +13,7 @@ const panels = [
   { id: 'notes', label: 'Scratchpad' },
   { id: 'contact', label: 'Contact' },
   { id: 'activity', label: 'Activity' },
+  ...(databaseEnabled ? [{ id: 'database', label: 'Database' }] : []),
 ]
 
 const projects = [
@@ -55,7 +59,6 @@ function AppIcon({ name }) {
   return <span className={'app-icon app-icon--' + name} aria-hidden="true"><i /></span>
 }
 
-const localWorkbench = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)
 const hostedApi = import.meta.env.VITE_CONTACT_API_URL?.trim().replace(/\/+$/, '') || 'https://bikas-portfolio-contact-api.onrender.com'
 const workbenchEndpoint = localWorkbench ? portfolioAsset('api/workbench/') : hostedApi + '/api/workbench/'
 let workspaceKey
@@ -83,6 +86,37 @@ async function workspaceRequest(path, method = 'GET', data) {
   const value = await response.json()
   if (!response.ok) throw new Error(value.error)
   return value
+}
+
+async function adminRequest(path, { method = 'GET', data, token } = {}) {
+  const headers = {}
+  if (data) headers['Content-Type'] = 'application/json'
+  if (token) headers.Authorization = 'Bearer ' + token
+  const response = await fetch(workbenchEndpoint + 'admin/' + path, {
+    method, headers, body: data ? JSON.stringify(data) : undefined,
+    credentials: 'omit', cache: 'no-store', redirect: 'error',
+  })
+  if (!response.headers.get('content-type')?.includes('application/json')) throw new Error('Database server unavailable.')
+  const value = await response.json()
+  if (!response.ok) throw Object.assign(new Error(value.error), { status: response.status })
+  return value
+}
+
+async function connectDatabase(credentials) {
+  if (localWorkbench) {
+    const snapshot = await adminRequest('database', { method: 'POST', data: credentials })
+    return {
+      expiresInMs: 10 * 60_000,
+      read: async collection => ({ documents: snapshot[collection], hasNext: false }),
+      lock: () => {},
+    }
+  }
+  const { token, expiresInMs } = await adminRequest('login', { method: 'POST', data: credentials })
+  return {
+    expiresInMs,
+    read: (collection, page) => adminRequest('records/' + collection + '?page=' + page, { token }),
+    lock: () => { void adminRequest('session', { method: 'DELETE', token }).catch(() => {}) },
+  }
 }
 
 export default function Workbench({ animation, enabled, onLightMode }) {
@@ -294,6 +328,7 @@ export default function Workbench({ animation, enabled, onLightMode }) {
             {item.id === 'activity' && (workspace?.activity.length ? <ul className="activity-list">
               {workspace.activity.map(({ label, at }, position) => <li key={at + position}><span>{label}</span><time dateTime={at}>{new Date(at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</time></li>)}
             </ul> : <p>{workspace ? 'Project views and note saves will appear here.' : 'Activity is available when the workspace connects.'}</p>)}
+            {databaseEnabled && item.id === 'database' && enabled && <DatabasePanel connect={connectDatabase} local={localWorkbench} />}
           </div>
         </section>
       })}
