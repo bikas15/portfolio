@@ -17,9 +17,8 @@ function PortfolioModes() {
   const timer = useRef(null)
   const currentMode = useRef(desk)
   const returnScroll = useRef(0)
-  const returnFocus = useRef(null)
   const portfolioUrl = useRef(isDeskRoute() ? portfolioRoot.href : location.href)
-  const portfolioTitle = 'Bikas Banjade | Software Engineering Student at NCIT'
+  const portfolioTitle = 'Bikas Banjade (Bikas Banjade) | Software Engineer | NCIT'
 
   useLayoutEffect(() => {
     document.body.classList.toggle('desk-active', desk)
@@ -46,12 +45,11 @@ function PortfolioModes() {
     }
   }, [])
 
-  function switchMode(nextDesk, trigger) {
+  function switchMode(nextDesk) {
     if (nextDesk === desk || animation) return
     if (nextDesk) {
       portfolioUrl.current = location.href
       returnScroll.current = window.scrollY
-      returnFocus.current = trigger
     }
     const destination = nextDesk ? deskUrl : portfolioUrl.current
     history.pushState(null, '', destination)
@@ -66,16 +64,14 @@ function PortfolioModes() {
       setAnimation('')
       requestAnimationFrame(() => {
         const selector = nextDesk ? '.theme-switch' : '.portfolio-theme-switch'
-        const trigger = nextDesk ? null : returnFocus.current
-        const target = trigger?.isConnected ? trigger : document.querySelector(selector)
-        target?.focus({ preventScroll: true })
+        document.querySelector(selector)?.focus({ preventScroll: true })
       })
     }, motion ? (nextDesk ? assemblyDuration : exitDuration) : 0)
   }
 
   return <>
     <div hidden={desk && animation !== 'assemble'} inert={desk ? '' : undefined}>
-      <App onDarkMode={event => switchMode(true, event.currentTarget)} showOpening={showOpening} />
+      <App onDarkMode={() => switchMode(true)} showOpening={showOpening} />
     </div>
     {openedDesk && <div className="desk-layer" hidden={!desk && animation !== 'exit'} inert={!desk || animation ? '' : undefined}>
       <Workbench animation={animation} enabled={desk && !animation} onLightMode={() => switchMode(false)} />
