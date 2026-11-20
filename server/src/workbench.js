@@ -15,7 +15,7 @@ const schema = new mongoose.Schema({
   activity: [{ _id: false, label: String, at: String }],
   expiresAt: { type: Date, expires: 0 },
 }, { versionKey: false, collection: 'workbenchSessions' })
-const Workspace = mongoose.model('WorkbenchSession', schema)
+export const Workspace = mongoose.model('WorkbenchSession', schema)
 
 function publicFields(document) {
   return document ? { note: document.note, updatedAt: document.updatedAt, activity: document.activity } : emptyWorkspace
