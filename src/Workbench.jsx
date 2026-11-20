@@ -22,7 +22,7 @@ const projects = [
 ]
 
 const compactDesk = '(max-width: 800px), (max-height: 480px) and (max-width: 1000px)'
-const initialWindows = () => matchMedia(compactDesk).matches ? [] : [{ id: 'about', x: 0, y: 0, mode: 'normal' }]
+const initialWindows = [{ id: 'about', x: 0, y: 0, mode: 'normal' }]
 const nepalClock = new Intl.DateTimeFormat('en-GB', {
   timeZone: 'Asia/Kathmandu', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
 })
