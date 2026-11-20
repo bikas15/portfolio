@@ -136,6 +136,34 @@ function App({ onDarkMode, showOpening }) {
         <h2>Feel Free to Explore my Website!</h2>
       </div>
 
+      <ProjectCaseStudies showOpening={showOpening} />
+
+      {/* Contact Section */}
+      <section id="contact" className="portfolio-contact" aria-labelledby="contact-title">
+        <div className="portfolio-contact-copy">
+          <h2 id="contact-title">Let’s talk<span aria-hidden="true">.</span></h2>
+          <p>Get in touch about a project, internship or collaboration.</p>
+          <a href={`mailto:${email}`} className="portfolio-email">{email} <span aria-hidden="true">↗</span></a>
+          <div className="portfolio-socials">
+            <SocialLink name="GitHub" href={github} />
+            <SocialLink name="Instagram" href="https://www.instagram.com/bikas.banjade22/" icon="instagram.svg" />
+            <SocialLink name="Facebook" href="https://www.facebook.com/bikash.banjade15/" icon="facebook.svg" />
+          </div>
+        </div>
+        <form className="portfolio-contact-form" onSubmit={handleSubmit}>
+          <div className="portfolio-form-row">
+            <label>Name<input name="name" autoComplete="name" maxLength={100} value={formData.name} onChange={handleInputChange} required /></label>
+            <label>Email<input type="email" name="email" autoComplete="email" maxLength={254} value={formData.email} onChange={handleInputChange} required /></label>
+          </div>
+          <label><span>Phone <small>(optional)</small></span><input type="tel" name="phone" autoComplete="tel" maxLength={30} value={formData.phone} onChange={handleInputChange} /></label>
+          <label>Message<textarea name="message" rows={4} maxLength={5000} value={formData.message} onChange={handleInputChange} required /></label>
+          {submitMessage && <p role="status" className={submitError ? 'portfolio-form-error' : 'portfolio-form-success'}>{submitMessage}</p>}
+          <button type="submit" className="portfolio-contact-submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Sending…' : 'Send message'} <span aria-hidden="true">↗</span>
+          </button>
+        </form>
+      </section>
+
       {/* About Section */}
       <section id="about" className="about">
         <h2>About</h2>
@@ -184,34 +212,6 @@ function App({ onDarkMode, showOpening }) {
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/java/java-original.svg" alt="Java" />
           </div>
         </div>
-      </section>
-
-      <ProjectCaseStudies showOpening={showOpening} />
-
-      {/* Contact Section */}
-      <section id="contact" className="portfolio-contact" aria-labelledby="contact-title">
-        <div className="portfolio-contact-copy">
-          <h2 id="contact-title">Let’s talk<span aria-hidden="true">.</span></h2>
-          <p>Get in touch about a project, internship or collaboration.</p>
-          <a href={`mailto:${email}`} className="portfolio-email">{email} <span aria-hidden="true">↗</span></a>
-          <div className="portfolio-socials">
-            <SocialLink name="GitHub" href={github} />
-            <SocialLink name="Instagram" href="https://www.instagram.com/bikas.banjade22/" icon="instagram.svg" />
-            <SocialLink name="Facebook" href="https://www.facebook.com/bikash.banjade15/" icon="facebook.svg" />
-          </div>
-        </div>
-        <form className="portfolio-contact-form" onSubmit={handleSubmit}>
-          <div className="portfolio-form-row">
-            <label>Name<input name="name" autoComplete="name" maxLength={100} value={formData.name} onChange={handleInputChange} required /></label>
-            <label>Email<input type="email" name="email" autoComplete="email" maxLength={254} value={formData.email} onChange={handleInputChange} required /></label>
-          </div>
-          <label><span>Phone <small>(optional)</small></span><input type="tel" name="phone" autoComplete="tel" maxLength={30} value={formData.phone} onChange={handleInputChange} /></label>
-          <label>Message<textarea name="message" rows={4} maxLength={5000} value={formData.message} onChange={handleInputChange} required /></label>
-          {submitMessage && <p role="status" className={submitError ? 'portfolio-form-error' : 'portfolio-form-success'}>{submitMessage}</p>}
-          <button type="submit" className="portfolio-contact-submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Sending…' : 'Send message'} <span aria-hidden="true">↗</span>
-          </button>
-        </form>
       </section>
     </div>
   )
