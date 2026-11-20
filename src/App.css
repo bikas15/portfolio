@@ -37,6 +37,11 @@ html {
 }
 
 .app-container {
+  --type-hero: clamp(2.25rem, 1.45rem + 3.4vw, 4.5rem);
+  --type-section: clamp(1.75rem, 1.3rem + 1.45vw, 2.65rem);
+  --type-project: clamp(1.375rem, 1.08rem + 1.1vw, 2.125rem);
+  --type-lead: clamp(1.125rem, .88rem + 1.05vw, 1.75rem);
+  --type-body: 1rem;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -251,7 +256,7 @@ html {
 }
 
 .hero-content h1 {
-  font-size: 4.5rem;
+  font-size: var(--type-hero);
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 20px;
@@ -260,15 +265,14 @@ html {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  word-spacing: 100vw;
 }
 
 .hero-content h2 {
-  font-size: 2.2rem;
+  font-size: var(--type-lead);
   font-weight: 400;
   color: #4b5874;
   margin-bottom: 40px;
-  letter-spacing: 1px;
+  letter-spacing: .02em;
 }
 
 .hero-content h2::after { background: var(--hero-accent); }
@@ -340,7 +344,7 @@ html {
 }
 
 .explore-text h2 {
-  font-size: 2.2rem;
+  font-size: var(--type-lead);
   color: var(--hero-accent);
   font-weight: 700;
 }
@@ -353,7 +357,7 @@ html {
 }
 
 :where(.app-container) section h2 {
-  font-size: 3rem;
+  font-size: var(--type-section);
   margin-bottom: 60px;
   color: var(--text-dark);
   font-weight: 800;
@@ -406,7 +410,7 @@ html {
 }
 
 .about-text p {
-  font-size: 1.05rem;
+  font-size: var(--type-body);
   line-height: 1.9;
   color: var(--text-light);
   margin-bottom: 25px;
@@ -466,7 +470,7 @@ html {
   display: block;
   margin-bottom: 10px;
   color: #17182e;
-  font: 700 1rem/1.4 'Bricolage Grotesque', 'Segoe UI', sans-serif;
+  font: 700 var(--type-section)/1.15 'Bricolage Grotesque', 'Segoe UI', sans-serif;
 }
 #skills.portfolio-stack h2::after { content: none; }
 .portfolio-stack dl { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
@@ -500,7 +504,7 @@ html {
   padding-block: clamp(28px, 6vw, 65px);
   border-block: 1px solid var(--page-line);
   color: var(--ink);
-  font: 400 1.125rem/1.55 'DM Sans', 'Segoe UI', sans-serif;
+  font: 400 var(--type-body)/1.6 'DM Sans', 'Segoe UI', sans-serif;
   grid-template-columns: minmax(0, .83fr) minmax(0, 1.17fr);
   gap: clamp(20px, 5vw, 56px);
 }
@@ -508,7 +512,7 @@ html {
   display: block;
   margin: 0;
   color: var(--ink);
-  font: 740 clamp(2.65rem, 5vw, 4.4rem)/.97 'Bricolage Grotesque', 'Segoe UI', sans-serif;
+  font: 740 var(--type-section)/1.15 'Bricolage Grotesque', 'Segoe UI', sans-serif;
   letter-spacing: -.067em;
 }
 .portfolio-contact h2::after { content: none; }
@@ -632,15 +636,15 @@ html {
 .featured-project h3 {
   margin: 0;
   color: var(--text-dark);
-  font-size: clamp(2rem, 4.5vw, 3.6rem);
-  line-height: 1.06;
+  font-size: var(--type-project);
+  line-height: 1.15;
   letter-spacing: -.052em;
 }
 
 .featured-project-summary {
   margin: 14px 0;
   color: var(--text-light);
-  font-size: clamp(.98rem, 1.35vw, 1.13rem);
+  font-size: var(--type-body);
   line-height: 1.65;
 }
 
@@ -716,14 +720,14 @@ html {
 .featured-project-details h4 {
   margin: 0 0 5px;
   color: var(--text-dark);
-  font-size: .98rem;
+  font-size: var(--type-body);
 }
 
 .featured-project-details p {
   margin: 0;
   color: var(--text-light);
-  font-size: .91rem;
-  line-height: 1.55;
+  font-size: var(--type-body);
+  line-height: 1.6;
 }
 
 @media (max-width: 740px) {
@@ -754,15 +758,6 @@ html {
     padding: 60px 0 40px;
   }
 
-  .hero-content h1 {
-    font-size: 2.8rem;
-    word-spacing: auto;
-  }
-
-  .hero-content h2 {
-    font-size: 1.5rem;
-  }
-
   .hero-image svg {
     width: 250px;
     height: 250px;
@@ -784,13 +779,6 @@ html {
     text-align: center;
   }
 
-  :where(.app-container) section h2 {
-    font-size: 2rem;
-  }
-
-  .explore-text h2 {
-    font-size: 1.5rem;
-  }
 }
 
 @media (max-width: 800px) {
@@ -821,7 +809,6 @@ html {
   :where(.app-container) section:not(.hero) { margin-bottom: 44px; padding-block: 34px; }
   :where(.app-container) section:not(.hero) > h2 { margin-bottom: 30px; }
   .hero { --hero-glow-position: 50% 72%; flex-direction: column; gap: 24px; padding-block: 48px 28px; text-align: center; }
-  .hero-content h1 { word-spacing: normal; }
   .hero-content h2 { margin-bottom: 12px; }
   .explore-text { margin: 28px 0 44px; }
   .hero-image, .about-image, .about-text { min-width: 0; max-width: 100%; }
@@ -831,8 +818,6 @@ html {
 @media (max-width: 480px) {
   .app-container { padding-inline: 14px; }
   .hero { padding-block: 40px 24px; }
-  .hero-content h1 { font-size: clamp(2rem, 10vw, 2.8rem); }
-  .hero-content h2 { font-size: 1.2rem; }
   .hero-image img, .about-image img { max-width: min(100%, 250px); }
 }
 
