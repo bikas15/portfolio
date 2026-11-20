@@ -3,6 +3,7 @@ import cors from 'cors'
 import express from 'express'
 import mongoose from 'mongoose'
 import ContactMessage from './models/ContactMessage.js'
+import { createWorkbenchRouter } from './workbench.js'
 
 const app = express()
 const port = Number(process.env.PORT) || 3001
@@ -20,6 +21,7 @@ app.use(cors({
     )))
   }
 }))
+app.use('/api/workbench', createWorkbenchRouter(allowedOrigins))
 app.use(express.json({ limit: '10kb' }))
 
 app.get('/health', (_request, response) => {

@@ -13,12 +13,11 @@ const PlaceholderImage = ({ width = 300, height = 300, text = 'Image' }) => (
 )
 
 const projectLinks = {
-  gridRush: import.meta.env.BASE_URL + 'games/gridrush/?discovered=party',
   bugFinder: 'https://bikas15.github.io/-bugs_finder/#/',
   hostelHub: 'https://bikas15.github.io/Hostel-Khojau/#/'
 }
 
-function App() {
+function App({ onDarkMode, showOpening }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -80,12 +79,25 @@ function App() {
 
   return (
     <div className="app-container">
+      <div className="opening-intro" hidden={!showOpening} aria-hidden="true">
+        <div className="opening-composition">
+          <div className="opening-name">
+            <span><b>Bikas</b></span>
+            <span><b>Banjade</b></span>
+          </div>
+          <div className="opening-tiles">
+            {[4, 2, 3, 1, 0, 5, 6, 7, 8].map(step => (
+              <span key={step} style={{ '--tile-delay': `${130 + step * 54}ms` }} />
+            ))}
+          </div>
+        </div>
+      </div>
       {/* Navigation */}
       <nav className="navbar">
         <div className="nav-container">
           <div className="logo">
-            <a className="logo-game-link" href={projectLinks.gridRush} aria-label="Play Turn Every Tile Blue">
-              <span className="logo-game-icon" aria-hidden="true">
+            <a className="brand-mark-link" href="#home" aria-label="Home">
+              <span className="brand-mark-icon" aria-hidden="true">
                 <img src={brandLogo} alt="" />
               </span>
             </a>
@@ -98,6 +110,9 @@ function App() {
             <li><a href="#projects">Projects</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
+          <button className="portfolio-theme-switch" type="button" aria-label="Flip the Switch" title="Open Bikas Desk" data-pointer-label="ENTER" onClick={onDarkMode}>
+            <span className="portfolio-mode-moon" aria-hidden="true" /><span className="portfolio-theme-label">Flip the Switch</span>
+          </button>
         </div>
       </nav>
 
@@ -171,7 +186,7 @@ function App() {
         <h2>Projects</h2>
         <div className="projects-grid">
           <div className="project-card">
-            <a className="project-card-link" href={projectLinks.bugFinder} target="_blank" rel="noreferrer">
+            <a className="project-card-link" href={projectLinks.bugFinder} target="_blank" rel="noreferrer" data-pointer-label="VIEW">
               <div className="project-image">
                 <img src="https://bikas15.github.io/-bugs_finder/bug.svg" alt="Bug Finder logo" style={{ objectFit: 'contain', padding: '2rem' }} />
               </div>
@@ -192,7 +207,7 @@ function App() {
           </div>
 
           <div className="project-card">
-            <a className="project-card-link" href={projectLinks.hostelHub} target="_blank" rel="noreferrer">
+            <a className="project-card-link" href={projectLinks.hostelHub} target="_blank" rel="noreferrer" data-pointer-label="VIEW">
               <div className="project-image">
                 <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80" alt="Hostel Hub" />
               </div>
