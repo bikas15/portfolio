@@ -18,7 +18,9 @@ function digest(value) {
 
 export function createAdminDatabaseRouter(allowedOrigins, password) {
   const router = express.Router()
-  const passwordDigest = typeof password === 'string' && password.length >= 24 ? digest(password) : null
+  const passwordDigest = typeof password === 'string' && password.length >= 18 && password.length <= 256
+    ? digest(password)
+    : null
   const sessions = new Map()
   let failures = []
 
