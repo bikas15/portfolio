@@ -3,21 +3,21 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import Workbench from './Workbench.jsx'
 import PointerEffect from './PointerEffect.jsx'
+import { deskUrl, isDeskRoute, portfolioRoot } from './portfolioPaths.js'
 import './index.css'
 
-const workbenchRoute = () => location.pathname.endsWith('/workbench.html')
 const assemblyDuration = 2200
 const exitDuration = 420
 
 function PortfolioModes() {
-  const [desk, setDesk] = useState(workbenchRoute)
-  const [openedDesk, setOpenedDesk] = useState(workbenchRoute)
+  const [desk, setDesk] = useState(isDeskRoute)
+  const [openedDesk, setOpenedDesk] = useState(isDeskRoute)
   const [animation, setAnimation] = useState('')
-  const [showOpening, setShowOpening] = useState(() => !workbenchRoute())
+  const [showOpening, setShowOpening] = useState(() => !isDeskRoute())
   const timer = useRef(null)
   const currentMode = useRef(desk)
   const returnScroll = useRef(0)
-  const portfolioUrl = useRef(workbenchRoute() ? new URL('./', location.href).href : location.href)
+  const portfolioUrl = useRef(isDeskRoute() ? portfolioRoot.href : location.href)
   const portfolioTitle = 'Bikas Banjade (Bikas Banjade) | Software Engineer | NCIT'
 
   useLayoutEffect(() => {
@@ -28,7 +28,7 @@ function PortfolioModes() {
 
   useEffect(() => {
     function syncLocation() {
-      const nextDesk = workbenchRoute()
+      const nextDesk = isDeskRoute()
       if (nextDesk === currentMode.current) return
       currentMode.current = nextDesk
       clearTimeout(timer.current)
@@ -51,7 +51,7 @@ function PortfolioModes() {
       portfolioUrl.current = location.href
       returnScroll.current = window.scrollY
     }
-    const destination = nextDesk ? new URL('workbench.html', location.href).href : portfolioUrl.current
+    const destination = nextDesk ? deskUrl : portfolioUrl.current
     history.pushState(null, '', destination)
     currentMode.current = nextDesk
     if (nextDesk) setOpenedDesk(true)

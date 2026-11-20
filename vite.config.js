@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react(), workbenchBackend()],
   build: {
     rollupOptions: {
-      input: { portfolio: 'index.html', workbench: 'workbench.html' },
+      input: { portfolio: 'index.html', desk: 'bikas-desk/index.html' },
     },
   },
 })

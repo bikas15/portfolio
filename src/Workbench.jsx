@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import './Workbench.css'
 import brandLogo from '../bikaslogo.png'
+import { deskUrl, portfolioAsset } from './portfolioPaths.js'
 
 const panels = [
   { id: 'about', label: 'About' },
@@ -12,7 +13,7 @@ const panels = [
 ]
 
 const projects = [
-  { id: 'bugs-finder', title: 'Bugs Finder', stack: 'React · Django · MySQL', description: 'Explore the bug tracking app and its project presentation.', url: 'https://bikas15.github.io/-bugs_finder/#/', slides: './bug-finder-presentation.pdf' },
+  { id: 'bugs-finder', title: 'Bugs Finder', stack: 'React · Django · MySQL', description: 'Explore the bug tracking app and its project presentation.', url: 'https://bikas15.github.io/-bugs_finder/#/', slides: portfolioAsset('bug-finder-presentation.pdf') },
   { id: 'hostel-hub', title: 'Hostel Hub', stack: 'React · Node · MongoDB', description: 'Explore the live hostel discovery app.', url: 'https://bikas15.github.io/Hostel-Khojau/#/' },
 ]
 
@@ -56,7 +57,7 @@ function AppIcon({ name }) {
 
 const localWorkbench = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)
 const hostedApi = import.meta.env.VITE_CONTACT_API_URL?.trim().replace(/\/+$/, '') || 'https://bikas-portfolio-contact-api.onrender.com'
-const workbenchEndpoint = localWorkbench ? './api/workbench/' : hostedApi + '/api/workbench/'
+const workbenchEndpoint = localWorkbench ? portfolioAsset('api/workbench/') : hostedApi + '/api/workbench/'
 let workspaceKey
 
 function browserWorkspaceKey() {
@@ -207,7 +208,7 @@ export default function Workbench({ animation, enabled, onLightMode }) {
 
   return <div className="desktop" data-theme="dark" data-animation={animation || undefined}>
     <header className="desktop-top">
-      <a className="desktop-brand" href="./workbench.html"><span className="desktop-logo" aria-hidden="true"><span><img src={brandLogo} alt="" /></span></span>Bikas Desk</a>
+      <a className="desktop-brand" href={deskUrl}><span className="desktop-logo" aria-hidden="true"><span><img src={brandLogo} alt="" /></span></span>Bikas Desk</a>
       <div className="desktop-top-actions">
         <span className="local-state" role="status"><i className={workspace ? 'ready' : ''} />{workspace ? (localWorkbench ? 'Local server online' : 'Workspace online') : serverMessage || 'Connecting'}</span>
         <button className="theme-switch" type="button" title="Return to the portfolio" data-pointer-label="BACK" onClick={onLightMode}><span aria-hidden="true" />Lights on</button>
@@ -221,7 +222,7 @@ export default function Workbench({ animation, enabled, onLightMode }) {
         {panels.map(panel => <button type="button" className="desktop-app" key={panel.id} onClick={() => openWindow(panel.id)}>
           <AppIcon name={panel.id} /><span>{panel.label}</span>
         </button>)}
-        <a className="desktop-app" href="./Bikas-Banjade-CV.pdf" target="_blank" rel="noreferrer"><AppIcon name="resume" /><span>Resume</span></a>
+        <a className="desktop-app" href={portfolioAsset('Bikas-Banjade-CV.pdf')} target="_blank" rel="noreferrer"><AppIcon name="resume" /><span>Resume</span></a>
       </nav>
 
       {windows.map((item, index) => {
@@ -243,13 +244,13 @@ export default function Workbench({ animation, enabled, onLightMode }) {
           <div className={'window-body window-body--' + item.id}>
             {item.id === 'about' && <>
               <div className="about-banner">
-                <img src="./portfolio/perfil.jpg" alt="Portrait of Bikas Banjade" />
+                <img src={portfolioAsset('portfolio/perfil.jpg')} alt="Portrait of Bikas Banjade" />
                 <div><h1>Bikas Banjade</h1><p>Software engineering student · NCIT</p></div>
               </div>
               <p>I’m from Pyuthan, Nepal. I build web apps, backend APIs and small browser experiments.</p>
               <div className="panel-actions">
                 <button className="feature-link" type="button" onClick={() => openWindow('projects')}>View projects</button>
-                <a className="soft-button" href="./Bikas-Banjade-CV.pdf" target="_blank" rel="noreferrer">Resume</a>
+                <a className="soft-button" href={portfolioAsset('Bikas-Banjade-CV.pdf')} target="_blank" rel="noreferrer">Resume</a>
                 <a className="soft-button" href="https://github.com/bikas15" target="_blank" rel="noreferrer">GitHub</a>
               </div>
             </>}
@@ -271,7 +272,7 @@ export default function Workbench({ animation, enabled, onLightMode }) {
               <h3>Get in touch</h3>
               <div className="panel-actions">
                 <a className="feature-link" href="mailto:bikashbanjade15@gmail.com">Email me</a>
-                <a className="soft-button" href="./#contact">Contact form</a>
+                <a className="soft-button" href={portfolioAsset('#contact')}>Contact form</a>
               </div>
             </>}
             {item.id === 'notes' && <form className="scratchpad" onSubmit={saveNote}>

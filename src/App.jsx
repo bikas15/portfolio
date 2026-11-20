@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import brandLogo from '../bikaslogo.png'
+import { portfolioAsset } from './portfolioPaths.js'
 
 // SVG placeholder component
 const PlaceholderImage = ({ width = 300, height = 300, text = 'Image' }) => (
@@ -146,7 +147,7 @@ function App({ onDarkMode, showOpening }) {
               my main focus to be on. But for now I am just exploring different fields.
             </p>
             <p><strong>In short:</strong> A guy not sure what he is doing but trying to figure it out.</p>
-            <a className="about-cv-link" href={import.meta.env.BASE_URL + 'Bikas-Banjade-CV.pdf'} target="_blank" rel="noopener noreferrer">
+            <a className="about-cv-link" href={portfolioAsset('Bikas-Banjade-CV.pdf')} target="_blank" rel="noopener noreferrer">
               View CV ↗
             </a>
           </div>
@@ -202,7 +203,7 @@ function App({ onDarkMode, showOpening }) {
             </a>
             <div className="project-actions">
               <button type="button" className="btn-link" onClick={() => openProject(projectLinks.bugFinder)}>Open Website</button>
-              <button type="button" className="btn-link" onClick={() => openProject(import.meta.env.BASE_URL + 'bug-finder-presentation.pdf')}>View PPT</button>
+              <button type="button" className="btn-link" onClick={() => openProject(portfolioAsset('bug-finder-presentation.pdf'))}>View PPT</button>
             </div>
           </div>
 
@@ -297,13 +298,13 @@ function App({ onDarkMode, showOpening }) {
             <h3>You can also find me on:</h3>
             <div className="social-links">
               <a href="https://www.facebook.com/bikash.banjade15/" target="_blank" rel="noopener noreferrer" title="Facebook">
-                <img src={import.meta.env.BASE_URL + 'portfolio/social/facebook.svg'} alt="Facebook" className="social-icon-img" />
+                <img src={portfolioAsset('portfolio/social/facebook.svg')} alt="Facebook" className="social-icon-img" />
               </a>
               <a href="https://www.instagram.com/bikas.banjade22/" target="_blank" rel="noopener noreferrer" title="Instagram">
-                <img src={import.meta.env.BASE_URL + 'portfolio/social/instagram.svg'} alt="Instagram" className="social-icon-img" />
+                <img src={portfolioAsset('portfolio/social/instagram.svg')} alt="Instagram" className="social-icon-img" />
               </a>
               <a href="mailto:bikashbanjade15@gmail.com" target="_blank" rel="noopener noreferrer" title="Gmail">
-                <img src={import.meta.env.BASE_URL + 'portfolio/social/gmail.svg'} alt="Gmail" className="social-icon-img" />
+                <img src={portfolioAsset('portfolio/social/gmail.svg')} alt="Gmail" className="social-icon-img" />
               </a>
             </div>
           </div>
