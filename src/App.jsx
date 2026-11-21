@@ -135,7 +135,7 @@ function App({ onDarkMode, showOpening }) {
 
       <main id="portfolio-content" tabIndex={-1}>
         <section id="home" className="hero" aria-labelledby="home-title">
-          <h1 id="home-title">Bikas Banjade</h1>
+          <h1 id="home-title">Bikas <span>Banjade</span></h1>
           <figure className="hero-photo">
             <img className="hero-portrait" src={portfolioAsset('portfolio/perfil.jpg')} alt="Bikas Banjade in front of a brick wall" width="559" height="485" fetchPriority="high" />
             <figcaption>Pyuthan, Nepal</figcaption>
