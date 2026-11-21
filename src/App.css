@@ -178,9 +178,9 @@ html {
   border-bottom: 1px solid var(--page-line);
 }
 .hero-photo {
-  grid-area: 1 / 2 / 4 / 3;
-  align-self: center;
+  grid-area: 2 / 2 / 4 / 3;
   width: clamp(142px, 19vw, 228px);
+  margin-inline-end: clamp(0px, 14vw - 112px, 90px);
 }
 .hero-portrait {
   display: block;
@@ -240,7 +240,7 @@ html {
   .hero { column-gap: 12px; }
   .hero-role { grid-area: 1 / 1 / 2 / -1; }
   .hero h1 { align-self: center; font-size: clamp(2.9rem, 14vw, 5.5rem); }
-  .hero-photo { grid-area: 2 / 2; width: clamp(82px, 21vw, 124px); }
+  .hero-photo { grid-area: 2 / 2; align-self: center; width: clamp(82px, 21vw, 124px); }
   .hero-photo figcaption { font-size: .75rem; line-height: 1.3; }
   .hero-intro { grid-area: 3 / 1 / 4 / -1; }
 }
