@@ -381,7 +381,6 @@ html {
 .portfolio-contact-form { display: grid; gap: 12px; padding: clamp(14px, 3vw, 26px); border: 1px solid var(--page-line); border-radius: 14px; background: var(--page-surface); }
 .portfolio-form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .portfolio-contact-form label { display: grid; gap: 4px; min-width: 0; font-size: 1rem; font-weight: 700; }
-.portfolio-contact-form label small { color: var(--muted); font-size: inherit; font-weight: 500; }
 .portfolio-contact-form :is(input, textarea) { width: 100%; min-height: 44px; padding: 8px 10px; border: 1px solid #8792aa; border-radius: 6px; background: var(--page-bg); color: var(--ink); font-family: inherit; font-size: 1rem; font-weight: 400; line-height: 1.45; }
 .portfolio-contact-form textarea { resize: vertical; }
 .portfolio-contact-submit {

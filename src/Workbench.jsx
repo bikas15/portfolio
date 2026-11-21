@@ -297,7 +297,6 @@ export default function Workbench({ animation, enabled, onLightMode }) {
     <header className="desktop-top">
       <a className="desktop-brand" href={deskUrl}><span className="desktop-logo" aria-hidden="true"><span><img src={brandLogo} alt="" /></span></span>Bikas Desk</a>
       <div className="desktop-top-actions">
-        <span className="local-state" role="status"><i className={workspace ? 'ready' : ''} />{workspace ? (localWorkbench ? 'Local server online' : 'Workspace online') : serverMessage || 'Connecting'}</span>
         <DeskAppSearch enabled={enabled && !animation} onOpen={openWindow} />
         <button className="theme-switch" type="button" title="Return to the portfolio" onClick={onLightMode}><span aria-hidden="true" />Lights on</button>
         <DeskClock enabled={enabled} />

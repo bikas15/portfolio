@@ -61,7 +61,7 @@ body.desk-active { overflow: hidden; }
   background: var(--top);
   border-bottom: 1px solid #b9c4ff38;
 }
-.desktop-brand, .desktop-top-actions, .local-state { display: inline-flex; align-items: center; gap: 9px; }
+.desktop-brand, .desktop-top-actions { display: inline-flex; align-items: center; gap: 9px; }
 .desktop-brand { text-decoration: none; font: 740 1.13rem/1.1 var(--headline); white-space: nowrap; }
 .desktop-logo {
   display: grid;
@@ -133,9 +133,6 @@ body.desk-active { overflow: hidden; }
   scale: 1.14;
   box-shadow: 0 0 0 3px #ffc77755, 0 0 12px #ffc77770;
 }
-.local-state { max-width: 23ch; color: var(--muted); font: 500 .71rem/1.35 var(--mono); }
-.local-state i { flex: 0 0 7px; height: 7px; border-radius: 50%; background: #d0a776; }
-.local-state i.ready { background: #20a881; }
 
 .desk-search-dialog {
   width: min(92vw, 460px);
@@ -563,7 +560,6 @@ kbd { border: 1px solid #637099; border-radius: 4px; padding: 1px 4px; }
   .desktop-dock button[data-open="true"]::after { bottom: -4px; }
 }
 @media (max-width: 580px) {
-  .desktop-top .local-state { display: none; }
   .desktop-top-actions { gap: 6px; }
   .desk-search-trigger { width: 44px; padding: 0; }
   .desk-search-trigger > span:last-child { display: none; }

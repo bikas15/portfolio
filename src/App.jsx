@@ -189,7 +189,7 @@ function App({ onDarkMode, showOpening }) {
               <label>Name<input name="name" autoComplete="name" maxLength={100} value={formData.name} onChange={handleInputChange} required /></label>
               <label>Email<input type="email" name="email" autoComplete="email" maxLength={254} value={formData.email} onChange={handleInputChange} required /></label>
             </div>
-            <label><span>Phone <small>(optional)</small></span><input type="tel" name="phone" autoComplete="tel" maxLength={30} value={formData.phone} onChange={handleInputChange} /></label>
+            <label>Phone<input type="tel" name="phone" autoComplete="tel" maxLength={30} value={formData.phone} onChange={handleInputChange} /></label>
             <label>Message<textarea name="message" rows={4} maxLength={5000} value={formData.message} onChange={handleInputChange} required /></label>
             <p role="status" className={submitError ? 'portfolio-form-error' : 'portfolio-form-success'}>{submitMessage}</p>
             <button type="submit" className="portfolio-contact-submit" disabled={!contactApi || isSubmitting}>
