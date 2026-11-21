@@ -6,17 +6,19 @@
 }
 
 :root {
-  --page-bg: #f3f7fa;
-  --page-surface: #fff;
-  --page-line: #cfdce4;
-  --hero-ink: #182532;
-  --hero-accent: #17576b;
+  --page-bg: #101318;
+  --page-surface: #191c21;
+  --page-line: #49454c;
+  --hero-ink: #f8eee9;
+  --hero-accent: #f49981;
+  --action-fill: #17576b;
+  --action-hover: #23667a;
   --primary-color: var(--hero-accent);
   --secondary-color: #294b64;
   --dark: #1a1a2e;
   --light: #f5f7fa;
   --text-dark: var(--hero-ink);
-  --text-light: #465968;
+  --text-light: #cbc1c3;
   --gradient-1: var(--hero-accent);
   --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.15);
   --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -24,10 +26,23 @@
 }
 
 body {
+  --backdrop-height: max(592px, 56.3vw);
   font-family: 'DM Sans', 'Segoe UI', sans-serif;
   color: var(--text-dark);
   min-height: 100vh;
   line-height: 1.6;
+  background-image:
+    linear-gradient(90deg, #101318 0%, #101318d9 34%, #10131859 68%, transparent 100%),
+    linear-gradient(180deg, transparent 42%, var(--page-bg) 100%),
+    url('./assets/himalayan-dusk.jpg'),
+    radial-gradient(ellipse at 52% 100%, #663327 0%, transparent 68%);
+  background-position: center top, center top, right top, center bottom;
+  background-repeat: no-repeat;
+  background-size: 100% var(--backdrop-height), 100% var(--backdrop-height), max(100%, 1050px) auto, 100% 320px;
+}
+
+@media (max-width: 650px) {
+  body { background-position: center top, center top, 38% top, center bottom; }
 }
 
 html {
@@ -38,6 +53,7 @@ html {
 }
 
 .app-container {
+  color-scheme: dark;
   --portfolio-scroll-offset: 88px;
   --type-heading: 'Bricolage Grotesque', 'Segoe UI', sans-serif;
   --type-section: clamp(1.75rem, 1.3rem + 1.45vw, 2.65rem);
@@ -109,6 +125,7 @@ html {
   width: auto;
   max-width: none;
   height: 34px;
+  filter: invert(1);
 }
 
 .logo-icon {
@@ -199,7 +216,7 @@ html {
 .hero h1 {
   grid-area: 2 / 1;
   width: fit-content;
-  color: #202921;
+  color: var(--hero-ink);
   font: 400 clamp(4.25rem, 8vw, 9rem)/.9 'Instrument Serif', Georgia, serif;
   letter-spacing: -.052em;
   transform: scaleX(1.14);
@@ -207,7 +224,7 @@ html {
 }
 .hero h1 span {
   display: block;
-  color: #a4432e;
+  color: var(--hero-accent);
   font-style: italic;
 }
 .hero-intro { grid-area: 3 / 1; }
@@ -225,12 +242,12 @@ html {
   min-height: 44px;
   padding: 7px 13px;
   border-radius: 5px;
-  background: var(--hero-accent);
+  background: var(--action-fill);
   color: #fff;
   font-size: .91rem;
   font-weight: 650;
 }
-.hero-resume:hover { background: var(--hero-ink); color: #fff; }
+.hero-resume:hover { background: var(--action-hover); color: #fff; }
 .hero-github { border: 1px solid var(--page-line); background: var(--page-surface); color: var(--hero-ink); }
 .hero-github:hover { border-color: var(--hero-accent); color: var(--hero-accent); }
 #projects { padding-block-start: clamp(26px, 3vw, 42px); }
@@ -323,7 +340,7 @@ html {
 #skills.portfolio-stack h2 {
   display: block;
   margin-bottom: 10px;
-  color: #17182e;
+  color: var(--hero-ink);
   font: 690 var(--type-section)/1.1 var(--type-heading);
 }
 #skills.portfolio-stack h2::after { content: none; }
@@ -349,8 +366,8 @@ html {
 
 /* Contact Section */
 #contact.portfolio-contact {
-  --ink: #17182e;
-  --muted: #565a6b;
+  --ink: var(--hero-ink);
+  --muted: var(--text-light);
   --accent: var(--hero-accent);
   --accent-deep: var(--hero-ink);
   display: grid;
@@ -400,15 +417,15 @@ html {
   padding: 10px 16px;
   border: 0;
   border-radius: 8px;
-  background: var(--accent);
+  background: var(--action-fill);
   color: #fff;
   font: 700 1rem/1.4 'DM Sans', 'Segoe UI', sans-serif;
   cursor: pointer;
 }
-.portfolio-contact-submit:hover { background: var(--accent-deep); }
+.portfolio-contact-submit:hover { background: var(--action-hover); }
 .portfolio-contact-submit:disabled { opacity: .55; cursor: wait; }
-.portfolio-form-error { color: #a13120; }
-.portfolio-form-success { color: #236244; }
+.portfolio-form-error { color: #ff9e90; }
+.portfolio-form-success { color: #a9ddbd; }
 .portfolio-contact-form [role="status"]:empty { position: absolute; }
 
 @media (max-width: 620px) {
@@ -478,7 +495,7 @@ html {
   text-decoration: none;
 }
 
-.featured-project-demo, .featured-project-demo:hover { background: var(--hero-accent); color: #fff; }
+.featured-project-demo, .featured-project-demo:hover { background: var(--action-fill); color: #fff; }
 .featured-project-actions .featured-project-source { padding-inline: 6px; border-color: transparent; color: var(--hero-accent); text-decoration: underline; text-underline-offset: 4px; }
 .featured-project-actions a:hover { border-color: var(--hero-accent); }
 .featured-project-actions .featured-project-source:hover { border-color: transparent; color: var(--hero-ink); }
@@ -505,7 +522,7 @@ html {
   justify-content: space-between;
   gap: 4px 14px;
   padding-inline: 4px;
-  color: #40466a;
+  color: var(--text-light);
   font-size: .75rem;
 }
 
