@@ -1,44 +1,12 @@
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { portfolioAsset } from './portfolioPaths.js'
-
-const caseStudies = [
-  {
-    id: 'bugs-finder',
-    title: 'Bugs Finder',
-    summary: 'An LLM-powered code debugger that explains likely bugs and suggests fixes.',
-    stack: ['React', 'Django REST', 'Gemini', 'PostgreSQL'],
-    demo: 'https://bikas15.github.io/-bugs_finder/#/',
-    source: 'https://github.com/bikas15/-bugs_finder',
-    presentation: 'bug-finder-presentation.pdf',
-    image: 'portfolio/bugs-finder-workspace.jpg',
-    imageWidth: 1536,
-    imageHeight: 639,
-    imageAlt: 'Signed-in Bugs Finder workspace showing a sample Python snippet, the Analyse Code button, and the output panel.',
-    caption: 'Bugs Finder code editor after sign-in',
-    problem: 'When code fails, developers need to understand the cause and know what to try next.',
-    workflow: 'Submit a code snippet, review Gemini’s analysis and suggested fixes, then save a report to your account.',
-    contribution: 'I built the React interface and Django REST API, integrated Gemini on the server, and added sign-in and per-account report history.',
-  },
-  {
-    id: 'hostel-hub',
-    title: 'Hostel Hub',
-    summary: 'A map-based hostel finder for students in Kathmandu and nearby cities.',
-    stack: ['React', 'Leaflet', 'Node.js', 'MongoDB'],
-    demo: 'https://bikas15.github.io/Hostel-Khojau/#/',
-    source: 'https://github.com/bikas15/Hostel-Khojau',
-    image: 'portfolio/hostel-hub-map.jpg',
-    imageWidth: 1265,
-    imageHeight: 712,
-    imageAlt: 'Hostel Hub map search showing filters, a map of Kathmandu, and hostel listings.',
-    caption: 'Map search in Hostel Hub',
-    attribution: { label: '© OpenStreetMap contributors', url: 'https://www.openstreetmap.org/copyright' },
-    problem: 'Students need to compare prices and see how close each hostel is to campus before arranging a visit.',
-    workflow: 'Filter by city, hostel type and price, then switch between the map and list to compare options and open a listing.',
-    contribution: 'Developed Hostel Hub end to end with responsive map search, an Express API, and MongoDB data models.',
-  },
-]
+import { caseStudies } from './portfolioProjects.js'
 
 export default function ProjectCaseStudies({ showOpening }) {
+  const screenshotDialog = useRef(null)
+  const [preview, setPreview] = useState(null)
+  const [actualSize, setActualSize] = useState(false)
+
   useEffect(() => {
     const id = location.hash.slice(1)
     if (!showOpening || !caseStudies.some(project => project.id === id)) return
@@ -58,8 +26,8 @@ export default function ProjectCaseStudies({ showOpening }) {
     }
   }, [showOpening])
 
-  return <section id="projects" className="projects">
-    <h2>Projects</h2>
+  return <section id="projects" className="projects" aria-labelledby="projects-title">
+    <h2 id="projects-title">Projects</h2>
     {caseStudies.map(project => (
       <article key={project.id} id={project.id} className="featured-project" aria-labelledby={project.id + '-title'}>
         <div className="featured-project-intro">
@@ -70,15 +38,21 @@ export default function ProjectCaseStudies({ showOpening }) {
           </ul>
           <div className="featured-project-actions">
             <a className="featured-project-demo" href={project.demo} target="_blank" rel="noopener noreferrer">Live demo</a>
-            <a className="featured-project-source" href={project.source} target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a className="featured-project-source" href={project.source} target="_blank" rel="noopener noreferrer">Source code</a>
             {project.presentation && (
-              <a className="featured-project-source" href={portfolioAsset(project.presentation)} target="_blank" rel="noopener noreferrer">View PPT</a>
+              <a className="featured-project-source" href={portfolioAsset(project.presentation)} target="_blank" rel="noopener noreferrer">Slides</a>
             )}
           </div>
         </div>
 
         <figure className="featured-project-preview">
-          <img src={portfolioAsset(project.image)} width={project.imageWidth} height={project.imageHeight} loading="lazy" decoding="async" alt={project.imageAlt} />
+          <button className="project-screenshot-trigger" type="button" aria-label={'Enlarge ' + project.title + ' screenshot'} onClick={() => {
+            setPreview(project)
+            screenshotDialog.current.showModal()
+          }}>
+            <img src={portfolioAsset(project.image)} width={project.imageWidth} height={project.imageHeight} loading="lazy" decoding="async" alt={project.imageAlt} />
+            <span>Enlarge screenshot</span>
+          </button>
           <figcaption>
             <span>{project.caption}</span>
             {project.attribution && (
@@ -96,12 +70,24 @@ export default function ProjectCaseStudies({ showOpening }) {
             <h4>How it works</h4>
             <p>{project.workflow}</p>
           </div>
-          <div>
-            <h4>My contribution</h4>
-            <p>{project.contribution}</p>
-          </div>
         </div>
       </article>
     ))}
+    <dialog className="project-screenshot-dialog" aria-labelledby="screenshot-title" ref={screenshotDialog} onClose={() => {
+      setPreview(null)
+      setActualSize(false)
+    }}>
+      <div className="project-screenshot-header">
+        <h2 id="screenshot-title">{preview ? preview.title + ' screenshot' : 'Project screenshot'}</h2>
+        <form method="dialog">
+          <button type="submit">Close</button>
+          <button type="button" aria-pressed={actualSize} onClick={() => setActualSize(value => !value)}>Actual size</button>
+        </form>
+      </div>
+      {preview && <div className="project-screenshot-scroll" data-actual-size={actualSize ? 'true' : undefined}
+        tabIndex={actualSize ? 0 : undefined} role="region" aria-label="Screenshot viewer">
+        <img src={portfolioAsset(preview.image)} width={preview.imageWidth} height={preview.imageHeight} alt={preview.imageAlt} />
+      </div>}
+    </dialog>
   </section>
 }

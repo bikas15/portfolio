@@ -9,6 +9,12 @@ import './index.css'
 const assemblyDuration = 2200
 const exitDuration = 420
 
+const favicon = document.querySelector('link[rel="icon"]')
+if (favicon) {
+  // Keep the icon URL stable when switching routes with pushState.
+  favicon.href = new URL(favicon.getAttribute('href'), document.baseURI).href
+}
+
 function PortfolioModes() {
   const [desk, setDesk] = useState(isDeskRoute)
   const [openedDesk, setOpenedDesk] = useState(isDeskRoute)

@@ -20,12 +20,6 @@ export default function PointerEffect({ enabled, desk }) {
     if (!enabled) return
     const media = matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) and (forced-colors: none)')
     const overlay = layer.current
-    const intro = document.querySelector('.opening-intro:not([hidden])')
-    const introStyle = intro && getComputedStyle(intro)
-    let introShowing = introStyle?.visibility === 'visible' && introStyle.display !== 'none'
-    function finishIntro(event) {
-      if (event.target === intro) introShowing = false
-    }
     const point = { x: 0, y: 0 }
     const target = { x: 0, y: 0 }
     const follower = { x: 0, y: 0 }
@@ -98,7 +92,7 @@ export default function PointerEffect({ enabled, desk }) {
     function track(event) {
       const element = event.buttons ? document.elementFromPoint(event.clientX, event.clientY)
         : event.target instanceof Element ? event.target : null
-      if (!media.matches || event.pointerType !== 'mouse' || !element || element.closest(nativeTargets) || introShowing) {
+      if (!media.matches || event.pointerType !== 'mouse' || !element || element.closest(nativeTargets)) {
         hide()
         return
       }
@@ -141,8 +135,6 @@ export default function PointerEffect({ enabled, desk }) {
     document.addEventListener('pointermove', track, { passive: true })
     document.addEventListener('pointerover', track, { passive: true })
     document.addEventListener('focusin', hideOnNativeFocus)
-    intro?.addEventListener('animationend', finishIntro)
-    intro?.addEventListener('animationcancel', finishIntro)
     document.documentElement.addEventListener('pointerleave', hide)
     window.addEventListener('blur', hide)
     media.addEventListener('change', hide)
@@ -151,8 +143,6 @@ export default function PointerEffect({ enabled, desk }) {
       document.removeEventListener('pointermove', track)
       document.removeEventListener('pointerover', track)
       document.removeEventListener('focusin', hideOnNativeFocus)
-      intro?.removeEventListener('animationend', finishIntro)
-      intro?.removeEventListener('animationcancel', finishIntro)
       document.documentElement.removeEventListener('pointerleave', hide)
       window.removeEventListener('blur', hide)
       media.removeEventListener('change', hide)
