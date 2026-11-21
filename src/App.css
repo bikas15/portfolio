@@ -359,16 +359,21 @@ html {
   --accent-deep: var(--hero-ink);
   display: grid;
   align-items: start;
-  padding-block: clamp(28px, 6vw, 65px);
+  margin-block-end: 0;
+  padding-block: clamp(28px, 6vw, 65px) clamp(12px, 3vw, 28px);
   border-block: 1px solid var(--page-line);
-  background:
-    linear-gradient(90deg, var(--page-bg), #101318d9 36%, transparent),
-    linear-gradient(180deg, var(--page-bg), #101318bf 34%, #10131833),
-    url('./assets/himalayan-dusk.jpg') right bottom / max(100%, 850px) auto no-repeat;
   color: var(--ink);
   font: 400 var(--type-body)/1.6 'DM Sans', 'Segoe UI', sans-serif;
   grid-template-columns: minmax(0, .83fr) minmax(0, 1.17fr);
   gap: clamp(20px, 5vw, 56px);
+}
+.portfolio-contact::after {
+  content: '';
+  grid-column: 1 / -1;
+  aspect-ratio: 8 / 3;
+  background:
+    linear-gradient(180deg, var(--page-bg), transparent 14%, transparent 92%, var(--page-bg)),
+    url('./assets/himalayan-dusk.jpg') center 60% / cover no-repeat;
 }
 .portfolio-contact h2 {
   display: block;
@@ -421,6 +426,7 @@ html {
 
 @media (max-width: 620px) {
   #contact.portfolio-contact { grid-template-columns: minmax(0, 1fr); }
+  .portfolio-contact::after { aspect-ratio: 16 / 9; }
 }
 @media (max-width: 400px) {
   .portfolio-form-row { grid-template-columns: minmax(0, 1fr); }
