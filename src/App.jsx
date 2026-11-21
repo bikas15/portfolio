@@ -128,6 +128,21 @@ function App({ onDarkMode, showOpening }) {
 
   return (
     <div className="app-container">
+      {showOpening && !location.hash && (
+        <div className="opening-intro" aria-hidden="true">
+          <div className="opening-composition">
+            <div className="opening-name">
+              <span><b>Bikas</b></span>
+              <span><b>Banjade</b></span>
+            </div>
+            <div className="opening-tiles">
+              {[4, 2, 3, 1, 0, 5, 6, 7, 8].map(step => (
+                <span key={step} style={{ '--tile-delay': `${130 + step * 54}ms` }} />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
       <div className="mardi-backdrop" aria-hidden="true" />
       <a className="skip-link" href="#portfolio-content">Skip to content</a>
       {/* Navigation */}

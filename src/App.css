@@ -50,6 +50,95 @@ html {
   overflow-x: clip;
 }
 
+.opening-intro {
+  --opening-blue: #2545d9;
+  --opening-paper: #f4f6ff;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 22px;
+  background: radial-gradient(ellipse at 80% 80%, #dbe5ff, transparent 65%), var(--opening-paper);
+  color: #101a3b;
+  pointer-events: none;
+  animation: opening-wipe 620ms cubic-bezier(.77, 0, .18, 1) 1120ms both;
+}
+
+.opening-composition {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: clamp(34px, 9vw, 128px);
+}
+
+.opening-name {
+  font-size: clamp(3.4rem, 10vw, 9rem);
+  font-weight: 800;
+  letter-spacing: -.075em;
+  line-height: .98;
+}
+
+.opening-name > span {
+  display: block;
+  overflow: hidden;
+  padding: .04em .13em .11em .02em;
+}
+
+.opening-name > span:last-child {
+  color: var(--opening-blue);
+}
+
+.opening-name b {
+  display: block;
+  font-weight: inherit;
+  animation: opening-type 620ms cubic-bezier(.2, .8, .15, 1) 100ms both;
+}
+
+.opening-name > span:last-child b {
+  animation-delay: 205ms;
+}
+
+.opening-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, clamp(24px, 5.2vw, 76px));
+  gap: clamp(5px, .85vw, 12px);
+}
+
+.opening-tiles span {
+  aspect-ratio: 1;
+  border: 1px solid #9eaef3;
+  border-radius: 12%;
+  background: #e5ebff;
+  animation: opening-tile 340ms cubic-bezier(.2, .7, .3, 1) var(--tile-delay) both;
+}
+
+@keyframes opening-type {
+  from { transform: translateY(112%) skewY(6deg); }
+  to { transform: translateY(0) skewY(0); }
+}
+
+@keyframes opening-tile {
+  45% { transform: scale(.86); background: #7690ff; }
+  100% { transform: scale(1); background: var(--opening-blue); border-color: var(--opening-blue); }
+}
+
+@keyframes opening-wipe {
+  from { clip-path: inset(0); }
+  to { clip-path: inset(0 0 100% 0); visibility: hidden; }
+}
+
+@media (max-width: 600px) {
+  .opening-composition { grid-template-columns: auto; gap: 26px; }
+  .opening-name { font-size: clamp(3.1rem, 13vw, 5rem); }
+  .opening-tiles { justify-self: start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .opening-intro { display: none; }
+}
+
 /* Navigation */
 .navbar {
   background: var(--page-surface);
