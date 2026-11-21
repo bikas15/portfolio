@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import './App.css'
+import './mardi.css'
 import ProjectCaseStudies from './ProjectCaseStudies.jsx'
 import brandLogo from '../bikaslogo.png'
+import frontPortrait from './assets/bikas-front-portrait.jpg'
 import { portfolioAsset } from './portfolioPaths.js'
 
 const email = 'bikashbanjade15@gmail.com'
@@ -109,6 +111,7 @@ function App({ onDarkMode, showOpening }) {
 
   return (
     <div className="app-container">
+      <div className="mardi-backdrop" aria-hidden="true" />
       <a className="skip-link" href="#portfolio-content">Skip to content</a>
       {/* Navigation */}
       <nav className="navbar" aria-label="Main navigation">
@@ -137,9 +140,8 @@ function App({ onDarkMode, showOpening }) {
         <section id="home" className="hero" aria-labelledby="home-title">
           <p className="hero-role">Software Engineering student at Nepal College of Information Technology (NCIT)</p>
           <h1 id="home-title">Bikas <span>Banjade</span></h1>
-          <figure className="hero-photo">
-            <img className="hero-portrait" src={portfolioAsset('portfolio/perfil.jpg')} alt="Bikas Banjade in front of a brick wall" width="559" height="485" fetchPriority="high" />
-            <figcaption>Pyuthan, Nepal</figcaption>
+          <figure className="mardi-portrait">
+            <img src={frontPortrait} alt="Bikas Banjade facing the camera in the mountains" width="1152" height="2048" />
           </figure>
           <div className="hero-intro">
             <p className="hero-lead">I build web applications end to end, from designing interfaces to developing APIs and working with databases.</p>

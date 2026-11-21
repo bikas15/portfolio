@@ -1,0 +1,111 @@
+.app-container {
+  --page-bg: #17222c;
+  --page-surface: #1c2935;
+  --page-line: #8293a373;
+  --hero-ink: #fff7ef;
+  --hero-accent: #ffbb86;
+  --text-dark: var(--hero-ink);
+  --text-light: #e1e6ed;
+  --primary-color: var(--hero-accent);
+  --gradient-1: var(--hero-accent);
+  --draft-button: #17576b;
+  --draft-panel: #14202cee;
+  isolation: isolate;
+  color-scheme: dark;
+}
+
+.mardi-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, #111c27 0 24%, #111c27e8 36%, #111c2770 57%, #111c2710 86%),
+    url('./assets/mardi-trek.jpg') right 64% / auto max(100%, 77vw) no-repeat,
+    #111c27;
+}
+
+.app-container .navbar {
+  background: #14202cec;
+  backdrop-filter: blur(12px);
+}
+.app-container .brand-mark-link { background: #f3f7fa; }
+
+.mardi-backdrop ~ main .hero {
+  min-height: min(68svh, 650px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 33%);
+  grid-template-rows: repeat(3, auto) 1fr;
+}
+.mardi-backdrop ~ main .hero h1 { color: var(--hero-ink); }
+.mardi-backdrop ~ main .hero h1 span { color: var(--hero-accent); }
+.mardi-portrait {
+  position: relative;
+  overflow: hidden;
+  grid-area: 2 / 2;
+  align-self: center;
+  justify-self: end;
+  width: clamp(140px, 14vw, 204px);
+  aspect-ratio: 1;
+  margin-inline-end: clamp(0px, 5vw - 30px, 38px);
+  border: 1px solid #ffe4c6a6;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px #0a111e60;
+}
+.mardi-portrait img {
+  /* Frame the head and shoulders inside the original full-length photo. */
+  position: absolute;
+  top: -150%;
+  left: -58%;
+  width: 213%;
+  max-width: none;
+  height: auto;
+  transform: rotate(-3deg);
+  transform-origin: 51% 52%;
+}
+
+.mardi-backdrop ~ main .hero-resume,
+.mardi-backdrop ~ main .featured-project-demo,
+.mardi-backdrop ~ main .portfolio-contact-submit {
+  background: var(--draft-button);
+}
+.mardi-backdrop ~ main :is(.hero-resume, .featured-project-demo, .portfolio-contact-submit):hover {
+  background: #21677c;
+}
+
+.mardi-backdrop ~ main :is(.featured-project, .portfolio-stack, .portfolio-contact) {
+  background: var(--draft-panel);
+  padding-inline: clamp(14px, 3.1vw, 35px);
+}
+.mardi-backdrop ~ main .featured-project:first-of-type {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.mardi-backdrop ~ main #skills.portfolio-stack {
+  padding-block: clamp(18px, 3vw, 27px);
+  border: 1px solid var(--page-line);
+  border-radius: 10px;
+}
+.mardi-backdrop ~ main #skills.portfolio-stack h2,
+.mardi-backdrop ~ main .featured-project-preview figcaption { color: var(--hero-ink); }
+.mardi-backdrop ~ main #contact.portfolio-contact {
+  --ink: var(--hero-ink);
+  --muted: var(--text-light);
+  border: 1px solid var(--page-line);
+  border-radius: 10px;
+}
+.mardi-backdrop ~ main .portfolio-form-error { color: #ffad9d; }
+.mardi-backdrop ~ main .portfolio-form-success { color: #b0e5be; }
+
+@media (max-width: 800px) {
+  .mardi-backdrop {
+    background:
+      linear-gradient(180deg, #111c27dc 0%, #111c27ad 35%, #111c2736 63%, #111c278c 100%),
+      linear-gradient(90deg, #111c2780, #111c271a),
+      url('./assets/mardi-trek.jpg') 51% center / cover no-repeat,
+      #111c27;
+  }
+  .mardi-backdrop ~ main .hero { grid-template-columns: minmax(0, 1fr) auto; column-gap: 10px; }
+  .mardi-backdrop ~ main .hero-role,
+  .mardi-backdrop ~ main .hero-intro { grid-column: 1 / -1; }
+  .mardi-portrait { width: clamp(72px, 21vw, 132px); margin-inline-end: 0; }
+}
