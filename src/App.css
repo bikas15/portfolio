@@ -26,23 +26,10 @@
 }
 
 body {
-  --backdrop-height: max(592px, 56.3vw);
   font-family: 'DM Sans', 'Segoe UI', sans-serif;
   color: var(--text-dark);
   min-height: 100vh;
   line-height: 1.6;
-  background-image:
-    linear-gradient(90deg, #101318 0%, #101318d9 34%, #10131859 68%, transparent 100%),
-    linear-gradient(180deg, transparent 42%, var(--page-bg) 100%),
-    url('./assets/himalayan-dusk.jpg'),
-    radial-gradient(ellipse at 52% 100%, #663327 0%, transparent 68%);
-  background-position: center top, center top, right top, center bottom;
-  background-repeat: no-repeat;
-  background-size: 100% var(--backdrop-height), 100% var(--backdrop-height), max(100%, 1050px) auto, 100% 320px;
-}
-
-@media (max-width: 650px) {
-  body { background-position: center top, center top, 38% top, center bottom; }
 }
 
 html {
@@ -374,6 +361,10 @@ html {
   align-items: start;
   padding-block: clamp(28px, 6vw, 65px);
   border-block: 1px solid var(--page-line);
+  background:
+    linear-gradient(90deg, var(--page-bg), #101318d9 36%, transparent),
+    linear-gradient(180deg, var(--page-bg), #101318bf 34%, #10131833),
+    url('./assets/himalayan-dusk.jpg') right bottom / max(100%, 850px) auto no-repeat;
   color: var(--ink);
   font: 400 var(--type-body)/1.6 'DM Sans', 'Segoe UI', sans-serif;
   grid-template-columns: minmax(0, .83fr) minmax(0, 1.17fr);
