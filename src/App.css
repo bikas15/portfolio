@@ -170,7 +170,7 @@ html {
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto 1fr;
   align-items: start;
   gap: 14px clamp(20px, 6vw, 86px);
   margin-bottom: 0;
@@ -178,7 +178,7 @@ html {
   border-bottom: 1px solid var(--page-line);
 }
 .hero-photo {
-  grid-area: 1 / 2 / 3 / 3;
+  grid-area: 1 / 2 / 4 / 3;
   align-self: center;
   width: clamp(142px, 19vw, 228px);
 }
@@ -197,18 +197,21 @@ html {
   font-size: .83rem;
 }
 .hero h1 {
-  grid-area: 1 / 1;
+  grid-area: 2 / 1;
+  width: fit-content;
   color: #202921;
   font: 400 clamp(4.25rem, 8vw, 9rem)/.9 'Instrument Serif', Georgia, serif;
   letter-spacing: -.052em;
+  transform: scaleX(1.14);
+  transform-origin: left center;
 }
 .hero h1 span {
   display: block;
   color: #a4432e;
   font-style: italic;
 }
-.hero-intro { grid-area: 2 / 1; }
-.hero-role { color: var(--text-light); font-size: .96rem; font-weight: 600; }
+.hero-intro { grid-area: 3 / 1; }
+.hero-role { grid-area: 1 / 1; color: var(--text-light); font-size: .96rem; font-weight: 600; }
 .hero-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0 16px; margin-top: 14px; }
 .hero-lead {
   margin-top: 7px;
@@ -234,11 +237,12 @@ html {
 #projects > h2 { margin-bottom: 24px; }
 
 @media (max-width: 650px) {
-  .hero { grid-template-rows: auto auto; column-gap: 12px; }
+  .hero { column-gap: 12px; }
+  .hero-role { grid-area: 1 / 1 / 2 / -1; }
   .hero h1 { align-self: center; font-size: clamp(2.9rem, 14vw, 5.5rem); }
-  .hero-photo { grid-area: 1 / 2; width: clamp(82px, 21vw, 124px); }
+  .hero-photo { grid-area: 2 / 2; width: clamp(82px, 21vw, 124px); }
   .hero-photo figcaption { font-size: .75rem; line-height: 1.3; }
-  .hero-intro { grid-area: 2 / 1 / 3 / -1; }
+  .hero-intro { grid-area: 3 / 1 / 4 / -1; }
 }
 
 .portfolio-theme-switch {

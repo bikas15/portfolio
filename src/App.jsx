@@ -135,13 +135,13 @@ function App({ onDarkMode, showOpening }) {
 
       <main id="portfolio-content" tabIndex={-1}>
         <section id="home" className="hero" aria-labelledby="home-title">
+          <p className="hero-role">Software Engineering student at Nepal College of Information Technology (NCIT)</p>
           <h1 id="home-title">Bikas <span>Banjade</span></h1>
           <figure className="hero-photo">
             <img className="hero-portrait" src={portfolioAsset('portfolio/perfil.jpg')} alt="Bikas Banjade in front of a brick wall" width="559" height="485" fetchPriority="high" />
             <figcaption>Pyuthan, Nepal</figcaption>
           </figure>
           <div className="hero-intro">
-            <p className="hero-role">Software Engineering student at Nepal College of Information Technology (NCIT)</p>
             <p className="hero-lead">I build web applications end to end, from designing interfaces to developing APIs and working with databases.</p>
             <div className="hero-links">
               <a className="hero-resume" href={portfolioAsset('Bikas-Banjade-CV.pdf')} target="_blank" rel="noopener noreferrer">View Resume</a>
