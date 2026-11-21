@@ -3,7 +3,7 @@ export const caseStudies = [
     id: 'bugs-finder',
     title: 'Bugs Finder',
     summary: 'A full-stack debugging workspace for LLM-powered code analysis, sandboxed execution, and saved reports.',
-    stack: ['React', 'Django REST', 'LLM API', 'PostgreSQL'],
+    stack: ['React', 'Django REST', 'PostgreSQL'],
     demo: 'https://bikas15.github.io/-bugs_finder/#/',
     source: 'https://github.com/bikas15/-bugs_finder',
     presentation: 'bug-finder-presentation.pdf',
