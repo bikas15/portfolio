@@ -51,8 +51,6 @@ html {
 }
 
 .opening-intro {
-  --opening-blue: #2545d9;
-  --opening-paper: #f4f6ff;
   position: fixed;
   inset: 0;
   z-index: 1000;
@@ -60,8 +58,8 @@ html {
   place-items: center;
   overflow: hidden;
   padding: 22px;
-  background: radial-gradient(ellipse at 80% 80%, #dbe5ff, transparent 65%), var(--opening-paper);
-  color: #101a3b;
+  background: radial-gradient(ellipse at 80% 80%, color-mix(in srgb, var(--hero-accent) 12%, transparent), transparent 65%), var(--page-bg);
+  color: var(--hero-ink);
   pointer-events: none;
   animation: opening-wipe 620ms cubic-bezier(.77, 0, .18, 1) 1120ms both;
 }
@@ -87,7 +85,7 @@ html {
 }
 
 .opening-name > span:last-child {
-  color: var(--opening-blue);
+  color: var(--hero-accent);
 }
 
 .opening-name b {
@@ -108,9 +106,9 @@ html {
 
 .opening-tiles span {
   aspect-ratio: 1;
-  border: 1px solid #9eaef3;
+  border: 1px solid color-mix(in srgb, var(--hero-accent) 52%, var(--page-bg));
   border-radius: 12%;
-  background: #e5ebff;
+  background: color-mix(in srgb, var(--hero-accent) 18%, var(--page-bg));
   animation: opening-tile 340ms cubic-bezier(.2, .7, .3, 1) var(--tile-delay) both;
 }
 
@@ -120,8 +118,8 @@ html {
 }
 
 @keyframes opening-tile {
-  45% { transform: scale(.86); background: #7690ff; }
-  100% { transform: scale(1); background: var(--opening-blue); border-color: var(--opening-blue); }
+  45% { transform: scale(.86); background: color-mix(in srgb, var(--hero-accent) 68%, var(--page-bg)); }
+  100% { transform: scale(1); background: var(--hero-accent); border-color: var(--hero-accent); }
 }
 
 @keyframes opening-wipe {
