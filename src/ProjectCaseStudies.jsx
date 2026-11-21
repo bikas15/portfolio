@@ -1,30 +1,11 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { portfolioAsset } from './portfolioPaths.js'
 import { caseStudies } from './portfolioProjects.js'
 
-export default function ProjectCaseStudies({ showOpening }) {
+export default function ProjectCaseStudies() {
   const screenshotDialog = useRef(null)
   const [preview, setPreview] = useState(null)
   const [actualSize, setActualSize] = useState(false)
-
-  useEffect(() => {
-    const id = location.hash.slice(1)
-    if (!showOpening || !caseStudies.some(project => project.id === id)) return
-    let active = true
-    function revealCaseStudy() {
-      document.fonts.ready.then(() => {
-        if (active && location.hash === '#' + id) {
-          document.getElementById(id)?.scrollIntoView({ behavior: 'instant' })
-        }
-      })
-    }
-    if (document.readyState === 'complete') revealCaseStudy()
-    else window.addEventListener('load', revealCaseStudy, { once: true })
-    return () => {
-      active = false
-      window.removeEventListener('load', revealCaseStudy)
-    }
-  }, [showOpening])
 
   return <section id="projects" className="projects" aria-labelledby="projects-title">
     <h2 id="projects-title">Projects</h2>

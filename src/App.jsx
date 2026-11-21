@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import './mardi.css'
 import ProjectCaseStudies from './ProjectCaseStudies.jsx'
@@ -52,6 +52,23 @@ const PlaceholderImage = ({ width = 300, height = 300, text = 'Image' }) => (
 )
 
 function App({ onDarkMode, showOpening }) {
+  useEffect(() => {
+    const hash = location.hash
+    const section = document.getElementById(hash.slice(1))
+    if (!showOpening || !section?.closest('.app-container')) return
+
+    let active = true
+    function revealSection() {
+      if (active && location.hash === hash) section.scrollIntoView({ behavior: 'instant' })
+    }
+    revealSection()
+    const scrollPosition = window.scrollY
+    document.fonts.ready.then(() => {
+      if (Math.abs(window.scrollY - scrollPosition) <= 1) revealSection()
+    })
+    return () => { active = false }
+  }, [showOpening])
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -152,7 +169,7 @@ function App({ onDarkMode, showOpening }) {
           </div>
         </section>
 
-        <ProjectCaseStudies showOpening={showOpening} />
+        <ProjectCaseStudies />
 
         {/* Skills Section */}
         <section id="skills" className="portfolio-stack" aria-labelledby="skills-title">
