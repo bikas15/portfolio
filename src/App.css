@@ -518,6 +518,7 @@ html {
 .featured-project-preview { grid-area: 1 / 6 / 2 / -1; }
 .featured-project:nth-of-type(odd) .featured-project-intro { grid-column: 8 / -1; }
 .featured-project:nth-of-type(odd) .featured-project-preview { grid-column: 1 / 8; }
+.featured-project[data-with-preview="false"] .featured-project-intro { grid-column: 1 / -1; }
 
 .featured-project h3 {
   margin: 0;

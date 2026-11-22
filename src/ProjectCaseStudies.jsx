@@ -10,7 +10,7 @@ export default function ProjectCaseStudies() {
   return <section id="projects" className="projects" aria-labelledby="projects-title">
     <h2 id="projects-title">Projects</h2>
     {caseStudies.map(project => (
-      <article key={project.id} id={project.id} className="featured-project" aria-labelledby={project.id + '-title'}>
+      <article key={project.id} id={project.id} className="featured-project" data-with-preview={Boolean(project.image)} aria-labelledby={project.id + '-title'}>
         <div className="featured-project-intro">
           <h3 id={project.id + '-title'}>{project.title}</h3>
           <p className="featured-project-summary">{project.summary}</p>
@@ -19,14 +19,14 @@ export default function ProjectCaseStudies() {
           </ul>
           <div className="featured-project-actions">
             <a className="featured-project-demo" href={project.demo} target="_blank" rel="noopener noreferrer">Live demo</a>
-            <a className="featured-project-source" href={project.source} target="_blank" rel="noopener noreferrer">Source code</a>
+            <a className="featured-project-source" href={project.source} target="_blank" rel="noopener noreferrer">{project.sourceIsPrivate ? 'GitHub (private)' : 'Source code'}</a>
             {project.presentation && (
               <a className="featured-project-source" href={portfolioAsset(project.presentation)} target="_blank" rel="noopener noreferrer">Slides</a>
             )}
           </div>
         </div>
 
-        <figure className="featured-project-preview">
+        {project.image && <figure className="featured-project-preview">
           <button className="project-screenshot-trigger" type="button" aria-label={'Enlarge ' + project.title + ' screenshot'} onClick={() => {
             setPreview(project)
             screenshotDialog.current.showModal()
@@ -40,7 +40,7 @@ export default function ProjectCaseStudies() {
               <a href={project.attribution.url} target="_blank" rel="noopener noreferrer">{project.attribution.label}</a>
             )}
           </figcaption>
-        </figure>
+        </figure>}
 
         <div className="featured-project-details">
           <div>

@@ -31,4 +31,15 @@ export const caseStudies = [
     problem: 'Students need to compare prices and see how close each hostel is to campus before arranging a visit.',
     workflow: 'Filter hostels by city, type, or rent. Use the map to see what’s near campus, then switch to the list to compare prices and open a listing.',
   },
+  {
+    id: 'systemmirror',
+    title: 'SystemMirror',
+    summary: 'A codebase analysis workspace that maps JavaScript and PHP dependencies and shows what a file change could affect.',
+    stack: ['React', 'PHP', 'Node.js', 'TiDB'],
+    demo: 'https://systemmirror.onrender.com/',
+    source: 'https://github.com/bikas15/SystemMirror',
+    sourceIsPrivate: true,
+    problem: 'Before changing a file, developers need to know what depends on it and where those dependencies come from.',
+    workflow: 'Create an account, upload a ZIP, and run the analysis. Explore the dependency map, select a file to trace its downstream impact, and save the results as a report.',
+  },
 ]

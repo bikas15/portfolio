@@ -352,17 +352,17 @@ export default function Workbench({ animation, enabled, onLightMode }) {
                 <h3>{project.title}</h3>
                 <p>{project.summary}</p>
                 <p className="project-stack">{project.stack.join(' · ')}</p>
-                <figure className="desk-project-preview">
+                {project.image && <figure className="desk-project-preview">
                   <img src={portfolioAsset(project.image)} alt={project.imageAlt} width={project.imageWidth} height={project.imageHeight} loading="lazy" decoding="async" />
                   <figcaption>
                     <span>{project.caption}</span>
                     {project.attribution && <a href={project.attribution.url} target="_blank" rel="noreferrer">{project.attribution.label}</a>}
                   </figcaption>
-                </figure>
+                </figure>}
                 <div className="panel-actions">
                   <a className="feature-link" href={portfolioAsset('#' + project.id)}>Case study</a>
                   <a className="soft-button" href={project.demo} target="_blank" rel="noreferrer">Live demo</a>
-                  <a className="soft-button" href={project.source} target="_blank" rel="noreferrer">GitHub</a>
+                  <a className="soft-button" href={project.source} target="_blank" rel="noreferrer">{project.sourceIsPrivate ? 'GitHub (private)' : 'GitHub'}</a>
                   {project.presentation && <a className="soft-button" href={portfolioAsset(project.presentation)} target="_blank" rel="noreferrer">Slides</a>}
                 </div>
               </article>
