@@ -36,7 +36,7 @@ export const caseStudies = [
     title: 'SystemMirror',
     summary: 'A codebase analysis workspace that maps JavaScript and PHP dependencies and shows what a file change could affect.',
     stack: ['React', 'PHP', 'Node.js', 'TiDB'],
-    demo: 'https://systemmirror.onrender.com/',
+    demo: 'https://bikasbanjade.com.np/systemmirror/',
     source: 'https://github.com/bikas15/SystemMirror',
     sourceIsPrivate: true,
     sample: 'https://systemmirror.onrender.com/systemmirror-showcase.zip',

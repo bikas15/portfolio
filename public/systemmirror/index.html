@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore SystemMirror's dependency graph, change impact, and live codebase analysis demo.">
+  <title>SystemMirror | Bikas Banjade</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./start.js" defer></script>
+</head>
+<body>
+  <main>
+    <a class="back" href="../#systemmirror">← Bikas Banjade’s portfolio</a>
+    <header>
+      <h1>SystemMirror</h1>
+      <p>See which files a code change could affect. Import a JavaScript or PHP project, follow its dependencies, and save your analysis.</p>
+      <div class="actions">
+        <button id="launch" type="button" hidden>Open live demo</button>
+        <a href="https://systemmirror.onrender.com/">Open Render directly</a>
+        <button id="cancel" class="quiet" type="button" hidden>Cancel</button>
+      </div>
+      <div class="startup" id="startup" hidden>
+        <p id="status" role="status"></p>
+        <span id="elapsed" aria-hidden="true"></span>
+      </div>
+    </header>
+    <section aria-label="SystemMirror previews" class="tiles">
+      <article>
+        <h2>Dependency graph</h2>
+        <p>Explore the five files and three resolved imports in the checkout sample.</p>
+        <a href="../portfolio/systemmirror-dependency-graph.jpg">
+          <img src="../portfolio/systemmirror-dependency-graph.jpg" width="1072" height="607" alt="SystemMirror graph with five PHP and JavaScript files connected by import arrows">
+        </a>
+      </article>
+      <article>
+        <h2>Change impact</h2>
+        <p>Follow the two-hop path from the checkout UI to the currency formatter, with source evidence.</p>
+        <a href="../portfolio/systemmirror-impact-evidence.jpg">
+          <img src="../portfolio/systemmirror-impact-evidence.jpg" width="1076" height="513" alt="Impact analysis showing the files that depend directly and indirectly on money.js">
+        </a>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
