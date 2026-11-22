@@ -40,6 +40,7 @@ export const caseStudies = [
     source: 'https://github.com/bikas15/SystemMirror',
     sourceIsPrivate: true,
     sample: 'https://systemmirror.onrender.com/systemmirror-showcase.zip',
+    presentation: 'systemmirror-portfolio-slides.pdf',
     image: 'portfolio/systemmirror-dependency-graph.jpg',
     imageWidth: 1072,
     imageHeight: 607,
