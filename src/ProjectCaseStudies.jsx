@@ -33,7 +33,8 @@ export default function ProjectCaseStudies() {
             screenshotDialog.current.showModal()
           }}>
             <img src={portfolioAsset(project.image)} width={project.imageWidth} height={project.imageHeight} loading="lazy" decoding="async" alt={project.imageAlt} />
-            <span>Enlarge screenshot</span>
+            {project.detailImage && <DetailScreenshot image={project.detailImage} />}
+            <span>{project.detailImage ? 'Enlarge screenshots' : 'Enlarge screenshot'}</span>
           </button>
           <figcaption>
             <span>{project.caption}</span>
@@ -69,7 +70,13 @@ export default function ProjectCaseStudies() {
       {preview && <div className="project-screenshot-scroll" data-actual-size={actualSize ? 'true' : undefined}
         tabIndex={actualSize ? 0 : undefined} role="region" aria-label="Screenshot viewer">
         <img src={portfolioAsset(preview.image)} width={preview.imageWidth} height={preview.imageHeight} alt={preview.imageAlt} />
+        {preview.detailImage && <DetailScreenshot image={preview.detailImage} />}
       </div>}
     </dialog>
   </section>
+}
+
+function DetailScreenshot({ image }) {
+  return <img className="project-detail-screenshot" src={portfolioAsset(image.path)} width={image.width}
+    height={image.height} loading="lazy" decoding="async" alt={image.alt} />
 }

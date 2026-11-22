@@ -354,6 +354,8 @@ export default function Workbench({ animation, enabled, onLightMode }) {
                 <p className="project-stack">{project.stack.join(' · ')}</p>
                 {project.image && <figure className="desk-project-preview">
                   <img src={portfolioAsset(project.image)} alt={project.imageAlt} width={project.imageWidth} height={project.imageHeight} loading="lazy" decoding="async" />
+                  {project.detailImage && <img className="project-detail-screenshot" src={portfolioAsset(project.detailImage.path)}
+                    alt={project.detailImage.alt} width={project.detailImage.width} height={project.detailImage.height} loading="lazy" decoding="async" />}
                   <figcaption>
                     <span>{project.caption}</span>
                     {project.attribution && <a href={project.attribution.url} target="_blank" rel="noreferrer">{project.attribution.label}</a>}

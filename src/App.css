@@ -642,6 +642,7 @@ html {
   font-weight: 650;
 }
 .project-screenshot-trigger:hover span { text-decoration: underline; }
+.project-detail-screenshot { margin-top: 6px; }
 .project-screenshot-dialog {
   position: fixed;
   inset: 0;
