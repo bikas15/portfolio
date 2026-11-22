@@ -20,6 +20,7 @@ export default function ProjectCaseStudies() {
           <div className="featured-project-actions">
             <a className="featured-project-demo" href={project.demo} target="_blank" rel="noopener noreferrer">Live demo</a>
             <a className="featured-project-source" href={project.source} target="_blank" rel="noopener noreferrer">{project.sourceIsPrivate ? 'GitHub (private)' : 'Source code'}</a>
+            {project.sample && <a className="featured-project-source" href={project.sample}>Sample ZIP</a>}
             {project.presentation && (
               <a className="featured-project-source" href={portfolioAsset(project.presentation)} target="_blank" rel="noopener noreferrer">Slides</a>
             )}

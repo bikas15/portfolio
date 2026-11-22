@@ -363,6 +363,7 @@ export default function Workbench({ animation, enabled, onLightMode }) {
                   <a className="feature-link" href={portfolioAsset('#' + project.id)}>Case study</a>
                   <a className="soft-button" href={project.demo} target="_blank" rel="noreferrer">Live demo</a>
                   <a className="soft-button" href={project.source} target="_blank" rel="noreferrer">{project.sourceIsPrivate ? 'GitHub (private)' : 'GitHub'}</a>
+                  {project.sample && <a className="soft-button" href={project.sample}>Sample ZIP</a>}
                   {project.presentation && <a className="soft-button" href={portfolioAsset(project.presentation)} target="_blank" rel="noreferrer">Slides</a>}
                 </div>
               </article>

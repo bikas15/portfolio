@@ -39,7 +39,8 @@ export const caseStudies = [
     demo: 'https://systemmirror.onrender.com/',
     source: 'https://github.com/bikas15/SystemMirror',
     sourceIsPrivate: true,
+    sample: 'https://systemmirror.onrender.com/systemmirror-showcase.zip',
     problem: 'Before changing a file, developers need to know what depends on it and where those dependencies come from.',
-    workflow: 'Create an account, upload a ZIP, and run the analysis. Explore the dependency map, select a file to trace its downstream impact, and save the results as a report.',
+    workflow: 'Upload the Order checkout sample and run the analysis. Open the missing theme import at its source line, trace how a currency formatter change reaches the order UI, and save the results as a report.',
   },
 ]
