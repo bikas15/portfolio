@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Color Contrast</title>
+  <link rel="icon" type="image/svg+xml" href="../icons/color-contrast.svg">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <main>
+    <a href="../index.html">← All tools</a>
+    <p class="tag">Design</p>
+    <h1 class="tool-title"><span class="tool-icon icon-color-contrast" aria-hidden="true"></span>Color Contrast</h1>
+    <p>Preview a foreground and background color with WCAG contrast guidance.</p>
+    <section class="panel">
+      <form>
+        <label>Text color<input name="fg" type="color" value="#ffffff"></label>
+        <label>Background color<input name="bg" type="color" value="#151a25"></label>
+        <button type="submit">Check contrast</button>
+      </form>
+      <div class="sample" id="sample">Readable design starts here.</div>
+      <p id="status" class="notice" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <script src="../app-core.js"></script>
+  <script src="app.js"></script>
+  <script src="../site.js"></script>
+</body>
+</html>

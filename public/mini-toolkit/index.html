@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Eight focused, privacy-friendly browser tools for planning, development, and everyday tasks.">
+  <meta name="theme-color" content="#0b1020">
+  <title>Bikas' Practical Toolkit</title>
+  <link rel="icon" type="image/svg+xml" href="icons/toolkit.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="toolkit-home">
+  <header class="site-header">
+    <a class="site-brand" href="./"><img src="icons/toolkit.svg" alt="" width="32" height="32"> Bikas’ Toolkit</a>
+    <div id="theme-control"></div>
+  </header>
+  <main>
+    <section class="toolkit-hero" aria-labelledby="home-title">
+      <h1 id="home-title">Everyday tools,<br><span>right in your browser.</span></h1>
+      <p>Plan tasks, format JSON, resize images, and more. Your data stays on your device.</p>
+      <img src="icons/toolkit.svg" alt="" width="192" height="192">
+    </section>
+    <section aria-labelledby="tools-title">
+    <h2 id="tools-title">Explore the tools</h2>
+    <div class="toolbar" aria-label="Find a tool">
+      <label for="project-search">Search tools
+        <input id="project-search" type="search" placeholder="Try “image” or “JSON”" autocomplete="off">
+      </label>
+      <label for="category-filter">Category
+        <select id="category-filter"><option value="">All categories</option></select>
+      </label>
+    </div>
+    <p id="project-count" class="muted" aria-live="polite"></p>
+    <button id="favorites-filter" type="button" aria-pressed="false" hidden>Favorites only</button>
+    <div class="grid" id="projects">
+      <article class="tile project-card" data-category="Productivity"><span class="tool-icon icon-task-board" aria-hidden="true"></span><div class="project-card-content"><div class="tag">Productivity</div><h2><a href="01-task-board/index.html">Task Board</a></h2><p>Plan and prioritize tasks, set due dates, and track progress.</p></div></article>
+      <article class="tile project-card" data-category="Finance"><span class="tool-icon icon-expense-log" aria-hidden="true"></span><div class="project-card-content"><div class="tag">Finance</div><h2><a href="03-expense-log/index.html">Expense Log</a></h2><p>Track categorized expenses, review monthly totals, and export a CSV.</p></div></article>
+      <article class="tile project-card" data-category="Developer"><span class="tool-icon icon-json-studio" aria-hidden="true"></span><div class="project-card-content"><div class="tag">Developer</div><h2><a href="06-json-studio/index.html">JSON Studio</a></h2><p>Validate, format, sort, minify, and download JSON locally.</p></div></article>
+      <article class="tile project-card" data-category="Security"><span class="tool-icon icon-password-generator" aria-hidden="true"></span><div class="project-card-content"><div class="tag">Security</div><h2><a href="07-password-generator/index.html">Password Generator</a></h2><p>Generate cryptographically secure passwords with chosen character sets.</p></div></article>
+      <article class="tile project-card" data-category="Utility"><span class="tool-icon icon-unit-converter" aria-hidden="true"></span><div class="project-card-content"><div class="tag">Utility</div><h2><a href="08-unit-converter/index.html">Unit Converter</a></h2><p>Convert length, mass, volume, and temperature with precise results.</p></div></article>
+      <article class="tile project-card" data-category="Utility"><span class="tool-icon icon-date-calculator" aria-hidden="true"></span><div class="project-card-content"><div class="tag">Utility</div><h2><a href="09-date-calculator/index.html">Date Calculator</a></h2><p>Compare dates, count weekdays, and calculate inclusive ranges.</p></div></article>
+      <article class="tile project-card" data-category="Design"><span class="tool-icon icon-color-contrast" aria-hidden="true"></span><div class="project-card-content"><div class="tag">Design</div><h2><a href="10-color-contrast/index.html">Color Contrast</a></h2><p>Preview color pairs and check WCAG AA and AAA contrast.</p></div></article>
+      <article class="tile project-card" data-category="Media"><span class="tool-icon icon-image-resizer" aria-hidden="true"></span><div class="project-card-content"><div class="tag">Media</div><h2><a href="11-image-resizer/index.html">Image Resizer</a></h2><p>Resize and export images in your browser without uploading them.</p></div></article>
+    </div>
+    <div id="no-results" class="empty-state" hidden>
+      <p id="empty-message">No tools match your search.</p>
+      <button id="reset-filters" type="button">Clear filters</button>
+    </div>
+    </section>
+    <footer><p class="muted">Built by Bikas</p></footer>
+  </main>
+  <script src="site.js"></script>
+</body>
+</html>

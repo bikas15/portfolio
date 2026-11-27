@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Password Generator</title>
+  <link rel="icon" type="image/svg+xml" href="../icons/password-generator.svg">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <main>
+    <a href="../index.html">← All tools</a>
+    <p class="tag">Security</p>
+    <h1 class="tool-title"><span class="tool-icon icon-password-generator" aria-hidden="true"></span>Password Generator</h1>
+    <p>Generate a secure password on this device. Nothing is sent to a server.</p>
+    <section class="panel">
+      <form>
+        <label>Length<input name="length" type="number" min="8" max="128" value="20" required></label>
+        <label class="check"><input name="symbols" type="checkbox" checked> Include symbols</label>
+        <button type="submit">Generate</button>
+      </form>
+      <label>Password<input id="result" readonly autocomplete="off"></label>
+      <p id="status" class="notice" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <script src="../app-core.js"></script>
+  <script src="app.js"></script>
+  <script src="../site.js"></script>
+</body>
+</html>

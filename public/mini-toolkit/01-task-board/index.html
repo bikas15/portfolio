@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Task Board</title>
+  <link rel="icon" type="image/svg+xml" href="../icons/task-board.svg">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <main>
+    <a href="../index.html">← All tools</a>
+    <p class="tag">Productivity</p>
+    <h1 class="tool-title"><span class="tool-icon icon-task-board" aria-hidden="true"></span>Task Board</h1>
+    <p>Capture tasks, set priorities and due dates, and keep track of your progress.</p>
+    <section class="panel">
+      <form>
+        <label>New task<input name="task" required maxlength="120" autocomplete="off"></label>
+        <button type="submit">Add task</button>
+      </form>
+      <ul id="list"></ul>
+      <p id="status" class="notice" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <script src="../app-core.js"></script>
+  <script src="app.js"></script>
+  <script src="../site.js"></script>
+</body>
+</html>

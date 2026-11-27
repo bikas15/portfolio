@@ -10,6 +10,7 @@ const databaseEnabled = !localWorkbench || import.meta.env.DEV
 const panels = [
   { id: 'about', label: 'About' },
   { id: 'projects', label: 'Projects' },
+  { id: 'toolkit', label: 'Mini Toolkit' },
   { id: 'terminal', label: 'Terminal' },
   { id: 'notes', label: 'Scratchpad' },
   { id: 'contact', label: 'Contact' },
@@ -397,6 +398,7 @@ export default function Workbench({ animation, enabled, onLightMode }) {
               {workspace.activity.map(({ label, at }, position) => <li key={at + position}><span>{label}</span><time dateTime={at}>{new Date(at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</time></li>)}
             </ul> : <p>{workspace ? 'Project views and note saves will appear here.' : 'Activity is available when the workspace connects.'}</p>)}
             {databaseEnabled && item.id === 'database' && enabled && <DatabasePanel connect={connectDatabase} local={localWorkbench} />}
+            {item.id === 'toolkit' && <iframe className="desk-toolkit-frame" title="Mini Toolkit" src={portfolioAsset('mini-toolkit/desk.html')} />}
           </div>
         </section>
       })}

@@ -223,6 +223,9 @@ body.desk-active { overflow: hidden; }
 }
 .app-icon--about { --icon-hi: #8e80ff; --icon-low: #5641c1; }
 .app-icon--projects { --icon-hi: #53c6be; --icon-low: #147d82; }
+.app-icon--toolkit { --icon-hi: #7498f6; --icon-low: #4249a1; }
+.app-icon--toolkit i { border: .1em solid; border-radius: .15em; background: linear-gradient(currentColor, currentColor) center / .1em 100% no-repeat, linear-gradient(currentColor, currentColor) center / 100% .1em no-repeat; }
+.desk-toolkit-frame { display: block; width: 100%; height: min(62dvh, 680px); min-height: 260px; border: 0; border-radius: 12px; background: #0b1020; }
 .app-icon--terminal { --icon-hi: #4b557d; --icon-low: #191e39; }
 .app-icon--notes { --icon-hi: #fdaf52; --icon-low: #bd6027; }
 .app-icon--contact { --icon-hi: #f187ac; --icon-low: #b43770; }

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Expense Log</title>
+  <link rel="icon" type="image/svg+xml" href="../icons/expense-log.svg">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <main>
+    <a href="../index.html">← All tools</a>
+    <p class="tag">Finance</p>
+    <h1 class="tool-title"><span class="tool-icon icon-expense-log" aria-hidden="true"></span>Expense Log</h1>
+    <p>Record spending, review monthly totals, and export your entries. Your data stays in this browser.</p>
+    <section class="panel">
+      <form id="expense-form">
+        <label>Description<input name="description" required maxlength="100" autocomplete="off" placeholder="Groceries"></label>
+        <label>Amount<input name="amount" type="number" min="0.01" max="100000000" step="0.01" required inputmode="decimal"></label>
+        <label>Currency<select name="currency" required></select></label>
+        <label>Category<select name="category" required></select></label>
+        <label>Date<input name="date" type="date" required></label>
+        <button type="submit">Add expense</button>
+      </form>
+      <div class="toolbar">
+        <label for="month-filter">Month<select id="month-filter"></select></label>
+        <p id="summary" class="muted" aria-live="polite"></p>
+      </div>
+      <div class="actions">
+        <button id="export" type="button">Export all expenses as CSV</button>
+      </div>
+      <ul id="expense-list"></ul>
+      <p id="status" class="notice" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <script src="../app-core.js"></script>
+  <script src="app.js"></script>
+  <script src="../site.js"></script>
+</body>
+</html>
